@@ -1,0 +1,16 @@
+add_compile_options(
+  -Wall
+  -Wextra
+  -Wcast-align
+  -Wcast-qual
+  -Wconversion
+  -Wdisabled-optimization
+  -Werror
+  -Wextra
+  -Winit-self
+  -Wmissing-include-dirs
+  -Wparentheses
+  -Wpedantic
+  -Wredundant-decls
+  -Wshadow
+  -Wuninitialized)
