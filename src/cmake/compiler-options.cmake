@@ -13,4 +13,5 @@ add_compile_options(
   -Wpedantic
   -Wredundant-decls
   -Wshadow
-  -Wuninitialized)
+  -Wuninitialized
+)
