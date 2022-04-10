@@ -18,6 +18,9 @@ void Version()
 
 void Help()
 {
+    Version();
+
+    std::cout << "\n";
     std::cout << "Usage:\n";
     std::cout << "    pass++ help\n";
     std::cout << "        Show this text.\n";
