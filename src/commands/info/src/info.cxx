@@ -13,8 +13,6 @@ void Version()
     std::cout << "|                  C++ port                  |\n";
     std::cout << "|                                            |\n";
     std::cout << "|                   v0.0.1                   |\n";
-    std::cout << "|                                            |\n";
-    std::cout << "|                 A. Koutian                 |\n";
     std::cout << "+--------------------------------------------+" << std::endl;
 }
 
