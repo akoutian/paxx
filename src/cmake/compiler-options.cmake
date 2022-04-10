@@ -10,7 +10,6 @@ add_compile_options(
   -Winit-self
   -Wmissing-include-dirs
   -Wnon-virtual-dtor
-  -Wnon-virtual-dtor
   -Wold-style-cast
   -Woverloaded-virtual
   -Wparentheses
