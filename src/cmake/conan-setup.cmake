@@ -11,3 +11,25 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     "${CMAKE_BINARY_DIR}/conan.cmake" TLS_VERIFY ON
   )
 endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+conan_cmake_configure(REQUIRES lyra/1.6.0 GENERATORS cmake_find_package)
+
+conan_cmake_autodetect(settings)
+
+conan_cmake_install(
+  PATH_OR_REFERENCE
+  .
+  BUILD
+  missing
+  REMOTE
+  conancenter
+  SETTINGS
+  ${settings}
+)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+
+find_package(lyra)
