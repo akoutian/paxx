@@ -5,8 +5,8 @@ project(pass++ LANGUAGES CXX)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 include(compiler-options)
-include(configuration)
 include(conan-setup)
+include(configuration)
 
 add_subdirectory(cli)
 add_subdirectory(commands)
