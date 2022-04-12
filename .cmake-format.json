@@ -4,19 +4,7 @@
     "_help_additional_commands": [
       "Specify structure for custom cmake functions"
     ],
-    "additional_commands": {
-      "foo": {
-        "flags": [
-          "BAR",
-          "BAZ"
-        ],
-        "kwargs": {
-          "HEADERS": "*",
-          "SOURCES": "*",
-          "DEPENDS": "*"
-        }
-      }
-    },
+    "additional_commands": {},
     "_help_override_spec": [
       "Override configurations per-command where available"
     ],
