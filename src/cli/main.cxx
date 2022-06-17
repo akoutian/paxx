@@ -8,15 +8,29 @@
 
 #include <iostream>
 
+namespace
+{
+
+struct Args
+{
+    bool help{};
+    bool version{};
+};
+
+auto BuildCli(Args &args)
+{
+    auto cli = lyra::cli();
+    cli |= lyra::opt(args.help)["-h"]["--help"]("Show this text.");
+    cli |= lyra::opt(args.version)["-v"]["--version"]("Show version information.");
+    return cli;
+}
+
+} // namespace
+
 int main(int argc, char **argv)
 {
-    bool help = false;
-    bool version = false;
-
-    const auto cli = lyra::cli() | lyra::opt(help)["-h"]["--help"]("Show this text.") |
-                     lyra::opt(version)["-v"]["--version"]("Show version information.");
-
-    const auto result = cli.parse({argc, argv});
+    Args args;
+    const auto result = BuildCli(args).parse({argc, argv});
 
     if (!result)
     {
@@ -24,13 +38,13 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    if (help)
+    if (args.help)
     {
         pass::Help();
         return EXIT_SUCCESS;
     }
 
-    if (version)
+    if (args.version)
     {
         pass::Version();
         return EXIT_SUCCESS;
