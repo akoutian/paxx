@@ -7,8 +7,8 @@
 namespace pass
 {
 
-void Version(common::Info &);
+void Version(cmn::Info &);
 
-void Help(common::Info &);
+void Help(cmn::Info &);
 
 } // namespace pass

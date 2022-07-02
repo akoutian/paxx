@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Show([[maybe_unused]] common::Info &info)
+void Show([[maybe_unused]] cmn::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }

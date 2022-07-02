@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Edit(common::Info &);
+void Edit(cmn::Info &);
 
 }

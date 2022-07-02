@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Grep(common::Info &);
+void Grep(cmn::Info &);
 
 }

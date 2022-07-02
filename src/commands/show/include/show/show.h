@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Show(common::Info &);
+void Show(cmn::Info &);
 
 }

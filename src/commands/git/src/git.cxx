@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Git([[maybe_unused]] common::Info &info)
+void Git([[maybe_unused]] cmn::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }

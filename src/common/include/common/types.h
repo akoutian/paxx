@@ -5,7 +5,7 @@
 #include <optional>
 #include <string>
 
-namespace pass::common
+namespace pass::cmn
 {
 
 struct Info
@@ -14,4 +14,4 @@ struct Info
     std::optional<std::string> message{};
 };
 
-} // namespace pass::common
+} // namespace pass::cmn

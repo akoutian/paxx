@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Find(common::Info &);
+void Find(cmn::Info &);
 
 }

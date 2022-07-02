@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Delete(common::Info &);
+void Delete(cmn::Info &);
 
 }

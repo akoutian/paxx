@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Git(common::Info &);
+void Git(cmn::Info &);
 
 }

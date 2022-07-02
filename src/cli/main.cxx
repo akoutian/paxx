@@ -11,6 +11,8 @@
 namespace
 {
 
+using pass::cmn::Info;
+
 struct Args
 {
     bool help{};
@@ -36,7 +38,7 @@ auto BuildCli(Args &args)
     return cli;
 }
 
-void HandleArgs(const Args &args, pass::common::Info &info)
+void HandleArgs(const Args &args, Info &info)
 {
     if (args.help)
     {
@@ -69,7 +71,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    pass::common::Info info;
+    Info info;
     HandleArgs(args, info);
 
     if (info.status != 0)

@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Rename([[maybe_unused]] common::Info &info)
+void Rename([[maybe_unused]] cmn::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }
