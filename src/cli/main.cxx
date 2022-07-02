@@ -76,8 +76,11 @@ int main(int argc, char **argv)
 
     if (info.status != 0)
     {
-        std::cerr << "Something bad happened. TODO: print nice error messages here." << std::endl;
-        exit(EXIT_FAILURE);
+        if (info.message)
+        {
+            std::cerr << info.message.value() << std::endl;
+        }
+        exit(info.status);
     }
 
     return EXIT_SUCCESS;
