@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Find()
+void Find([[maybe_unused]] common::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }

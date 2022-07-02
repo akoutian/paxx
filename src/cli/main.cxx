@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include "common/types.h"
 #include "info/info.h"
 #include "show/show.h"
 
@@ -35,6 +36,26 @@ auto BuildCli(Args &args)
     return cli;
 }
 
+void HandleArgs(const Args &args, pass::common::Info &info)
+{
+    if (args.help)
+    {
+        pass::Help(info);
+    }
+
+    if (args.show)
+    {
+        pass::Show(info);
+    }
+
+    if (args.version)
+    {
+        pass::Version(info);
+    }
+
+    pass::Show(info);
+}
+
 } // namespace
 
 int main(int argc, char **argv)
@@ -48,25 +69,14 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    if (args.help)
-    {
-        pass::Help();
-        return EXIT_SUCCESS;
-    }
+    pass::common::Info info;
+    HandleArgs(args, info);
 
-    if (args.show)
+    if (info.status != 0)
     {
-        pass::Show();
-        return EXIT_SUCCESS;
+        std::cerr << "Something bad happened. TODO: print nice error messages here." << std::endl;
+        exit(EXIT_FAILURE);
     }
-
-    if (args.version)
-    {
-        pass::Version();
-        return EXIT_SUCCESS;
-    }
-
-    pass::Show();
 
     return EXIT_SUCCESS;
 }

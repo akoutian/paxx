@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Version()
+void Version([[maybe_unused]] common::Info &info)
 {
     std::cout << "+--------------------------------------------+\n";
     std::cout << "| pass++: the standard unix password manager |\n";
@@ -18,9 +18,9 @@ void Version()
     std::cout << "+--------------------------------------------+" << std::endl;
 }
 
-void Help()
+void Help([[maybe_unused]] common::Info &info)
 {
-    Version();
+    Version(info);
 
     std::cout << "\n";
     std::cout << "Usage:\n";

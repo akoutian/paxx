@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Generate()
+void Generate([[maybe_unused]] common::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }

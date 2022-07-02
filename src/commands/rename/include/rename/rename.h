@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "common/types.h"
+
 namespace pass
 {
 
-void Rename();
+void Rename(common::Info &);
 
 }

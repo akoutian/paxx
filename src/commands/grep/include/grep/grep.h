@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "common/types.h"
+
 namespace pass
 {
 
-void Grep();
+void Grep(common::Info &);
 
 }

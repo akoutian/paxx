@@ -2,11 +2,13 @@
 
 #pragma once
 
+#include "common/types.h"
+
 namespace pass
 {
 
-void Version();
+void Version(common::Info &);
 
-void Help();
+void Help(common::Info &);
 
 } // namespace pass

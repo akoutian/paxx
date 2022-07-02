@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Grep()
+void Grep([[maybe_unused]] common::Info &info)
 {
     throw std::runtime_error("TODO: implement");
 }
