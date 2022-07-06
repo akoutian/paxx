@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "show/show.h"
+#include "tree.h"
 
+#include <algorithm>
 #include <filesystem>
 #include <iostream>
 #include <optional>
@@ -47,14 +49,7 @@ void Show(cmn::Info &info)
 {
     const auto p = FindPasswordStore();
 
-    if (p)
-    {
-        for (const auto &d : fs::recursive_directory_iterator(*p))
-        {
-            std::cout << d << std::endl;
-        }
-    }
-    else
+    if (!p)
     {
         info.status = 1;
         info.message = "Error: password store is empty. Try \"pass init\".";
