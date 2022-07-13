@@ -3,6 +3,7 @@
 #include "show/show.h"
 
 #include "tree.h"
+#include "types.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -16,13 +17,6 @@ namespace fs = std::filesystem;
 
 namespace
 {
-
-struct PathInfo
-{
-    fs::path path{};
-    size_t depth{};
-    bool isDirectory{};
-};
 
 static std::string gl_passwordStoreName = "password-store";
 
