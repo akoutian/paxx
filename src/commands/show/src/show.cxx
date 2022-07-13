@@ -16,6 +16,13 @@ namespace fs = std::filesystem;
 namespace
 {
 
+struct PathInfo
+{
+    fs::path path{};
+    size_t depth{};
+    bool isDirectory{};
+};
+
 static std::string gl_passwordStoreName = "password-store";
 
 std::optional<fs::path> FindPasswordStore()
@@ -43,13 +50,14 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
-std::vector<std::string> Vectorize(const fs::recursive_directory_iterator &it)
+std::vector<PathInfo> Vectorize(const fs::recursive_directory_iterator &it)
 {
-    std::vector<std::string> result;
+    std::vector<PathInfo> result;
 
     for (const auto &a : it)
     {
-        result.push_back(a.path());
+        PathInfo i{a.path(), static_cast<size_t>(it.depth()), a.is_directory()};
+        result.push_back(i);
     };
 
     return result;
@@ -82,7 +90,9 @@ void Show(cmn::Info &info)
 
     const auto v = Vectorize(it);
 
-    std::for_each(v.begin(), v.end(), [](const auto &a) { std::cout << a << "\n"; });
+    std::for_each(v.begin(), v.end(), [](const auto &a) {
+        std::cout << a.isDirectory << " " << a.depth << " " << a.path << "\n";
+    });
     std::cout << std::flush;
 }
 
