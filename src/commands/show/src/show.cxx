@@ -43,6 +43,18 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
+std::vector<std::string> Vectorize(const fs::recursive_directory_iterator &it)
+{
+    std::vector<std::string> result;
+
+    for (const auto &a : it)
+    {
+        result.push_back(a.path());
+    };
+
+    return result;
+}
+
 } // namespace
 
 void Show(cmn::Info &info)
@@ -53,7 +65,25 @@ void Show(cmn::Info &info)
     {
         info.status = 1;
         info.message = "Error: password store is empty. Try \"pass init\".";
+        return;
     }
+
+    std::error_code ec;
+    const auto it = fs::recursive_directory_iterator(*p, ec);
+
+    const auto ev = ec.value();
+    if (ev != 0)
+    {
+        info.status = ev;
+        info.message =
+            "Error: found password store but encountered filesystem error: " + ec.message();
+        return;
+    }
+
+    const auto v = Vectorize(it);
+
+    std::for_each(v.begin(), v.end(), [](const auto &a) { std::cout << a << "\n"; });
+    std::cout << std::flush;
 }
 
 } // namespace pass
