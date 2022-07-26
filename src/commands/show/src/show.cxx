@@ -51,8 +51,7 @@ std::vector<PathInfo> Vectorize(const fs::recursive_directory_iterator &it)
 
     for (const auto &a : it)
     {
-        PathInfo i{a.path(), static_cast<size_t>(it.depth()), a.is_directory()};
-        result.push_back(i);
+        result.push_back({a.path(), static_cast<size_t>(it.depth()), a.is_directory()});
     };
 
     return result;
@@ -83,12 +82,14 @@ void Show(cmn::Info &info)
         return;
     }
 
+    Tree tree;
+    const auto push = [&](const auto &a) { tree.Push(a); };
     const auto v = Vectorize(it);
+    std::for_each(v.begin(), v.end(), push);
 
-    std::for_each(v.begin(), v.end(), [](const auto &a) {
-        std::cout << a.isDirectory << " " << a.depth << " " << a.path << "\n";
-    });
-    std::cout << std::flush;
+    const auto result = tree.Get();
+    std::for_each(result.begin(), result.end(),
+                  [&](const auto &a) { std::cout << a << std::endl; });
 }
 
 } // namespace pass
