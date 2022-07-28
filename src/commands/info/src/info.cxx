@@ -9,13 +9,13 @@ namespace pass
 
 void Version([[maybe_unused]] cmn::Info &info)
 {
-    std::cout << "+--------------------------------------------+\n";
-    std::cout << "| pass++: the standard unix password manager |\n";
-    std::cout << "|                                            |\n";
-    std::cout << "|                  C++ port                  |\n";
-    std::cout << "|                                            |\n";
-    std::cout << "|                   v0.0.1                   |\n";
-    std::cout << "+--------------------------------------------+" << std::endl;
+    std::cout << "╭────────────────────────────────────────────╮\n";
+    std::cout << "│ pass++: the standard unix password manager │\n";
+    std::cout << "│                                            │\n";
+    std::cout << "│                  C++ port                  │\n";
+    std::cout << "│                                            │\n";
+    std::cout << "│                   v0.0.1                   │\n";
+    std::cout << "╰────────────────────────────────────────────╯" << std::endl;
 }
 
 void Help([[maybe_unused]] cmn::Info &info)
