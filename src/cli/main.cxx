@@ -77,14 +77,10 @@ int main(int argc, char **argv)
     Info info;
     HandleArgs(args, info);
 
-    if (info.status != 0)
+    if (info.status != 0 && info.message)
     {
-        if (info.message)
-        {
-            std::cerr << info.message.value() << std::endl;
-        }
-        exit(info.status);
+        std::cerr << info.message.value() << std::endl;
     }
 
-    return EXIT_SUCCESS;
+    exit(info.status);
 }
