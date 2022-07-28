@@ -43,16 +43,19 @@ void HandleArgs(const Args &args, Info &info)
     if (args.help)
     {
         pass::Help(info);
+        return;
     }
 
     if (args.show)
     {
         pass::Show(info);
+        return;
     }
 
     if (args.version)
     {
         pass::Version(info);
+        return;
     }
 
     pass::Show(info);
