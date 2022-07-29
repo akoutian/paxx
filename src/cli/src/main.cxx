@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include "args.h"
 #include "common/types.h"
 #include "info/info.h"
 #include "show/show.h"
@@ -11,14 +12,8 @@
 namespace
 {
 
+using pass::cli::Args;
 using pass::cmn::Info;
-
-struct Args
-{
-    bool help{};
-    bool show{};
-    bool version{};
-};
 
 auto BuildCli(Args &args)
 {
