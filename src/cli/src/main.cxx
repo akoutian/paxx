@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 
     if (!result)
     {
-        std::cerr << "Error in command line: " << result.message() << std::endl;
+        std::cerr << "Error: " << result.message() << std::endl;
         return EXIT_FAILURE;
     }
 
