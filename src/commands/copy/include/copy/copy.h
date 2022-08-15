@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Copy(cmn::Info &);
+void Copy(cmn::Context &);
 
 }

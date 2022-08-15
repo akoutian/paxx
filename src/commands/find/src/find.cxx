@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Find([[maybe_unused]] cmn::Info &info)
+void Find([[maybe_unused]] cmn::Context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

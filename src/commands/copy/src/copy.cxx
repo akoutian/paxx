@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Copy([[maybe_unused]] cmn::Info &info)
+void Copy([[maybe_unused]] cmn::Context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

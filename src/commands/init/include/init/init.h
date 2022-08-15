@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Init(cmn::Info &);
+void Init(cmn::Context &);
 
 }

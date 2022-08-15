@@ -7,6 +7,6 @@
 namespace pass
 {
 
-void Rename(cmn::Info &);
+void Rename(cmn::Context &);
 
 }

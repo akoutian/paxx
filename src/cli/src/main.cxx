@@ -13,7 +13,7 @@ namespace
 {
 
 using pass::cli::Args;
-using pass::cmn::Info;
+using pass::cmn::Context;
 
 auto BuildCli(Args &args)
 {
@@ -33,27 +33,27 @@ auto BuildCli(Args &args)
     return cli;
 }
 
-void HandleArgs(const Args &args, Info &info)
+void HandleArgs(const Args &args, Context &ctx)
 {
     if (args.help)
     {
-        pass::Help(info);
+        pass::Help(ctx);
         return;
     }
 
     if (args.show)
     {
-        pass::Show(info);
+        pass::Show(ctx);
         return;
     }
 
     if (args.version)
     {
-        pass::Version(info);
+        pass::Version(ctx);
         return;
     }
 
-    pass::Show(info);
+    pass::Show(ctx);
 }
 
 } // namespace
@@ -69,13 +69,13 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    Info info;
-    HandleArgs(args, info);
+    Context ctx;
+    HandleArgs(args, ctx);
 
-    if (info.status != 0 && info.message)
+    if (ctx.status != 0 && ctx.message)
     {
-        std::cerr << info.message.value() << std::endl;
+        std::cerr << ctx.message.value() << std::endl;
     }
 
-    return info.status;
+    return ctx.status;
 }

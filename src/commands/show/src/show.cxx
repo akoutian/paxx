@@ -59,14 +59,14 @@ std::vector<PathInfo> Vectorize(const fs::recursive_directory_iterator &it)
 
 } // namespace
 
-void Show(cmn::Info &info)
+void Show(cmn::Context &ctx)
 {
     const auto p = FindPasswordStore();
 
     if (!p)
     {
-        info.status = 1;
-        info.message = "Error: password store is empty. Try \"pass init\".";
+        ctx.status = 1;
+        ctx.message = "Error: password store is empty. Try \"pass init\".";
         return;
     }
 
@@ -76,8 +76,8 @@ void Show(cmn::Info &info)
     const auto ev = ec.value();
     if (ev != 0)
     {
-        info.status = ev;
-        info.message =
+        ctx.status = ev;
+        ctx.message =
             "Error: found password store but encountered filesystem error: " + ec.message();
         return;
     }

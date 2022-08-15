@@ -7,7 +7,7 @@
 namespace pass
 {
 
-void Grep([[maybe_unused]] cmn::Info &info)
+void Grep([[maybe_unused]] cmn::Context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

@@ -8,7 +8,7 @@
 namespace pass::cmn
 {
 
-struct Info
+struct Context
 {
     int status{};
     std::optional<std::string> message{};
