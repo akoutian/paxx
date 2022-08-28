@@ -9,6 +9,6 @@ target_include_directories(show PUBLIC include)
 
 target_link_libraries(show common)
 
-add_executable(show-test test/tree-test.cxx)
+add_pass_test(BIN_NAME show-test BIN_SOURCES test/tree-test.cxx)
 
 target_link_libraries(show-test show doctest::doctest)

@@ -7,6 +7,9 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 include(compiler-options)
 include(conan-setup)
 include(configuration)
+include(functions)
+
+include(CTest)
 
 add_subdirectory(cli)
 add_subdirectory(commands)
