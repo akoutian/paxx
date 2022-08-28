@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "../src/tree.h"
+#include "src/tree.h"
 
 #include "doctest/doctest.h"
 

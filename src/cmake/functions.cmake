@@ -7,5 +7,8 @@ function(add_pass_test)
     ADD_PASS_TEST "${opts}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN}
   )
   add_executable(${ADD_PASS_TEST_BIN_NAME} ${ADD_PASS_TEST_BIN_SOURCES})
+  target_include_directories(
+    ${ADD_PASS_TEST_BIN_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+  )
   add_test(NAME ${ADD_PASS_TEST_BIN_NAME} COMMAND ${ADD_PASS_TEST_BIN_NAME})
 endfunction()
