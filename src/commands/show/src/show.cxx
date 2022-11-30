@@ -3,12 +3,12 @@
 #include "show/show.h"
 
 #include "tree.h"
-#include "types.h"
 
 #include <algorithm>
 #include <filesystem>
 #include <iostream>
 #include <optional>
+#include <vector>
 
 namespace pass
 {
@@ -45,16 +45,27 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
-std::vector<PathInfo> Vectorize(const fs::recursive_directory_iterator &it)
+auto CountChildren(const fs::path &p)
 {
-    std::vector<PathInfo> result;
+    return std::distance(fs::directory_iterator{p}, fs::directory_iterator{});
+};
 
-    for (const auto &a : it)
+[[maybe_unused]] void ShowTree(fs::recursive_directory_iterator it)
+{
+    TreePrinter printer;
+
+    const auto handle = [&](const auto &i)
     {
-        result.push_back({a.path(), static_cast<size_t>(it.depth()), a.is_directory()});
+        const auto path = i.path();
+        TreeInfo info{.depth{static_cast<size_t>(it.depth())}, .name{path.filename().string()}};
+        if (it->is_directory())
+        {
+            info.children = static_cast<size_t>(CountChildren(path));
+        }
+        printer.Print(std::cout, info);
     };
 
-    return result;
+    std::for_each(begin(it), end(it), handle);
 }
 
 } // namespace
@@ -71,7 +82,7 @@ void Show(cmn::Context &ctx)
     }
 
     std::error_code ec;
-    const auto it = fs::recursive_directory_iterator(*p, ec);
+    const auto it = fs::recursive_directory_iterator{*p, ec};
 
     const auto ev = ec.value();
     if (ev != 0)
@@ -81,15 +92,6 @@ void Show(cmn::Context &ctx)
             "Error: found password store but encountered filesystem error: " + ec.message();
         return;
     }
-
-    Tree tree;
-    const auto push = [&](const auto &a) { tree.Push(a); };
-    const auto v = Vectorize(it);
-    std::for_each(v.begin(), v.end(), push);
-
-    const auto result = tree.Get();
-    std::for_each(result.begin(), result.end(),
-                  [&](const auto &a) { std::cout << a << std::endl; });
 }
 
 } // namespace pass

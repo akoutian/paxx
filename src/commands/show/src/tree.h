@@ -2,23 +2,22 @@
 
 #pragma once
 
-#include "types.h"
-
-#include <string>
-#include <vector>
+#include <filesystem>
 
 namespace pass
 {
 
-class Tree
+struct TreeInfo
+{
+    size_t depth{};
+    size_t children{};
+    std::string_view name{};
+};
+
+class TreePrinter
 {
   public:
-    void Push(const PathInfo &);
-
-    std::vector<std::string> Get() const;
-
-  private:
-    std::vector<std::string> m_tree;
+    void Print(std::ostream &, const TreeInfo &info);
 };
 
 } // namespace pass

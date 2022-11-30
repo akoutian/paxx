@@ -2,7 +2,7 @@
 
 #include "tree.h"
 
-#include <stdexcept>
+#include <filesystem>
 
 namespace pass
 {
@@ -10,42 +10,32 @@ namespace pass
 namespace
 {
 
-[[maybe_unused]] static constexpr auto gl_tee = "├";
-[[maybe_unused]] static constexpr auto gl_dash = "── ";
-[[maybe_unused]] static constexpr auto gl_line = "│";
-[[maybe_unused]] static constexpr auto gl_corner = "└";
-[[maybe_unused]] static constexpr auto gl_space = " ";
-[[maybe_unused]] static constexpr auto gl_indent_depth = 4;
+[[maybe_unused]] static constexpr auto gl_corner = "\342\224\224";
+[[maybe_unused]] static constexpr auto gl_dash = "\342\224\200\342\224\200 ";
+[[maybe_unused]] static constexpr auto gl_bar = "\342\224\202";
+[[maybe_unused]] static constexpr auto gl_newline = '\n';
+[[maybe_unused]] static constexpr auto gl_space = ' ';
+[[maybe_unused]] static constexpr auto gl_tee = "\342\224\234";
+[[maybe_unused]] static constexpr size_t gl_indent_depth = 4;
 
-std::string BuildPrefix(size_t depth)
+auto BuildPrefix(size_t depth)
 {
-    std::string result;
-
-    for (size_t ii{}; ii < depth * gl_indent_depth; ++ii)
-    {
-        result += gl_space;
-    }
-
-    return result;
+    return std::string(gl_indent_depth * depth, gl_space);
 }
 
 } // namespace
 
-std::vector<std::string> Tree::Get() const
+void TreePrinter::Print(std::ostream &out, const TreeInfo &info)
 {
-    return m_tree;
-}
+    out << BuildPrefix(info.depth);
 
-void Tree::Push(const PathInfo &info)
-{
-    if (info.isDirectory)
+    if (info.children > 0)
     {
-        m_tree.push_back(BuildPrefix(info.depth) + gl_corner + gl_dash + info.path.string());
+        out << info.name << " directory" << gl_newline;
+        return;
     }
-    else
-    {
-        m_tree.push_back(BuildPrefix(info.depth) + gl_tee + gl_dash + info.path.string());
-    }
+
+    out << info.name << gl_newline;
 }
 
 } // namespace pass
