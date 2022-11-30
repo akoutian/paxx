@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "tree.h"
+#include "symbols.h"
 
 #include <filesystem>
 
@@ -9,14 +10,6 @@ namespace pass
 
 namespace
 {
-
-[[maybe_unused]] static constexpr auto gl_corner = "\342\224\224";
-[[maybe_unused]] static constexpr auto gl_dash = "\342\224\200\342\224\200 ";
-[[maybe_unused]] static constexpr auto gl_bar = "\342\224\202";
-[[maybe_unused]] static constexpr auto gl_newline = '\n';
-[[maybe_unused]] static constexpr auto gl_space = ' ';
-[[maybe_unused]] static constexpr auto gl_tee = "\342\224\234";
-[[maybe_unused]] static constexpr size_t gl_indent_depth = 4;
 
 auto BuildPrefix(size_t depth)
 {
