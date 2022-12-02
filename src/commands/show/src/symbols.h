@@ -8,7 +8,7 @@ namespace pass
 {
 
 static constexpr auto gl_corner = "\342\224\224";
-static constexpr auto gl_dash = "\342\224\200\342\224\200 ";
+static constexpr auto gl_dash = "\342\224\200";
 static constexpr auto gl_bar = "\342\224\202";
 static constexpr auto gl_newline = '\n';
 static constexpr auto gl_space = ' ';

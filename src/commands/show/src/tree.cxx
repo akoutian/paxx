@@ -3,32 +3,51 @@
 #include "tree.h"
 #include "symbols.h"
 
-#include <filesystem>
+#include <algorithm>
+#include <string>
 
-namespace pass
+namespace pass::tree
 {
 
 namespace
 {
 
-auto BuildPrefix(size_t depth)
+template <typename Container, typename... Args> void AppendAll(Container &c, Args... args)
 {
-    return std::string(gl_indent_depth * depth, gl_space);
+    ((c += args), ...);
+}
+
+auto BuildPrefix(const tree::TreeInfo &info)
+{
+    // four chars per indent plus four for the "corner" or "tee" and a space
+    std::string result;
+    result.reserve(info.depth * (gl_indent_depth + 1));
+
+    for (size_t ii{0}; ii < info.depth; ++ii)
+    {
+        if (info.pending.contains(ii))
+        {
+            AppendAll(result, gl_bar, gl_space, gl_space, gl_space);
+            continue;
+        }
+        AppendAll(result, gl_space, gl_space, gl_space, gl_space);
+    }
+
+    if (info.isLast)
+    {
+        AppendAll(result, gl_corner, gl_dash, gl_dash, gl_space);
+        return result;
+    }
+
+    AppendAll(result, gl_tee, gl_dash, gl_dash, gl_space);
+    return result;
 }
 
 } // namespace
 
-void TreePrinter::Print(std::ostream &out, const TreeInfo &info)
+void Print(std::ostream &out, const TreeInfo &info)
 {
-    out << BuildPrefix(info.depth);
-
-    if (info.children > 0)
-    {
-        out << info.name << " directory" << gl_newline;
-        return;
-    }
-
-    out << info.name << gl_newline;
+    out << BuildPrefix(info) << info.name << gl_newline;
 }
 
-} // namespace pass
+} // namespace pass::tree

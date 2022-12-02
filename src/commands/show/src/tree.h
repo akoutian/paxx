@@ -2,22 +2,22 @@
 
 #pragma once
 
-#include <filesystem>
+#include <cstddef>
+#include <ostream>
+#include <set>
+#include <string_view>
 
-namespace pass
+namespace pass::tree
 {
 
 struct TreeInfo
 {
-    size_t depth{};
-    size_t children{};
-    std::string_view name{};
+    bool isLast{false};
+    size_t depth{0};
+    std::string_view name;
+    std::set<size_t> pending;
 };
 
-class TreePrinter
-{
-  public:
-    void Print(std::ostream &, const TreeInfo &info);
-};
+void Print(std::ostream &, const TreeInfo &info);
 
-} // namespace pass
+} // namespace pass::tree

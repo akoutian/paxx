@@ -45,24 +45,19 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
-auto CountChildren(const fs::path &p)
-{
-    return std::distance(fs::directory_iterator{p}, fs::directory_iterator{});
-};
-
 [[maybe_unused]] void ShowTree(fs::recursive_directory_iterator it)
 {
-    TreePrinter printer;
+    std::cout << "Password Store" << std::endl;
 
     const auto handle = [&](const auto &i)
     {
         const auto path = i.path();
-        TreeInfo info{.depth{static_cast<size_t>(it.depth())}, .name{path.filename().string()}};
-        if (it->is_directory())
-        {
-            info.children = static_cast<size_t>(CountChildren(path));
-        }
-        printer.Print(std::cout, info);
+        tree::TreeInfo info{
+            .depth{static_cast<size_t>(it.depth())},
+            .name{path.filename().string()},
+            .pending{},
+        };
+        tree::Print(std::cout, info);
     };
 
     std::for_each(begin(it), end(it), handle);
