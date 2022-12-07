@@ -8,26 +8,6 @@
 namespace pass::cli
 {
 
-TEST_CASE("Check Help")
-{
-    parsed::Args parsed;
-    ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "help"});
-
-    REQUIRE(result);
-    REQUIRE(std::holds_alternative<HelpArgs>(ready));
-}
-
-TEST_CASE("Check Version")
-{
-    parsed::Args parsed;
-    ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "version"});
-
-    REQUIRE(result);
-    REQUIRE(std::holds_alternative<VersionArgs>(ready));
-}
-
 TEST_CASE("Check Show Ia")
 {
     parsed::Args parsed;
