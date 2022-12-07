@@ -2,13 +2,13 @@
 
 #include "show/show.h"
 
-#include "tree.h"
+#include "show-tree.h"
 
 #include <algorithm>
+#include <cstddef>
 #include <filesystem>
 #include <iostream>
 #include <optional>
-#include <vector>
 
 namespace pass
 {
@@ -45,24 +45,6 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
-[[maybe_unused]] void ShowTree(fs::recursive_directory_iterator it)
-{
-    std::cout << "Password Store" << std::endl;
-
-    const auto handle = [&](const auto &i)
-    {
-        const auto path = i.path();
-        tree::TreeInfo info{
-            .depth{static_cast<size_t>(it.depth())},
-            .name{path.filename().string()},
-            .pending{},
-        };
-        tree::Print(std::cout, info);
-    };
-
-    std::for_each(begin(it), end(it), handle);
-}
-
 } // namespace
 
 void Show(cmn::Context &ctx)
@@ -87,6 +69,8 @@ void Show(cmn::Context &ctx)
             "Error: found password store but encountered filesystem error: " + ec.message();
         return;
     }
+
+    ShowTree(it);
 }
 
 } // namespace pass

@@ -5,7 +5,6 @@
 #include <cstddef>
 #include <ostream>
 #include <set>
-#include <string_view>
 
 namespace pass::tree
 {
@@ -14,10 +13,10 @@ struct TreeInfo
 {
     bool isLast{false};
     size_t depth{0};
-    std::string_view name;
+    std::string name;
     std::set<size_t> pending;
 };
 
-void Print(std::ostream &, const TreeInfo &info);
+void Print(std::ostream &, const TreeInfo &);
 
 } // namespace pass::tree
