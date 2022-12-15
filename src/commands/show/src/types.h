@@ -12,8 +12,8 @@ namespace fs = std::filesystem;
 struct PathInfo
 {
     fs::path path{};
-    size_t depth{};
-    bool isDirectory{};
+    size_t depth;
+    bool isDirectory;
 };
 
 } // namespace pass

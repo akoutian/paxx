@@ -22,8 +22,8 @@ struct HelpArgs
 
 struct ShowArgs
 {
-    std::optional<size_t> line{};
-    std::optional<std::string> name{};
+    std::optional<size_t> line;
+    std::optional<std::string> name;
     OutputType outputType{};
 };
 
@@ -36,9 +36,9 @@ namespace parsed
 
 struct Args
 {
-    HelpArgs help{};
-    ShowArgs show{};
-    VersionArgs version{};
+    HelpArgs help;
+    ShowArgs show;
+    VersionArgs version;
 };
 
 } // namespace parsed
