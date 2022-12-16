@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
 
-add_library(common INTERFACE include/common/types.h)
+add_library(common INTERFACE include/common/types.h include/common/args.h)
 
 target_include_directories(common INTERFACE include)

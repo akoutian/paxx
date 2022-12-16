@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "args.h"
+#include "common/args.h"
 #include "common/types.h"
 
 namespace pass::cli

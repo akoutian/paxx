@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 add_library(
-  cli STATIC src/args.h src/build-cli.h src/build-cli.cxx src/handle-args.h
+  cli STATIC src/build-cli.h src/build-cli.cxx src/handle-args.h
              src/handle-args.cxx
 )
 target_link_libraries(cli PUBLIC common info show bfg::lyra)
