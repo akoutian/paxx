@@ -9,7 +9,8 @@ namespace pass::cli
 
 void BuildHelp(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 {
-    const auto makeReady = [&]([[maybe_unused]] const auto &g) {
+    const auto makeReady = [&]([[maybe_unused]] const auto &g)
+    {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.help;
@@ -23,7 +24,8 @@ void BuildHelp(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 void BuildVersion(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 {
 
-    const auto makeReady = [&]([[maybe_unused]] const auto &g) {
+    const auto makeReady = [&]([[maybe_unused]] const auto &g)
+    {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.version;
@@ -36,7 +38,8 @@ void BuildVersion(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 
 void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 {
-    const auto makeReady = [&]([[maybe_unused]] auto g) {
+    const auto makeReady = [&]([[maybe_unused]] auto g)
+    {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.show;
@@ -44,13 +47,15 @@ void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
     };
     auto command = lyra::command("show", makeReady);
 
-    const auto clipOpt = [&](size_t i) {
+    const auto clipOpt = [&](size_t i)
+    {
         parsed.show.outputType = OutputType::CLIPBOARD;
         parsed.show.line = i;
     };
     command.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
 
-    const auto qrCodeOpt = [&](size_t i) {
+    const auto qrCodeOpt = [&](size_t i)
+    {
         parsed.show.outputType = OutputType::QRCODE;
         parsed.show.line = i;
     };
