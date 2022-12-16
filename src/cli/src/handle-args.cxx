@@ -14,9 +14,9 @@ void Handle([[maybe_unused]] const HelpArgs &args, Context &ctx)
     pass::Help(ctx);
 }
 
-void Handle([[maybe_unused]] const ShowArgs &args, Context &ctx)
+void Handle(const ShowArgs &args, Context &ctx)
 {
-    pass::Show(ctx);
+    pass::Show(ctx, args);
 }
 
 void Handle([[maybe_unused]] const VersionArgs &args, Context &ctx)

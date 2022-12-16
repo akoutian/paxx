@@ -47,8 +47,10 @@ std::optional<fs::path> FindPasswordStore()
 
 } // namespace
 
-void Show(cmn::Context &ctx)
+void Show(cmn::Context &ctx, const cli::ShowArgs &args)
 {
+    (void)args;
+
     const auto p = FindPasswordStore();
 
     if (!p)

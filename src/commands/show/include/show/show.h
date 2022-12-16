@@ -2,11 +2,12 @@
 
 #pragma once
 
+#include "common/args.h"
 #include "common/types.h"
 
 namespace pass
 {
 
-void Show(cmn::Context &);
+void Show(cmn::Context &, const cli::ShowArgs &);
 
 }
