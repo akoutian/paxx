@@ -15,7 +15,8 @@ endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_cmake_configure(
-  REQUIRES lyra/1.6.0 doctest/2.4.8 GENERATORS cmake_find_package
+  REQUIRES lyra/1.6.0 BUILD_REQUIRES doctest/2.4.8 GENERATORS
+  cmake_find_package
 )
 
 conan_cmake_autodetect(settings)
