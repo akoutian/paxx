@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(pass++ LANGUAGES CXX)
+project(paxx LANGUAGES CXX)
 
 include(cmake/compiler-options.cmake)
 include(cmake/conan-setup.cmake)
