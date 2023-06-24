@@ -2,7 +2,7 @@
 
 #include "show/show.h"
 
-#include "show-tree.h"
+#include "tree-builder.h"
 
 #include <algorithm>
 #include <cstddef>
@@ -61,7 +61,7 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
     }
 
     std::cout << "Password Store\n";
-    ShowTree(*p);
+    BuildTree(*p);
 }
 
 } // namespace pass

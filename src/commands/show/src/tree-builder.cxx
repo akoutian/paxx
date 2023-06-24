@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "show-tree.h"
+#include "tree-builder.h"
 
 #include "tree-writer.h"
 
@@ -11,7 +11,7 @@
 namespace pass
 {
 
-void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
+void BuildTree(fs::directory_iterator it, tree::TreeInfo &info)
 {
     const auto handle = [&](const auto &i)
     {
@@ -28,7 +28,7 @@ void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
 
             ++info.depth;
 
-            ShowTree(fs::directory_iterator(i), info);
+            BuildTree(fs::directory_iterator(i), info);
 
             --info.depth;
 
@@ -66,10 +66,10 @@ void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
 }
 
 // TODO: Unit Tests. Consider mocking fs::directory iterator
-void ShowTree(fs::path p)
+void BuildTree(fs::path p)
 {
     tree::TreeInfo info{.name = p.filename()};
-    ShowTree(fs::directory_iterator(p), info);
+    BuildTree(fs::directory_iterator(p), info);
 }
 
 } // namespace pass

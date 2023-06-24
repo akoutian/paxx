@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.20)
 add_library(
     show STATIC
     include/show/show.h
-    src/show-tree.cxx
-    src/show-tree.h
     src/show.cxx
     src/symbols.h
+    src/tree-builder.cxx
+    src/tree-builder.h
     src/tree-writer.cxx
     src/tree-writer.h
 )
