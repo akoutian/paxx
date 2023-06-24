@@ -11,34 +11,34 @@
 namespace pass
 {
 
-void BuildTree(fs::directory_iterator it, tree::TreeInfo &info)
+void BuildTree(fs::directory_iterator it, tree::TreeState &state)
 {
     const auto handle = [&](const auto &i)
     {
         if (i.is_directory())
         {
-            info.name = i.path().filename().stem();
+            state.name = i.path().filename().stem();
 
-            tree::Write(std::cout, info);
+            tree::Write(std::cout, state);
 
-            if (!info.isLast)
+            if (!state.last)
             {
-                info.pending.insert(info.depth);
+                state.open.insert(state.depth);
             }
 
-            ++info.depth;
+            ++state.depth;
 
-            BuildTree(fs::directory_iterator(i), info);
+            BuildTree(fs::directory_iterator(i), state);
 
-            --info.depth;
+            --state.depth;
 
-            info.pending.erase(info.depth);
+            state.open.erase(state.depth);
 
             return;
         }
 
-        info.name = i.path().filename().stem();
-        tree::Write(std::cout, info);
+        state.name = i.path().filename().stem();
+        tree::Write(std::cout, state);
     };
 
     for (auto i = fs::begin(it); i != fs::end(it); /*see below*/)
@@ -54,12 +54,12 @@ void BuildTree(fs::directory_iterator it, tree::TreeInfo &info)
 
         if (i == fs::end(it))
         {
-            info.isLast = true;
+            state.last = true;
             handle(entry);
         }
         else
         {
-            info.isLast = false;
+            state.last = false;
             handle(entry);
         }
     }
@@ -68,7 +68,7 @@ void BuildTree(fs::directory_iterator it, tree::TreeInfo &info)
 // TODO: Unit Tests. Consider mocking fs::directory iterator
 void BuildTree(fs::path p)
 {
-    tree::TreeInfo info{.name = p.filename()};
+    tree::TreeState info{.name = p.filename()};
     BuildTree(fs::directory_iterator(p), info);
 }
 

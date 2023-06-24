@@ -14,7 +14,7 @@ namespace pass::tree
 namespace
 {
 
-void Write(const std::vector<TreeInfo> &entries, std::stringstream &out)
+void Write(const std::vector<TreeState> &entries, std::stringstream &out)
 {
     std::for_each(entries.begin(), entries.end(), [&](const auto &i) { Write(out, i); });
 }
@@ -23,7 +23,7 @@ void Write(const std::vector<TreeInfo> &entries, std::stringstream &out)
 
 TEST_CASE("Check Single Entry")
 {
-    std::vector<TreeInfo> entries{{.isLast = true, .name{"one"}, .pending{}}};
+    std::vector<TreeState> entries{{.last = true, .name{"one"}, .open{}}};
 
     std::stringstream os;
 
@@ -34,9 +34,9 @@ TEST_CASE("Check Single Entry")
 
 TEST_CASE("Check Two Entries")
 {
-    std::vector<TreeInfo> entries{
-        {.isLast = false, .depth = 0, .name{"one"}, .pending{}},
-        {.isLast = true, .depth = 0, .name{"two"}, .pending{}},
+    std::vector<TreeState> entries{
+        {.last = false, .depth = 0, .name{"one"}, .open{}},
+        {.last = true, .depth = 0, .name{"two"}, .open{}},
     };
 
     std::stringstream os;
@@ -49,10 +49,10 @@ TEST_CASE("Check Two Entries")
 
 TEST_CASE("Check Three Entries")
 {
-    std::vector<TreeInfo> entries{
-        {.isLast = false, .depth = 0, .name{"one"}, .pending{}},
-        {.isLast = false, .depth = 0, .name{"two"}, .pending{}},
-        {.isLast = true, .depth = 0, .name{"three"}, .pending{}},
+    std::vector<TreeState> entries{
+        {.last = false, .depth = 0, .name{"one"}, .open{}},
+        {.last = false, .depth = 0, .name{"two"}, .open{}},
+        {.last = true, .depth = 0, .name{"three"}, .open{}},
     };
 
     std::stringstream os;
@@ -66,10 +66,10 @@ TEST_CASE("Check Three Entries")
 
 TEST_CASE("Check Single Nested Entry")
 {
-    std::vector<TreeInfo> entries{
-        {.isLast = false, .depth = 0, .name{"one"}, .pending{}},
-        {.isLast = true, .depth = 1, .name{"two"}, .pending{0}},
-        {.isLast = true, .depth = 0, .name{"three"}, .pending{}},
+    std::vector<TreeState> entries{
+        {.last = false, .depth = 0, .name{"one"}, .open{}},
+        {.last = true, .depth = 1, .name{"two"}, .open{0}},
+        {.last = true, .depth = 0, .name{"three"}, .open{}},
     };
 
     std::stringstream os;
@@ -83,10 +83,10 @@ TEST_CASE("Check Single Nested Entry")
 
 TEST_CASE("Check Single Nested Entry")
 {
-    std::vector<TreeInfo> entries{
-        {.isLast = false, .depth = 0, .name{"one"}, .pending{}},
-        {.isLast = true, .depth = 1, .name{"two"}, .pending{0}},
-        {.isLast = true, .depth = 0, .name{"three"}, .pending{}},
+    std::vector<TreeState> entries{
+        {.last = false, .depth = 0, .name{"one"}, .open{}},
+        {.last = true, .depth = 1, .name{"two"}, .open{0}},
+        {.last = true, .depth = 0, .name{"three"}, .open{}},
     };
 
     std::stringstream os;
@@ -100,17 +100,17 @@ TEST_CASE("Check Single Nested Entry")
 
 TEST_CASE("Check Multiple Nested Entries")
 {
-    std::vector<TreeInfo> entries{
-        {.isLast = false, .depth = 0, .name{"one"}, .pending{}},
-        {.isLast = false, .depth = 1, .name{"two"}, .pending{0}},
-        {.isLast = false, .depth = 2, .name{"three"}, .pending{0, 1}},
-        {.isLast = true, .depth = 2, .name{"four"}, .pending{0, 1}},
-        {.isLast = true, .depth = 1, .name{"five"}, .pending{0}},
-        {.isLast = false, .depth = 2, .name{"six"}, .pending{0}},
-        {.isLast = true, .depth = 2, .name{"seven"}, .pending{0}},
-        {.isLast = true, .depth = 3, .name{"eight"}, .pending{0}},
-        {.isLast = true, .depth = 0, .name{"nine"}, .pending{}},
-        {.isLast = true, .depth = 1, .name{"ten"}, .pending{}},
+    std::vector<TreeState> entries{
+        {.last = false, .depth = 0, .name{"one"}, .open{}},
+        {.last = false, .depth = 1, .name{"two"}, .open{0}},
+        {.last = false, .depth = 2, .name{"three"}, .open{0, 1}},
+        {.last = true, .depth = 2, .name{"four"}, .open{0, 1}},
+        {.last = true, .depth = 1, .name{"five"}, .open{0}},
+        {.last = false, .depth = 2, .name{"six"}, .open{0}},
+        {.last = true, .depth = 2, .name{"seven"}, .open{0}},
+        {.last = true, .depth = 3, .name{"eight"}, .open{0}},
+        {.last = true, .depth = 0, .name{"nine"}, .open{}},
+        {.last = true, .depth = 1, .name{"ten"}, .open{}},
     };
 
     std::stringstream os;

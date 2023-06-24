@@ -9,14 +9,16 @@
 namespace pass::tree
 {
 
-struct TreeInfo
+struct TreeState
 {
-    bool isLast{false};
+    // is the current entry the last to appear in a directory
+    bool last{false};
     size_t depth{0};
     std::string name;
-    std::set<size_t> pending;
+    // depths of directories currently on the stack
+    std::set<size_t> open;
 };
 
-void Write(std::ostream &, const TreeInfo &);
+void Write(std::ostream &, const TreeState &);
 
 } // namespace pass::tree

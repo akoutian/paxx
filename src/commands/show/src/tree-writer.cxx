@@ -18,7 +18,7 @@ template <typename Container, typename... Args> void AppendAll(Container &c, Arg
     ((c += args), ...);
 }
 
-auto BuildPrefix(const tree::TreeInfo &info)
+auto BuildPrefix(const tree::TreeState &info)
 {
     // four chars per indent plus four for the "corner" or "tee" and a space
     std::string result;
@@ -26,7 +26,7 @@ auto BuildPrefix(const tree::TreeInfo &info)
 
     for (size_t ii{0}; ii < info.depth; ++ii)
     {
-        if (info.pending.contains(ii))
+        if (info.open.contains(ii))
         {
             AppendAll(result, gl_bar, gl_space, gl_space, gl_space);
             continue;
@@ -34,7 +34,7 @@ auto BuildPrefix(const tree::TreeInfo &info)
         AppendAll(result, gl_space, gl_space, gl_space, gl_space);
     }
 
-    if (info.isLast)
+    if (info.last)
     {
         AppendAll(result, gl_corner, gl_dash, gl_dash, gl_space);
         return result;
@@ -46,7 +46,7 @@ auto BuildPrefix(const tree::TreeInfo &info)
 
 } // namespace
 
-void Write(std::ostream &out, const TreeInfo &info)
+void Write(std::ostream &out, const TreeState &info)
 {
     out << BuildPrefix(info) << info.name << gl_newline;
 }
