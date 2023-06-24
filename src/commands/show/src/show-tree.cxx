@@ -2,7 +2,7 @@
 
 #include "show-tree.h"
 
-#include "tree.h"
+#include "tree-writer.h"
 
 #include <algorithm>
 #include <iostream>
@@ -19,7 +19,7 @@ void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
         {
             info.name = i.path().filename().stem();
 
-            tree::Print(std::cout, info);
+            tree::Write(std::cout, info);
 
             if (!info.isLast)
             {
@@ -38,7 +38,7 @@ void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
         }
 
         info.name = i.path().filename().stem();
-        tree::Print(std::cout, info);
+        tree::Write(std::cout, info);
     };
 
     for (auto i = fs::begin(it); i != fs::end(it); /*see below*/)

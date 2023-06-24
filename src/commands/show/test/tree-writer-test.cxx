@@ -2,7 +2,7 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "src/tree.h"
+#include "src/tree-writer.h"
 
 #include "doctest/doctest.h"
 
@@ -14,9 +14,9 @@ namespace pass::tree
 namespace
 {
 
-void Print(const std::vector<TreeInfo> &entries, std::stringstream &out)
+void Write(const std::vector<TreeInfo> &entries, std::stringstream &out)
 {
-    std::for_each(entries.begin(), entries.end(), [&](const auto &i) { Print(out, i); });
+    std::for_each(entries.begin(), entries.end(), [&](const auto &i) { Write(out, i); });
 }
 
 } // namespace
@@ -27,7 +27,7 @@ TEST_CASE("Check Single Entry")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\224\342\224\200\342\224\200 one\n");
 }
@@ -41,7 +41,7 @@ TEST_CASE("Check Two Entries")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
                       "\342\224\224\342\224\200\342\224\200 two\n");
@@ -57,7 +57,7 @@ TEST_CASE("Check Three Entries")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
                       "\342\224\234\342\224\200\342\224\200 two\n"
@@ -74,7 +74,7 @@ TEST_CASE("Check Single Nested Entry")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
                       "\342\224\202   \342\224\224\342\224\200\342\224\200 two\n"
@@ -91,7 +91,7 @@ TEST_CASE("Check Single Nested Entry")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
                       "\342\224\202   \342\224\224\342\224\200\342\224\200 two\n"
@@ -115,7 +115,7 @@ TEST_CASE("Check Multiple Nested Entries")
 
     std::stringstream os;
 
-    Print(entries, os);
+    Write(entries, os);
 
     CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
                       "\342\224\202   \342\224\234\342\224\200\342\224\200 two\n"

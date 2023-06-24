@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "tree.h"
+#include "tree-writer.h"
+
 #include "symbols.h"
 
 #include <algorithm>
@@ -45,7 +46,7 @@ auto BuildPrefix(const tree::TreeInfo &info)
 
 } // namespace
 
-void Print(std::ostream &out, const TreeInfo &info)
+void Write(std::ostream &out, const TreeInfo &info)
 {
     out << BuildPrefix(info) << info.name << gl_newline;
 }

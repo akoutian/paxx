@@ -17,6 +17,6 @@ struct TreeInfo
     std::set<size_t> pending;
 };
 
-void Print(std::ostream &, const TreeInfo &);
+void Write(std::ostream &, const TreeInfo &);
 
 } // namespace pass::tree
