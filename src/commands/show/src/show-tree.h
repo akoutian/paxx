@@ -11,4 +11,6 @@ namespace fs = std::filesystem;
 
 void ShowTree(fs::recursive_directory_iterator);
 
+void ShowTree(fs::path);
+
 } // namespace pass

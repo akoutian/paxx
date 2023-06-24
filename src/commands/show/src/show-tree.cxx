@@ -11,80 +11,65 @@
 namespace pass
 {
 
-// Slow. This is O(n^2). TODO: improve.
-bool IsLast(const fs::path &path)
+void ShowTree(fs::directory_iterator it, tree::TreeInfo &info)
 {
-    if (!path.has_parent_path())
-    {
-        return true;
-    }
-
-    auto parent = fs::directory_iterator{path.parent_path()};
-
-    while (parent->path() != path)
-    {
-        ++parent;
-    }
-
-    auto next = std::next(parent);
-
-    if (next == end(parent))
-    {
-        return true;
-    }
-
-    const auto nextIsDot = next->path().filename().string().starts_with(".");
-
-    if (nextIsDot)
-    {
-        next = std::next(parent);
-        return next == end(parent);
-    }
-
-    return false;
-}
-
-void ShowTree(fs::recursive_directory_iterator it)
-{
-    std::cout << "Password Store\n";
-
-    std::set<size_t> pending;
-
     const auto handle = [&](const auto &i)
     {
-        const auto &path = i.path();
-
-        if (path.filename().string().starts_with("."))
+        if (i.is_directory())
         {
+            info.name = i.path().filename().stem();
+
+            tree::Print(std::cout, info);
+
+            if (!info.isLast)
+            {
+                info.pending.insert(info.depth);
+            }
+
+            ++info.depth;
+
+            ShowTree(fs::directory_iterator(i), info);
+
+            --info.depth;
+
+            info.pending.erase(info.depth);
+
             return;
         }
 
-        bool isLast = IsLast(path);
-        bool isDir = i.is_directory();
-
-        size_t depth = static_cast<size_t>(it.depth());
-
-        if (isDir)
-        {
-            pending.insert(depth);
-        }
-
-        if (isDir && isLast)
-        {
-            pending.erase(depth);
-        }
-
-        auto info = tree::TreeInfo{
-            .isLast{isLast},
-            .depth = depth,
-            .name = path.filename().stem(),
-            .pending = pending,
-        };
-
+        info.name = i.path().filename().stem();
         tree::Print(std::cout, info);
     };
 
-    std::for_each(begin(it), end(it), handle);
+    for (auto i = fs::begin(it); i != fs::end(it); /*see below*/)
+    {
+        // advancing the iterator invalidates its previous copies
+        // solution: use post-increment and dereference
+        auto entry = *(i++);
+
+        if (entry.path().filename().string().starts_with("."))
+        {
+            continue;
+        }
+
+        if (i == fs::end(it))
+        {
+            info.isLast = true;
+            handle(entry);
+        }
+        else
+        {
+            info.isLast = false;
+            handle(entry);
+        }
+    }
+}
+
+// TODO: Unit Tests. Consider mocking fs::directory iterator
+void ShowTree(fs::path p)
+{
+    tree::TreeInfo info{.name = p.filename()};
+    ShowTree(fs::directory_iterator(p), info);
 }
 
 } // namespace pass

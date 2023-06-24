@@ -60,19 +60,8 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
         return;
     }
 
-    std::error_code ec;
-    const auto it = fs::recursive_directory_iterator{*p, ec};
-
-    const auto ev = ec.value();
-    if (ev != 0)
-    {
-        ctx.status = ev;
-        ctx.message =
-            "Error: found password store but encountered filesystem error: " + ec.message();
-        return;
-    }
-
-    ShowTree(it);
+    std::cout << "Password Store\n";
+    ShowTree(*p);
 }
 
 } // namespace pass
