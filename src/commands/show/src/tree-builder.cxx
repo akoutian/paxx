@@ -41,11 +41,12 @@ void BuildTree(fs::directory_iterator it, tree::TreeState &state)
         tree::Write(std::cout, state);
     };
 
-    for (auto i = fs::begin(it); i != fs::end(it); /*see below*/)
+    for (auto i = fs::begin(it); i != fs::end(it);
+         /* deliberately not incrementing here, see below*/)
     {
         // advancing the iterator invalidates its previous copies
-        // solution: use post-increment and dereference
-        auto entry = *(i++);
+        // solution: use post-increment and dereference to get the next entry
+        const auto entry = *(i++);
 
         if (entry.path().filename().string().starts_with("."))
         {
