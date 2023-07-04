@@ -5,7 +5,7 @@
 #include "symbols.h"
 
 #include <algorithm>
-#include <string>
+#include <sstream>
 
 namespace pass::tree
 {
@@ -13,34 +13,27 @@ namespace pass::tree
 namespace
 {
 
-template <typename Container, typename... Args> void AppendAll(Container &c, Args... args)
-{
-    ((c += args), ...);
-}
-
 auto BuildPrefix(const tree::TreeState &info)
 {
-    // four chars per indent plus four for the "corner" or "tee" and a space
-    std::string result;
-    result.reserve(info.depth * (gl_indent_depth + 1));
+    std::stringstream result;
 
-    for (size_t ii{0}; ii < info.depth; ++ii)
+    for (size_t ii{}; ii < info.depth; ++ii)
     {
         if (info.open.contains(ii))
         {
-            AppendAll(result, gl_bar, gl_space, gl_space, gl_space);
+            result << gl_bar << gl_space << gl_space << gl_space;
             continue;
         }
-        AppendAll(result, gl_space, gl_space, gl_space, gl_space);
+        result << gl_space << gl_space << gl_space << gl_space;
     }
 
     if (info.last)
     {
-        AppendAll(result, gl_corner, gl_dash, gl_dash, gl_space);
+        result << gl_corner << gl_dash << gl_dash << gl_space;
         return result;
     }
 
-    AppendAll(result, gl_tee, gl_dash, gl_dash, gl_space);
+    result << gl_tee << gl_dash << gl_dash << gl_space;
     return result;
 }
 
@@ -48,7 +41,7 @@ auto BuildPrefix(const tree::TreeState &info)
 
 void Write(std::ostream &out, const TreeState &info)
 {
-    out << BuildPrefix(info) << info.name << gl_newline;
+    out << BuildPrefix(info).str() << info.name << gl_newline;
 }
 
 } // namespace pass::tree
