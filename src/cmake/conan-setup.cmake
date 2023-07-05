@@ -14,8 +14,12 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
+if(BUILD_TESTING)
+  list(APPEND BUILD_REQUIRES doctest/2.4.8)
+endif()
+
 conan_cmake_configure(
-  REQUIRES lyra/1.6.0 BUILD_REQUIRES doctest/2.4.8 GENERATORS
+  REQUIRES lyra/1.6.0 BUILD_REQUIRES ${BUILD_REQUIRES} GENERATORS
   cmake_find_package
 )
 
@@ -36,4 +40,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
 find_package(lyra)
-find_package(doctest)
+
+if(BUILD_TESTING)
+  find_package(doctest)
+endif()
