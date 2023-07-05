@@ -49,8 +49,6 @@ std::optional<fs::path> FindPasswordStore()
 
 void Show(cmn::Context &ctx, const cli::ShowArgs &args)
 {
-    (void)args;
-
     const auto p = FindPasswordStore();
 
     if (!p)
@@ -60,8 +58,31 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
         return;
     }
 
-    std::cout << "Password Store\n";
-    BuildTree(*p);
+    if (!args.name)
+    {
+        std::cout << "Password Store\n";
+        BuildTree(*p);
+        return;
+    }
+
+    const auto name = *args.name;
+    const auto path = *p / fs::path(name);
+
+    if (const auto entry = fs::directory_entry{path}; entry.is_directory())
+    {
+        std::cout << entry.path().filename().string() << '\n';
+        BuildTree(entry);
+        return;
+    }
+
+    if (const auto file = fs::directory_entry{path.string() + ".gpg"}; file.is_regular_file())
+    {
+        throw std::runtime_error("TODO: implement");
+    }
+
+    ctx.status = 1;
+    ctx.message = "Error: " + name + " is not in the password store.";
+    return;
 }
 
 } // namespace pass
