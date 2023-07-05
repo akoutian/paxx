@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 
-add_library(
-  show STATIC include/show/show.h src/tree.h src/tree.cxx src/show.cxx
-              src/types.h
-)
+add_library(show STATIC include/show/show.h src/tree.h src/tree.cxx src/show.cxx src/types.h)
 
 target_include_directories(show PUBLIC include)
 
 target_link_libraries(show common)
 
-add_pass_test(BIN_NAME show-test BIN_SOURCES test/tree-test.cxx)
-
-target_link_libraries(show-test show doctest::doctest)
+if(BUILD_TESTING)
+    add_pass_test(BIN_NAME show-test BIN_SOURCES test/tree-test.cxx)
+    target_link_libraries(show-test show doctest::doctest)
+endif()
