@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-add_library(common INTERFACE include/common/types.h include/common/args.h)
+add_library(common STATIC src/pgp-decryptor.cxx)
 
-target_include_directories(common INTERFACE include)
+target_include_directories(common PUBLIC include)
+
+target_link_libraries(common PRIVATE Gpgmepp)
