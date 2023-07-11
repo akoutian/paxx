@@ -45,26 +45,36 @@ void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
             ready = parsed.show;
         }
     };
-    auto command = lyra::command("show", makeReady);
+    auto show = lyra::command("show", makeReady);
+    auto ls = lyra::command("ls", makeReady);
+    auto list = lyra::command("list", makeReady);
 
     const auto clipOpt = [&](size_t i)
     {
         parsed.show.outputType = OutputType::CLIPBOARD;
         parsed.show.line = i;
     };
-    command.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
+    show.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
+    ls.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
+    list.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
 
     const auto qrCodeOpt = [&](size_t i)
     {
         parsed.show.outputType = OutputType::QRCODE;
         parsed.show.line = i;
     };
-    command.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
+    show.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
+    ls.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
+    list.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
 
     const auto name = [&](std::string s) { parsed.show.name = s; };
-    command.add_argument(lyra::arg(name, "name"));
+    show.add_argument(lyra::arg(name, "name"));
+    ls.add_argument(lyra::arg(name, "name"));
+    list.add_argument(lyra::arg(name, "name"));
 
-    cli.add_argument(command);
+    cli.add_argument(show);
+    cli.add_argument(ls);
+    cli.add_argument(list);
 }
 
 lyra::cli BuildCli(parsed::Args &parsed, ready::Args &ready)

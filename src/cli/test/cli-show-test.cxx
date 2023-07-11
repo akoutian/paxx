@@ -394,4 +394,36 @@ TEST_CASE("Check Show VId")
     CHECK(r.outputType == OutputType::QRCODE);
 }
 
+TEST_CASE("Check ls")
+{
+    parsed::Args parsed;
+    ready::Args ready;
+    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "ls"});
+
+    REQUIRE(result);
+    REQUIRE(std::holds_alternative<ShowArgs>(ready));
+
+    const auto r = std::get<ShowArgs>(ready);
+
+    CHECK(!r.line.has_value());
+    CHECK(!r.name.has_value());
+    CHECK(r.outputType == OutputType::STDOUT);
+}
+
+TEST_CASE("Check list")
+{
+    parsed::Args parsed;
+    ready::Args ready;
+    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "ls"});
+
+    REQUIRE(result);
+    REQUIRE(std::holds_alternative<ShowArgs>(ready));
+
+    const auto r = std::get<ShowArgs>(ready);
+
+    CHECK(!r.line.has_value());
+    CHECK(!r.name.has_value());
+    CHECK(r.outputType == OutputType::STDOUT);
+}
+
 } // namespace pass::cli
