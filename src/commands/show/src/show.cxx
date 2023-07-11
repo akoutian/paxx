@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "show/show.h"
+#include "common/args.h"
+#include "common/pgp-decryptor.h"
 
+#include "common/types.h"
 #include "tree-builder.h"
 
 #include <algorithm>
 #include <cstddef>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <optional>
 
@@ -45,6 +49,41 @@ std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
+void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::ShowArgs &args)
+{
+    if (args.line)
+    {
+        throw std::runtime_error("TODO: implement");
+    }
+
+    const auto fp = file.path().string();
+    std::ifstream ifs{fp};
+
+    if (!ifs.is_open())
+    {
+        ctx.status = 1;
+        ctx.message = "Error: failed to open file " + fp;
+        return;
+    }
+
+    std::stringstream ss;
+    ss << ifs.rdbuf();
+    cmn::PGPDecryptor decryptor;
+
+    switch (args.outputType)
+    {
+    case cli::OutputType::STDOUT:
+        decryptor.decrypt_file(ss, std::cout);
+        return;
+    case cli::OutputType::QRCODE:
+        throw std::runtime_error("TODO: implement");
+    case cli::OutputType::CLIPBOARD:
+        throw std::runtime_error("TODO: implement");
+    }
+
+    return;
+}
+
 } // namespace
 
 void Show(cmn::Context &ctx, const cli::ShowArgs &args)
@@ -77,7 +116,8 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
 
     if (const auto file = fs::directory_entry{path.string() + ".gpg"}; file.is_regular_file())
     {
-        throw std::runtime_error("TODO: implement");
+        HandleFile(ctx, file, args);
+        return;
     }
 
     ctx.status = 1;
