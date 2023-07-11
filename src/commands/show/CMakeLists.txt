@@ -1,21 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
-add_library(
-    show STATIC
-    include/show/show.h
-    src/show.cxx
-    src/symbols.h
-    src/tree-builder.cxx
-    src/tree-builder.h
-    src/tree-writer.cxx
-    src/tree-writer.h
-)
+add_library(show STATIC include/show/show.h src/show.cxx)
 
 target_include_directories(show PUBLIC include)
 
 target_link_libraries(show common)
-
-if(BUILD_TESTING)
-    add_pass_test(NAME show-test SOURCES test/tree-writer-test.cxx)
-    target_link_libraries(show-test show doctest::doctest)
-endif()

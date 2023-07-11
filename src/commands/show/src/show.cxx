@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "show/show.h"
+
 #include "common/args.h"
 #include "common/pgp-decryptor.h"
-
+#include "common/tree-builder.h"
 #include "common/types.h"
-#include "tree-builder.h"
 
 #include <algorithm>
 #include <cstddef>
