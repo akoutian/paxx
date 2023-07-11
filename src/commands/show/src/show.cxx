@@ -3,6 +3,7 @@
 #include "show/show.h"
 
 #include "common/args.h"
+#include "common/find-password-store.h"
 #include "common/pgp-decryptor.h"
 #include "common/tree-builder.h"
 #include "common/types.h"
@@ -21,33 +22,6 @@ namespace fs = std::filesystem;
 
 namespace
 {
-
-static std::string gl_passwordStoreName = "password-store";
-
-std::optional<fs::path> FindPasswordStore()
-{
-    fs::path result;
-
-    if (const auto h = std::getenv("HOME"))
-    {
-        const auto p = fs::path(h) /= "." + gl_passwordStoreName;
-        if (fs::exists(p))
-        {
-            result = p;
-        }
-    }
-
-    if (const auto h = std::getenv("PASSWORD_STORE_DIR"))
-    {
-        const auto p = fs::path(h);
-        if (fs::exists(p))
-        {
-            result = p;
-        }
-    }
-
-    return result.empty() ? std::nullopt : std::make_optional(result);
-}
 
 void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::ShowArgs &args)
 {
@@ -88,7 +62,7 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::S
 
 void Show(cmn::Context &ctx, const cli::ShowArgs &args)
 {
-    const auto p = FindPasswordStore();
+    const auto p = cmn::FindPasswordStore();
 
     if (!p)
     {
