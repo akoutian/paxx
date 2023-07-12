@@ -7,6 +7,6 @@ target_include_directories(common PUBLIC include)
 target_link_libraries(common PRIVATE Gpgmepp)
 
 if(BUILD_TESTING)
-    create_test(NAME show-test SOURCES test/tree-writer-test.cxx)
-    target_link_libraries(show-test show doctest::doctest)
+    create_test(NAME tree-writer-test SOURCES test/tree-writer-test.cxx)
+    target_link_libraries(tree-writer-test common doctest::doctest)
 endif()
