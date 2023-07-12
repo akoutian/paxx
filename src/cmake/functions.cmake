@@ -1,17 +1,20 @@
 # convenience function for creating tests
-function(add_pass_test)
+function(create_test)
   set(opts)
   set(oneValueArgs NAME)
   set(multiValueArgs SOURCES)
+
+  set(function "${CMAKE_CURRENT_FUNCTION}")
   cmake_parse_arguments(
-    ADD_PASS_TEST "${opts}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN}
+    "${function}" "${opts}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN}
   )
-  add_executable(${ADD_PASS_TEST_NAME} ${ADD_PASS_TEST_SOURCES})
-  target_include_directories(
-    ${ADD_PASS_TEST_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-  )
-  set(doctestArgs "-fc")
-  add_test(NAME ${ADD_PASS_TEST_NAME} COMMAND ${ADD_PASS_TEST_NAME}
-                                              ${doctestArgs}
-  )
+
+  set(name ${${function}_NAME})
+  set(sources ${${function}_SOURCES})
+  add_executable(${name} ${sources})
+
+  target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+
+  set(args "-fc")
+  add_test(NAME ${name} COMMAND ${name} ${args})
 endfunction()

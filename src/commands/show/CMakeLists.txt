@@ -9,6 +9,6 @@ target_include_directories(show PUBLIC include)
 
 target_link_libraries(show common)
 
-add_pass_test(NAME show-test SOURCES test/tree-test.cxx)
+create_test(NAME show-test SOURCES test/tree-test.cxx)
 
 target_link_libraries(show-test show doctest::doctest)

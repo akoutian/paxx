@@ -9,5 +9,5 @@ target_link_libraries(cli PUBLIC common info show bfg::lyra)
 add_executable(${PROJECT_NAME} src/main.cxx)
 target_link_libraries(${PROJECT_NAME} cli common)
 
-add_pass_test(NAME cli-test SOURCES test/cli-test.cxx)
+create_test(NAME cli-test SOURCES test/cli-test.cxx)
 target_link_libraries(cli-test cli doctest::doctest)
