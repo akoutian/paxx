@@ -8,5 +8,5 @@ target_link_libraries(common PRIVATE Gpgmepp)
 
 if(BUILD_TESTING)
     create_test(NAME tree-writer-test SOURCES test/tree-writer-test.cxx)
-    target_link_libraries(tree-writer-test common doctest::doctest)
+    target_link_libraries(tree-writer-test PRIVATE common doctest::doctest)
 endif()

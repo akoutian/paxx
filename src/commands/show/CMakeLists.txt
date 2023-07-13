@@ -4,4 +4,4 @@ add_library(show STATIC include/show/show.h src/show.cxx)
 
 target_include_directories(show PUBLIC include)
 
-target_link_libraries(show common)
+target_link_libraries(show PRIVATE common)

@@ -4,4 +4,4 @@ add_library(info STATIC include/info/info.h src/info.cxx)
 
 target_include_directories(info PUBLIC include)
 
-target_link_libraries(info common)
+target_link_libraries(info PRIVATE common)

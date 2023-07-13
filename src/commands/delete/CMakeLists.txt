@@ -4,4 +4,4 @@ add_library(delete STATIC include/delete/delete.h src/delete.cxx)
 
 target_include_directories(delete PUBLIC include)
 
-target_link_libraries(delete common)
+target_link_libraries(delete PRIVATE common)

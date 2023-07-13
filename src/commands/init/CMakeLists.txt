@@ -4,4 +4,4 @@ add_library(init STATIC include/init/init.h src/init.cxx)
 
 target_include_directories(init PUBLIC include)
 
-target_link_libraries(init common)
+target_link_libraries(init PRIVATE common)

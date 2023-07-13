@@ -4,4 +4,4 @@ add_library(generate STATIC include/generate/generate.h src/generate.cxx)
 
 target_include_directories(generate PUBLIC include)
 
-target_link_libraries(generate common)
+target_link_libraries(generate PRIVATE common)
