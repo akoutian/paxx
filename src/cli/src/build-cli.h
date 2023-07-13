@@ -11,6 +11,6 @@
 namespace pass::cli
 {
 
-lyra::cli BuildCli(parsed::Args &, ready::Args &);
+lyra::cli BuildCli(cmn::parsed::Args &, cmn::ready::Args &);
 
 } // namespace pass::cli

@@ -8,6 +8,6 @@
 namespace pass::cli
 {
 
-void HandleArgs(const ready::Args &, cmn::Context &);
+void HandleArgs(const cmn::ready::Args &, cmn::Context &);
 
 } // namespace pass::cli

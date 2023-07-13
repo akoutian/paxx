@@ -12,12 +12,12 @@ namespace pass::cli
 
 TEST_CASE("Check Help")
 {
-    parsed::Args parsed;
-    ready::Args ready;
+    cmn::parsed::Args parsed;
+    cmn::ready::Args ready;
     const auto result = BuildCli(parsed, ready).parse({"argv[0]", "help"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<HelpArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::HelpArgs>(ready));
 }
 
 } // namespace pass::cli

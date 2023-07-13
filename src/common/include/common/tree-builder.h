@@ -4,11 +4,11 @@
 
 #include <filesystem>
 
-namespace pass
+namespace pass::cmn
 {
 
 namespace fs = std::filesystem;
 
 void BuildTree(fs::path);
 
-} // namespace pass
+} // namespace pass::cmn

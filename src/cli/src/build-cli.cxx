@@ -7,7 +7,7 @@
 namespace pass::cli
 {
 
-void BuildHelp(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
+void BuildHelp(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
 {
     const auto makeReady = [&]([[maybe_unused]] const auto &g)
     {
@@ -21,7 +21,7 @@ void BuildHelp(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
     cli.add_argument(command);
 }
 
-void BuildVersion(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
+void BuildVersion(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
 {
 
     const auto makeReady = [&]([[maybe_unused]] const auto &g)
@@ -36,7 +36,7 @@ void BuildVersion(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
     cli.add_argument(command);
 }
 
-void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
+void BuildShow(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
 {
     const auto makeReady = [&]([[maybe_unused]] auto g)
     {
@@ -51,7 +51,7 @@ void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 
     const auto clipOpt = [&](size_t i)
     {
-        parsed.show.outputType = OutputType::CLIPBOARD;
+        parsed.show.outputType = cmn::OutputType::CLIPBOARD;
         parsed.show.line = i;
     };
     show.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
@@ -60,7 +60,7 @@ void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
 
     const auto qrCodeOpt = [&](size_t i)
     {
-        parsed.show.outputType = OutputType::QRCODE;
+        parsed.show.outputType = cmn::OutputType::QRCODE;
         parsed.show.line = i;
     };
     show.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
@@ -77,7 +77,7 @@ void BuildShow(lyra::cli &cli, parsed::Args &parsed, ready::Args &ready)
     cli.add_argument(list);
 }
 
-lyra::cli BuildCli(parsed::Args &parsed, ready::Args &ready)
+lyra::cli BuildCli(cmn::parsed::Args &parsed, cmn::ready::Args &ready)
 {
     auto cli = lyra::cli();
 

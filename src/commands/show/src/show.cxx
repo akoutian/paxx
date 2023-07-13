@@ -23,7 +23,7 @@ namespace fs = std::filesystem;
 namespace
 {
 
-void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::ShowArgs &args)
+void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::ShowArgs &args)
 {
     if (args.line)
     {
@@ -46,12 +46,12 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::S
 
     switch (args.outputType)
     {
-    case cli::OutputType::STDOUT:
+    case cmn::OutputType::STDOUT:
         decryptor.decrypt_file(ss, std::cout);
         return;
-    case cli::OutputType::QRCODE:
+    case cmn::OutputType::QRCODE:
         throw std::runtime_error("TODO: implement");
-    case cli::OutputType::CLIPBOARD:
+    case cmn::OutputType::CLIPBOARD:
         throw std::runtime_error("TODO: implement");
     }
 
@@ -60,7 +60,7 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cli::S
 
 } // namespace
 
-void Show(cmn::Context &ctx, const cli::ShowArgs &args)
+void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
 {
     const auto p = cmn::FindPasswordStore();
 
@@ -74,7 +74,7 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
     if (!args.name)
     {
         std::cout << "Password Store\n";
-        BuildTree(*p);
+        cmn::BuildTree(*p);
         return;
     }
 
@@ -84,7 +84,7 @@ void Show(cmn::Context &ctx, const cli::ShowArgs &args)
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
         std::cout << entry.path().filename().string() << '\n';
-        BuildTree(entry);
+        cmn::BuildTree(entry);
         return;
     }
 

@@ -8,8 +8,10 @@
 #include <iostream>
 #include <set>
 
-namespace pass
+namespace pass::cmn
 {
+
+namespace fs = std::filesystem;
 
 void BuildTree(fs::directory_iterator it, tree::TreeState &state)
 {
@@ -73,4 +75,4 @@ void BuildTree(fs::path p)
     BuildTree(fs::directory_iterator(p), info);
 }
 
-} // namespace pass
+} // namespace pass::cmn

@@ -6,7 +6,7 @@
 #include <string>
 #include <variant>
 
-namespace pass::cli
+namespace pass::cmn
 {
 
 enum struct OutputType
@@ -50,4 +50,4 @@ using Args = std::variant<std::monostate, HelpArgs, ShowArgs, VersionArgs>;
 
 } // namespace ready
 
-} // namespace pass::cli
+} // namespace pass::cmn

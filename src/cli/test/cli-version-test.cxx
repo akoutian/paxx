@@ -12,12 +12,12 @@ namespace pass::cli
 
 TEST_CASE("Check Version")
 {
-    parsed::Args parsed;
-    ready::Args ready;
+    cmn::parsed::Args parsed;
+    cmn::ready::Args ready;
     const auto result = BuildCli(parsed, ready).parse({"argv[0]", "version"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<VersionArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::VersionArgs>(ready));
 }
 
 } // namespace pass::cli

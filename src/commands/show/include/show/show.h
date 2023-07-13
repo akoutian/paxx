@@ -8,6 +8,6 @@
 namespace pass
 {
 
-void Show(cmn::Context &, const cli::ShowArgs &);
+void Show(cmn::Context &, const cmn::ShowArgs &);
 
 }

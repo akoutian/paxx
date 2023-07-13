@@ -8,10 +8,10 @@
 
 int main(int argc, char **argv)
 {
-    pass::cli::parsed::Args parsed;
-    pass::cli::ready::Args ready;
+    pass::cmn::parsed::Args parsed;
+    pass::cmn::ready::Args ready;
 
-    const auto result = BuildCli(parsed, ready).parse({argc, argv});
+    const auto result = pass::cli::BuildCli(parsed, ready).parse({argc, argv});
 
     if (!result)
     {
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     }
 
     pass::cmn::Context ctx;
-    HandleArgs(ready, ctx);
+    pass::cli::HandleArgs(ready, ctx);
 
     if (ctx.status != 0 && ctx.message)
     {
