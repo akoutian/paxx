@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 add_library(cli STATIC src/build-cli.cxx src/handle-args.cxx)
-target_link_libraries(cli PRIVATE common info show bfg::lyra)
+target_link_libraries(cli PRIVATE common info show delete bfg::lyra)
 
 add_executable(${PROJECT_NAME} src/main.cxx)
 target_link_libraries(${PROJECT_NAME} cli common bfg::lyra)

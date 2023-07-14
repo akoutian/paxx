@@ -16,12 +16,15 @@ void Version([[maybe_unused]] cmn::Context &ctx)
     std::cout << "╰───────────────────────────────────────────╯" << std::endl;
 }
 
+// TODO: rename "pass" to "paxx" here
 void Help([[maybe_unused]] cmn::Context &ctx)
 {
     Version(ctx);
 
     std::cout << "\n";
     std::cout << "Usage:\n";
+    std::cout << "    pass rm [--recursive,-r] [--force,-f] pass-name\n";
+    std::cout << "        Remove existing password or directory, optionally forcefully.\n";
     std::cout << "    pass help\n";
     std::cout << "        Show this text.\n";
     std::cout << "    pass version\n";

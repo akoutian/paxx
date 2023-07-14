@@ -31,6 +31,13 @@ struct VersionArgs
 {
 };
 
+struct DeleteArgs
+{
+    std::string name;
+    bool force{};
+    bool recursive{};
+};
+
 namespace parsed
 {
 
@@ -39,6 +46,7 @@ struct Args
     HelpArgs help;
     ShowArgs show;
     VersionArgs version;
+    DeleteArgs del;
 };
 
 } // namespace parsed
@@ -46,7 +54,7 @@ struct Args
 namespace ready
 {
 
-using Args = std::variant<std::monostate, HelpArgs, ShowArgs, VersionArgs>;
+using Args = std::variant<std::monostate, HelpArgs, ShowArgs, VersionArgs, DeleteArgs>;
 
 } // namespace ready
 

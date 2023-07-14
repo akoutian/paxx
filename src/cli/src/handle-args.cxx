@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "handle-args.h"
+#include "delete/delete.h"
 #include "info/info.h"
 #include "show/show.h"
 
@@ -22,6 +23,11 @@ void Handle(const cmn::ShowArgs &args, Context &ctx)
 void Handle([[maybe_unused]] const cmn::VersionArgs &args, Context &ctx)
 {
     pass::Version(ctx);
+}
+
+void Handle(const cmn::DeleteArgs &args, Context &ctx)
+{
+    pass::Delete(ctx, args);
 }
 
 void Handle([[maybe_unused]] std::monostate m, [[maybe_unused]] Context &ctx)

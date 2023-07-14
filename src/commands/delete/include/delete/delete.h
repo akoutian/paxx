@@ -2,11 +2,12 @@
 
 #pragma once
 
+#include "common/args.h"
 #include "common/types.h"
 
 namespace pass
 {
 
-void Delete(cmn::Context &);
+void Delete(cmn::Context &, const cmn::DeleteArgs &args);
 
 }
