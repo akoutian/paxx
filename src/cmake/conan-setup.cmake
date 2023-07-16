@@ -14,7 +14,13 @@ if(BUILD_TESTING)
 endif()
 
 conan_cmake_configure(
-    REQUIRES lyra/1.6.0 BUILD_REQUIRES ${BUILD_REQUIRES} GENERATORS cmake_find_package
+    REQUIRES
+    qr-code-generator/1.8.0
+    lyra/1.6.0
+    BUILD_REQUIRES
+    ${BUILD_REQUIRES}
+    GENERATORS
+    cmake_find_package
 )
 
 conan_cmake_autodetect(settings)
@@ -34,6 +40,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
 find_package(lyra REQUIRED)
+find_package(qr-code-generator REQUIRED)
 
 if(BUILD_TESTING)
     find_package(doctest REQUIRED)
