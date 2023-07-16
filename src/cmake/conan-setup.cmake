@@ -33,8 +33,8 @@ conan_cmake_install(
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
-find_package(lyra)
+find_package(lyra REQUIRED)
 
 if(BUILD_TESTING)
-    find_package(doctest)
+    find_package(doctest REQUIRED)
 endif()
