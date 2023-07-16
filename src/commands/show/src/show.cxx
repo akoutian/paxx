@@ -44,10 +44,13 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
     ss << ifs.rdbuf();
     cmn::PGPDecryptor decryptor;
 
+    std::stringstream ps;
+    decryptor.decrypt_file(ss, ps);
+
     switch (args.outputType)
     {
     case cmn::OutputType::STDOUT:
-        decryptor.decrypt_file(ss, std::cout);
+        std::cout << ps.str();
         return;
     case cmn::OutputType::QRCODE:
         throw std::runtime_error("TODO: implement");
