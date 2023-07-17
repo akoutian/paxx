@@ -7,6 +7,7 @@
 #include "common/pgp-decryptor.h"
 #include "common/tree-builder.h"
 #include "common/types.h"
+#include "qr.h"
 
 #include <algorithm>
 #include <cstddef>
@@ -27,7 +28,6 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
 {
     if (args.line)
     {
-        throw std::runtime_error("TODO: implement");
     }
 
     const auto fp = file.path().string();
@@ -52,8 +52,11 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
     case cmn::OutputType::STDOUT:
         std::cout << ps.str();
         return;
-    case cmn::OutputType::QRCODE:
-        throw std::runtime_error("TODO: implement");
+    case cmn::OutputType::QRCODE: {
+        const auto qr = Qr(ps.str());
+        WriteQr(qr, std::cout);
+        return;
+    }
     case cmn::OutputType::CLIPBOARD:
         throw std::runtime_error("TODO: implement");
     }
