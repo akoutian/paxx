@@ -24,11 +24,74 @@ namespace fs = std::filesystem;
 namespace
 {
 
+std::stringstream Decrypt(const std::ifstream &ifs)
+{
+    std::stringstream cipher;
+    cipher << ifs.rdbuf();
+    cmn::PGPDecryptor decryptor;
+
+    std::stringstream plain;
+    decryptor.decrypt_file(cipher, plain);
+
+    return plain;
+}
+
+void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
+                      std::stringstream &plain, cmn::Context &ctx)
+{
+    if (lineNumber)
+    {
+        const auto n = *lineNumber;
+
+        std::string line;
+        for (size_t ii{1}; std::getline(plain, line); ++ii)
+        {
+            // mimic legacy "pass": both zero and one give the first line
+            if (ii == n || n == 0)
+            {
+                result = line;
+                break;
+            }
+        }
+
+        if (plain.eof())
+        {
+            ctx.status = 1;
+            ctx.message = "There is no password on line " + std::to_string(n) + ".";
+            return;
+        }
+
+        // std::getline strips the delimiter (newline in this case) so we put it back in
+        if (!plain.fail())
+        {
+            result.push_back('\n');
+        }
+    }
+    else
+    {
+        result = plain.str();
+    }
+}
+
+void Output(const cmn::ShowArgs &args, const std::string &result)
+{
+    switch (args.outputType)
+    {
+    case cmn::OutputType::STDOUT:
+        std::cout << result;
+        return;
+    case cmn::OutputType::QRCODE: {
+        const auto qr = Qr(result);
+        WriteQr(qr, std::cout);
+        return;
+    }
+    case cmn::OutputType::CLIPBOARD:
+        throw std::runtime_error("TODO: implement");
+    }
+}
+
 void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::ShowArgs &args)
 {
-    if (args.line)
-    {
-    }
 
     const auto fp = file.path().string();
     std::ifstream ifs{fp};
@@ -40,28 +103,17 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    std::stringstream ss;
-    ss << ifs.rdbuf();
-    cmn::PGPDecryptor decryptor;
+    auto plain = Decrypt(ifs);
 
-    std::stringstream ps;
-    decryptor.decrypt_file(ss, ps);
+    std::string result;
 
-    switch (args.outputType)
+    HandleLineNumber(result, args.line, plain, ctx);
+    if (ctx.status != 0)
     {
-    case cmn::OutputType::STDOUT:
-        std::cout << ps.str();
         return;
-    case cmn::OutputType::QRCODE: {
-        const auto qr = Qr(ps.str());
-        WriteQr(qr, std::cout);
-        return;
-    }
-    case cmn::OutputType::CLIPBOARD:
-        throw std::runtime_error("TODO: implement");
     }
 
-    return;
+    Output(args, result);
 }
 
 } // namespace
