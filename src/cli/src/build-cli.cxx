@@ -49,23 +49,23 @@ void BuildShow(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &read
     auto ls = lyra::command("ls", makeReady);
     auto list = lyra::command("list", makeReady);
 
-    const auto clipOpt = [&](size_t i)
-    {
-        parsed.show.outputType = cmn::OutputType::CLIPBOARD;
-        parsed.show.line = i;
-    };
-    show.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
-    ls.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
-    list.add_argument(lyra::opt(clipOpt, "clipVal").name("-c").name("--clip"));
+    const auto clipOpt = [&]([[maybe_unused]] bool i)
+    { parsed.show.outputType = cmn::OutputType::CLIPBOARD; };
+    show.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
+    ls.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
+    list.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
 
-    const auto qrCodeOpt = [&](size_t i)
-    {
-        parsed.show.outputType = cmn::OutputType::QRCODE;
-        parsed.show.line = i;
-    };
-    show.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
-    ls.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
-    list.add_argument(lyra::opt(qrCodeOpt, "qrCodeVal").name("-q").name("--qrcode"));
+    const auto qrCodeOpt = [&]([[maybe_unused]] bool i)
+    { parsed.show.outputType = cmn::OutputType::QRCODE; };
+    show.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
+    ls.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
+    list.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
+
+    const auto lineOpt = [&](size_t i) { parsed.show.line = i; };
+    const auto hint = "line number";
+    show.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
+    ls.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
+    list.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
 
     const auto name = [&](std::string s) { parsed.show.name = s; };
     show.add_argument(lyra::arg(name, "name"));
