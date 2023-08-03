@@ -15,8 +15,9 @@ endif()
 
 conan_cmake_configure(
     REQUIRES
-    qr-code-generator/1.8.0
+    dacap-clip/1.5
     lyra/1.6.0
+    qr-code-generator/1.8.0
     BUILD_REQUIRES
     ${BUILD_REQUIRES}
     GENERATORS
@@ -39,6 +40,7 @@ conan_cmake_install(
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
+find_package(clip REQUIRED)
 find_package(lyra REQUIRED)
 find_package(qr-code-generator REQUIRED)
 

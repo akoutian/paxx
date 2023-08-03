@@ -8,6 +8,7 @@
 #include "common/tree-builder.h"
 #include "common/types.h"
 #include "qr.h"
+#include <clip.h>
 
 #include <algorithm>
 #include <cstddef>
@@ -39,11 +40,11 @@ std::stringstream Decrypt(const std::ifstream &ifs)
 void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
                       std::stringstream &plain, cmn::Context &ctx)
 {
+    std::string line;
     if (lineNumber)
     {
         const auto n = *lineNumber;
 
-        std::string line;
         for (size_t ii{1}; std::getline(plain, line); ++ii)
         {
             // mimic legacy "pass": both zero and one give the first line
@@ -60,20 +61,26 @@ void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
             ctx.message = "There is no password on line " + std::to_string(n) + ".";
             return;
         }
-
-        // std::getline strips the delimiter (newline in this case) so we put it back in
-        if (!plain.fail())
-        {
-            result.push_back('\n');
-        }
     }
     else
     {
-        result = plain.str();
+        std::getline(plain, line);
+        result = line;
+    }
+
+    // std::getline strips the delimiter (newline in this case) so we put it back in
+    if (!plain.fail())
+    {
+        result.push_back('\n');
+    }
+    else
+    {
+        ctx.status = 1;
+        ctx.message = "Error while reading plaintext stream";
     }
 }
 
-void Output(const cmn::ShowArgs &args, const std::string &result)
+void Output(const cmn::ShowArgs &args, const std::string &result, cmn::Context &ctx)
 {
     switch (args.outputType)
     {
@@ -85,8 +92,15 @@ void Output(const cmn::ShowArgs &args, const std::string &result)
         WriteQr(qr, std::cout);
         return;
     }
-    case cmn::OutputType::CLIPBOARD:
-        throw std::runtime_error("TODO: implement");
+    case cmn::OutputType::CLIPBOARD: {
+        const auto success = clip::set_text(result);
+        if (!success)
+        {
+            ctx.status = 1;
+            ctx.message = "Failed to copy password to clipboard.";
+            return;
+        }
+    }
     }
 }
 
@@ -113,7 +127,7 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    Output(args, result);
+    Output(args, result, ctx);
 }
 
 } // namespace
