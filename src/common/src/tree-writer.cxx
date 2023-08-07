@@ -13,6 +13,13 @@ namespace pass::tree
 namespace
 {
 
+using cmn::gl_bar;
+using cmn::gl_corner;
+using cmn::gl_dash;
+using cmn::gl_newline;
+using cmn::gl_space;
+using cmn::gl_tee;
+
 auto BuildPrefix(const tree::TreeState &info)
 {
     std::stringstream result;
@@ -21,19 +28,19 @@ auto BuildPrefix(const tree::TreeState &info)
     {
         if (info.open.contains(ii))
         {
-            result << cmn::gl_bar << cmn::gl_space << cmn::gl_space << cmn::gl_space;
+            result << gl_bar << gl_space << gl_space << gl_space;
             continue;
         }
-        result << cmn::gl_space << cmn::gl_space << cmn::gl_space << cmn::gl_space;
+        result << gl_space << gl_space << gl_space << gl_space;
     }
 
     if (info.last)
     {
-        result << cmn::gl_corner << cmn::gl_dash << cmn::gl_dash << cmn::gl_space;
+        result << gl_corner << gl_dash << gl_dash << gl_space;
         return result;
     }
 
-    result << cmn::gl_tee << cmn::gl_dash << cmn::gl_dash << cmn::gl_space;
+    result << gl_tee << gl_dash << gl_dash << gl_space;
     return result;
 }
 
@@ -41,7 +48,7 @@ auto BuildPrefix(const tree::TreeState &info)
 
 void Write(std::ostream &out, const TreeState &info)
 {
-    out << BuildPrefix(info).str() << info.name << cmn::gl_newline;
+    out << BuildPrefix(info).str() << info.name << gl_newline;
 }
 
 } // namespace pass::tree
