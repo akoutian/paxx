@@ -11,6 +11,33 @@
 namespace pass::cmn
 {
 
+void BuildTree(fs::directory_iterator it, tree::TreeState &state);
+
+namespace
+{
+
+void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
+{
+    state.name = e.path().filename().stem();
+
+    tree::Write(std::cout, state);
+
+    if (!state.last)
+    {
+        state.open.insert(state.depth);
+    }
+
+    ++state.depth;
+
+    BuildTree(fs::directory_iterator(e), state);
+
+    --state.depth;
+
+    state.open.erase(state.depth);
+}
+
+} // namespace
+
 namespace fs = std::filesystem;
 
 void BuildTree(fs::directory_iterator it, tree::TreeState &state)
@@ -19,23 +46,7 @@ void BuildTree(fs::directory_iterator it, tree::TreeState &state)
     {
         if (i.is_directory())
         {
-            state.name = i.path().filename().stem();
-
-            tree::Write(std::cout, state);
-
-            if (!state.last)
-            {
-                state.open.insert(state.depth);
-            }
-
-            ++state.depth;
-
-            BuildTree(fs::directory_iterator(i), state);
-
-            --state.depth;
-
-            state.open.erase(state.depth);
-
+            HandleDirectory(i, state);
             return;
         }
 
