@@ -5,10 +5,10 @@ project(paxx LANGUAGES CXX)
 include(CTest)
 
 include(cmake/compiler-options.cmake)
-include(cmake/conan-setup.cmake)
 include(cmake/configuration.cmake)
 include(cmake/functions.cmake)
 include(cmake/system-dependencies.cmake)
+include(cmake/conan-setup.cmake)
 
 add_subdirectory(cli)
 add_subdirectory(commands)
