@@ -2,9 +2,22 @@ cmake_minimum_required(VERSION 3.20)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
-         "${CMAKE_BINARY_DIR}/conan.cmake" TLS_VERIFY ON
+    file(
+        DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
+        "${CMAKE_BINARY_DIR}/conan.cmake"
+        TLS_VERIFY ON
+        STATUS DOWNLOAD_STATUS
     )
+
+    list(GET DOWNLOAD_STATUS 0 STATUS_CODE)
+    list(GET DOWNLOAD_STATUS 1 ERROR_MESSAGE)
+
+    if(${STATUS_CODE} EQUAL 0)
+        message(STATUS "Download completed successfully.")
+    else()
+        # Exit CMake if the download failed, printing the error message.
+        message(FATAL_ERROR "Error occurred during download: ${ERROR_MESSAGE}")
+    endif()
 endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
