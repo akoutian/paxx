@@ -16,3 +16,5 @@ if(BUILD_TESTING)
     create_test(NAME cli-version-test SOURCES test/cli-version-test.cxx)
     target_link_libraries(cli-version-test common cli doctest::doctest bfg::lyra)
 endif()
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
