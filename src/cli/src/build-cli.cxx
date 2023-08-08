@@ -4,7 +4,7 @@
 
 #include <lyra/lyra.hpp>
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 void BuildHelp(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
@@ -122,4 +122,4 @@ lyra::cli BuildCli(cmn::parsed::Args &parsed, cmn::ready::Args &ready)
     return cli;
 }
 
-} // namespace pass::cli
+} // namespace paxx::cli

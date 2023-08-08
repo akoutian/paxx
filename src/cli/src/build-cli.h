@@ -8,9 +8,9 @@
 #include <functional>
 #include <lyra/lyra.hpp>
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 lyra::cli BuildCli(cmn::parsed::Args &, cmn::ready::Args &);
 
-} // namespace pass::cli
+} // namespace paxx::cli

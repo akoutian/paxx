@@ -8,7 +8,7 @@
 
 #include <sstream>
 
-namespace pass::tree
+namespace paxx::tree
 {
 
 namespace
@@ -129,4 +129,4 @@ TEST_CASE("Check Multiple Nested Entries")
                       "    \342\224\224\342\224\200\342\224\200 ten\n");
 }
 
-} // namespace pass::tree
+} // namespace paxx::tree

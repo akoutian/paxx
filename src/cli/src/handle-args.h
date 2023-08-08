@@ -5,9 +5,9 @@
 #include "common/args.h"
 #include "common/types.h"
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 void HandleArgs(const cmn::ready::Args &, cmn::Context &);
 
-} // namespace pass::cli
+} // namespace paxx::cli

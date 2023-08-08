@@ -7,7 +7,7 @@
 #include <memory>
 #include <sstream>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 class PGPDecryptor
@@ -21,4 +21,4 @@ class PGPDecryptor
     std::unique_ptr<GpgME::Context> m_ctx;
 };
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

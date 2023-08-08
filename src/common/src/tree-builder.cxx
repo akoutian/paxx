@@ -8,7 +8,7 @@
 #include <iostream>
 #include <set>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 void BuildTree(fs::directory_iterator it, tree::TreeState &state);
@@ -86,4 +86,4 @@ void BuildTree(fs::path p)
     BuildTree(fs::directory_iterator(p), info);
 }
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

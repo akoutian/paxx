@@ -10,7 +10,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace pass
+namespace paxx
 {
 
 namespace fs = std::filesystem;
@@ -107,4 +107,4 @@ void Delete(cmn::Context &ctx, const cmn::DeleteArgs &args)
     return;
 }
 
-} // namespace pass
+} // namespace paxx

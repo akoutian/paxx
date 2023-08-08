@@ -5,7 +5,7 @@
 #include <optional>
 #include <string>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 struct Context
@@ -14,4 +14,4 @@ struct Context
     std::optional<std::string> message{};
 };
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

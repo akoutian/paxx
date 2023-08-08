@@ -7,7 +7,7 @@
 #include <doctest/doctest.h>
 #include <lyra/lyra.hpp>
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 TEST_CASE("Check Help")
@@ -20,4 +20,4 @@ TEST_CASE("Check Help")
     REQUIRE(std::holds_alternative<cmn::HelpArgs>(ready));
 }
 
-} // namespace pass::cli
+} // namespace paxx::cli

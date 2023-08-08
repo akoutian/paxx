@@ -4,7 +4,7 @@
 
 #include <qrcodegen/qrcodegen.hpp>
 
-namespace pass
+namespace paxx
 {
 
 using qrcodegen::QrCode;
@@ -13,4 +13,4 @@ QrCode Qr(const std::string &text);
 
 void WriteQr(const QrCode &, std::ostream &);
 
-} // namespace pass
+} // namespace paxx

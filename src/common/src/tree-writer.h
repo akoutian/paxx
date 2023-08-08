@@ -6,7 +6,7 @@
 #include <ostream>
 #include <set>
 
-namespace pass::tree
+namespace paxx::tree
 {
 
 struct TreeState
@@ -21,4 +21,4 @@ struct TreeState
 
 void Write(std::ostream &, const TreeState &);
 
-} // namespace pass::tree
+} // namespace paxx::tree

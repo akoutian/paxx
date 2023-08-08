@@ -8,10 +8,10 @@
 
 int main(int argc, char **argv)
 {
-    pass::cmn::parsed::Args parsed;
-    pass::cmn::ready::Args ready;
+    paxx::cmn::parsed::Args parsed;
+    paxx::cmn::ready::Args ready;
 
-    const auto result = pass::cli::BuildCli(parsed, ready).parse({argc, argv});
+    const auto result = paxx::cli::BuildCli(parsed, ready).parse({argc, argv});
 
     if (!result)
     {
@@ -19,8 +19,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    pass::cmn::Context ctx;
-    pass::cli::HandleArgs(ready, ctx);
+    paxx::cmn::Context ctx;
+    paxx::cli::HandleArgs(ready, ctx);
 
     if (ctx.status != 0 && ctx.message)
     {

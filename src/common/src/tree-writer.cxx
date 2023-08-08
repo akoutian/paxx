@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <sstream>
 
-namespace pass::tree
+namespace paxx::tree
 {
 
 namespace
@@ -51,4 +51,4 @@ void Write(std::ostream &out, const TreeState &info)
     out << BuildPrefix(info).str() << info.name << gl_newline;
 }
 
-} // namespace pass::tree
+} // namespace paxx::tree

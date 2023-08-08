@@ -5,7 +5,7 @@
 #include "common/args.h"
 #include "common/types.h"
 
-namespace pass
+namespace paxx
 {
 
 void Delete(cmn::Context &, const cmn::DeleteArgs &args);

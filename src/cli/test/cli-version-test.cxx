@@ -7,7 +7,7 @@
 #include <doctest/doctest.h>
 #include <lyra/lyra.hpp>
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 TEST_CASE("Check Version")
@@ -20,4 +20,4 @@ TEST_CASE("Check Version")
     REQUIRE(std::holds_alternative<cmn::VersionArgs>(ready));
 }
 
-} // namespace pass::cli
+} // namespace paxx::cli

@@ -6,7 +6,7 @@
 #include <optional>
 #include <string>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 namespace fs = std::filesystem;
@@ -38,4 +38,4 @@ inline std::optional<fs::path> FindPasswordStore()
     return result.empty() ? std::nullopt : std::make_optional(result);
 }
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

@@ -5,7 +5,7 @@
 #include "common/args.h"
 #include "common/types.h"
 
-namespace pass
+namespace paxx
 {
 
 void Show(cmn::Context &, const cmn::ShowArgs &);

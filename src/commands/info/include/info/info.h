@@ -4,11 +4,11 @@
 
 #include "common/types.h"
 
-namespace pass
+namespace paxx
 {
 
 void Version(cmn::Context &);
 
 void Help(cmn::Context &);
 
-} // namespace pass
+} // namespace paxx

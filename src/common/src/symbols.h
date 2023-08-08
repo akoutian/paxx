@@ -4,7 +4,7 @@
 
 #include <cstddef>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 static constexpr auto gl_bar = "\342\224\202";
@@ -14,4 +14,4 @@ static constexpr auto gl_newline = '\n';
 static constexpr auto gl_space = ' ';
 static constexpr auto gl_tee = "\342\224\234";
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

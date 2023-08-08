@@ -5,29 +5,29 @@
 #include "info/info.h"
 #include "show/show.h"
 
-namespace pass::cli
+namespace paxx::cli
 {
 
-using pass::cmn::Context;
+using paxx::cmn::Context;
 
 void Handle([[maybe_unused]] const cmn::HelpArgs &args, Context &ctx)
 {
-    pass::Help(ctx);
+    paxx::Help(ctx);
 }
 
 void Handle(const cmn::ShowArgs &args, Context &ctx)
 {
-    pass::Show(ctx, args);
+    paxx::Show(ctx, args);
 }
 
 void Handle([[maybe_unused]] const cmn::VersionArgs &args, Context &ctx)
 {
-    pass::Version(ctx);
+    paxx::Version(ctx);
 }
 
 void Handle(const cmn::DeleteArgs &args, Context &ctx)
 {
-    pass::Delete(ctx, args);
+    paxx::Delete(ctx, args);
 }
 
 void Handle([[maybe_unused]] std::monostate m, [[maybe_unused]] Context &ctx)
@@ -39,4 +39,4 @@ void HandleArgs(const cmn::ready::Args &args, Context &ctx)
     std::visit([&](auto &a) { Handle(a, ctx); }, args);
 }
 
-} // namespace pass::cli
+} // namespace paxx::cli

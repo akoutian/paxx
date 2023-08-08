@@ -17,7 +17,7 @@
 #include <iostream>
 #include <optional>
 
-namespace pass
+namespace paxx
 {
 
 namespace fs = std::filesystem;
@@ -171,4 +171,4 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
     return;
 }
 
-} // namespace pass
+} // namespace paxx

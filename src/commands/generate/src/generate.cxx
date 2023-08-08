@@ -4,7 +4,7 @@
 
 #include <stdexcept>
 
-namespace pass
+namespace paxx
 {
 
 void Generate([[maybe_unused]] cmn::Context &ctx)
@@ -12,4 +12,4 @@ void Generate([[maybe_unused]] cmn::Context &ctx)
     throw std::runtime_error("TODO: implement");
 }
 
-} // namespace pass
+} // namespace paxx

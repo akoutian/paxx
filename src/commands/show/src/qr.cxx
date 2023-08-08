@@ -4,7 +4,7 @@
 
 #include <ostream>
 
-namespace pass
+namespace paxx
 {
 
 QrCode Qr(const std::string &text)
@@ -32,4 +32,4 @@ void WriteQr(const QrCode &qr, std::ostream &out)
     out << std::endl;
 }
 
-} // namespace pass
+} // namespace paxx

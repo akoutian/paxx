@@ -9,7 +9,7 @@
 #include <cassert>
 #include <stdexcept>
 
-namespace pass::cmn
+namespace paxx::cmn
 {
 
 PGPDecryptor::PGPDecryptor()
@@ -44,4 +44,4 @@ void PGPDecryptor::decrypt_file(const std::stringstream &in, std::ostream &out)
     out << plain.toString();
 }
 
-} // namespace pass::cmn
+} // namespace paxx::cmn

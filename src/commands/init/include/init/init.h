@@ -4,7 +4,7 @@
 
 #include "common/types.h"
 
-namespace pass
+namespace paxx
 {
 
 void Init(cmn::Context &);

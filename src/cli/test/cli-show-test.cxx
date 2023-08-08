@@ -7,7 +7,7 @@
 #include <doctest/doctest.h>
 #include <lyra/lyra.hpp>
 
-namespace pass::cli
+namespace paxx::cli
 {
 
 TEST_CASE("Check Show Ia")
@@ -356,4 +356,4 @@ TEST_CASE("Check Show IVf")
     CHECK(r.outputType == cmn::OutputType::CLIPBOARD);
 }
 
-} // namespace pass::cli
+} // namespace paxx::cli

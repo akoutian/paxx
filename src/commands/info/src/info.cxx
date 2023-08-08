@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace pass
+namespace paxx
 {
 
 void Version([[maybe_unused]] cmn::Context &ctx)
@@ -35,4 +35,4 @@ void Help([[maybe_unused]] cmn::Context &ctx)
     std::cout << "        Show version information." << std::endl;
 }
 
-} // namespace pass
+} // namespace paxx
