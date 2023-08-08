@@ -36,6 +36,12 @@ void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
     state.stack.erase(state.depth);
 }
 
+void HandleFile(const fs::directory_entry &e, tree::TreeState &state)
+{
+    state.name = e.path().filename().stem();
+    tree::Write(std::cout, state);
+}
+
 } // namespace
 
 namespace fs = std::filesystem;
@@ -50,8 +56,7 @@ void BuildTree(fs::directory_iterator it, tree::TreeState &state)
             return;
         }
 
-        state.name = i.path().filename().stem();
-        tree::Write(std::cout, state);
+        HandleFile(i, state);
     };
 
     for (auto i = fs::begin(it); i != fs::end(it);
