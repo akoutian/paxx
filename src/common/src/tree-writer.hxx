@@ -16,7 +16,7 @@ struct TreeState
     size_t depth{0};
     std::string name;
     // depths of directories currently on the stack
-    std::set<size_t> open;
+    std::set<size_t> stack;
 };
 
 void Write(std::ostream &, const TreeState &);

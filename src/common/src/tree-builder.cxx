@@ -24,7 +24,7 @@ void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
 
     if (!state.last)
     {
-        state.open.insert(state.depth);
+        state.stack.insert(state.depth);
     }
 
     ++state.depth;
@@ -33,7 +33,7 @@ void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
 
     --state.depth;
 
-    state.open.erase(state.depth);
+    state.stack.erase(state.depth);
 }
 
 } // namespace

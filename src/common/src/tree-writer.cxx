@@ -26,7 +26,7 @@ auto BuildPrefix(const tree::TreeState &info)
 
     for (size_t ii{}; ii < info.depth; ++ii)
     {
-        if (info.open.contains(ii))
+        if (info.stack.contains(ii))
         {
             result << gl_bar << gl_space << gl_space << gl_space;
             continue;

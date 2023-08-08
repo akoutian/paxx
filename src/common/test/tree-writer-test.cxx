@@ -23,7 +23,7 @@ void Write(const std::vector<TreeState> &entries, std::stringstream &out)
 
 TEST_CASE("Check Single Entry")
 {
-    std::vector<TreeState> entries{{.last = true, .name{"one"}, .open{}}};
+    std::vector<TreeState> entries{{.last = true, .name{"one"}, .stack{}}};
 
     std::stringstream os;
 
@@ -35,8 +35,8 @@ TEST_CASE("Check Single Entry")
 TEST_CASE("Check Two Entries")
 {
     std::vector<TreeState> entries{
-        {.last = false, .depth = 0, .name{"one"}, .open{}},
-        {.last = true, .depth = 0, .name{"two"}, .open{}},
+        {.last = false, .depth = 0, .name{"one"}, .stack{}},
+        {.last = true, .depth = 0, .name{"two"}, .stack{}},
     };
 
     std::stringstream os;
@@ -50,9 +50,9 @@ TEST_CASE("Check Two Entries")
 TEST_CASE("Check Three Entries")
 {
     std::vector<TreeState> entries{
-        {.last = false, .depth = 0, .name{"one"}, .open{}},
-        {.last = false, .depth = 0, .name{"two"}, .open{}},
-        {.last = true, .depth = 0, .name{"three"}, .open{}},
+        {.last = false, .depth = 0, .name{"one"}, .stack{}},
+        {.last = false, .depth = 0, .name{"two"}, .stack{}},
+        {.last = true, .depth = 0, .name{"three"}, .stack{}},
     };
 
     std::stringstream os;
@@ -67,9 +67,9 @@ TEST_CASE("Check Three Entries")
 TEST_CASE("Check Single Nested Entry")
 {
     std::vector<TreeState> entries{
-        {.last = false, .depth = 0, .name{"one"}, .open{}},
-        {.last = true, .depth = 1, .name{"two"}, .open{0}},
-        {.last = true, .depth = 0, .name{"three"}, .open{}},
+        {.last = false, .depth = 0, .name{"one"}, .stack{}},
+        {.last = true, .depth = 1, .name{"two"}, .stack{0}},
+        {.last = true, .depth = 0, .name{"three"}, .stack{}},
     };
 
     std::stringstream os;
@@ -84,9 +84,9 @@ TEST_CASE("Check Single Nested Entry")
 TEST_CASE("Check Single Nested Entry")
 {
     std::vector<TreeState> entries{
-        {.last = false, .depth = 0, .name{"one"}, .open{}},
-        {.last = true, .depth = 1, .name{"two"}, .open{0}},
-        {.last = true, .depth = 0, .name{"three"}, .open{}},
+        {.last = false, .depth = 0, .name{"one"}, .stack{}},
+        {.last = true, .depth = 1, .name{"two"}, .stack{0}},
+        {.last = true, .depth = 0, .name{"three"}, .stack{}},
     };
 
     std::stringstream os;
@@ -101,16 +101,16 @@ TEST_CASE("Check Single Nested Entry")
 TEST_CASE("Check Multiple Nested Entries")
 {
     std::vector<TreeState> entries{
-        {.last = false, .depth = 0, .name{"one"}, .open{}},
-        {.last = false, .depth = 1, .name{"two"}, .open{0}},
-        {.last = false, .depth = 2, .name{"three"}, .open{0, 1}},
-        {.last = true, .depth = 2, .name{"four"}, .open{0, 1}},
-        {.last = true, .depth = 1, .name{"five"}, .open{0}},
-        {.last = false, .depth = 2, .name{"six"}, .open{0}},
-        {.last = true, .depth = 2, .name{"seven"}, .open{0}},
-        {.last = true, .depth = 3, .name{"eight"}, .open{0}},
-        {.last = true, .depth = 0, .name{"nine"}, .open{}},
-        {.last = true, .depth = 1, .name{"ten"}, .open{}},
+        {.last = false, .depth = 0, .name{"one"}, .stack{}},
+        {.last = false, .depth = 1, .name{"two"}, .stack{0}},
+        {.last = false, .depth = 2, .name{"three"}, .stack{0, 1}},
+        {.last = true, .depth = 2, .name{"four"}, .stack{0, 1}},
+        {.last = true, .depth = 1, .name{"five"}, .stack{0}},
+        {.last = false, .depth = 2, .name{"six"}, .stack{0}},
+        {.last = true, .depth = 2, .name{"seven"}, .stack{0}},
+        {.last = true, .depth = 3, .name{"eight"}, .stack{0}},
+        {.last = true, .depth = 0, .name{"nine"}, .stack{}},
+        {.last = true, .depth = 1, .name{"ten"}, .stack{}},
     };
 
     std::stringstream os;
