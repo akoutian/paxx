@@ -11,12 +11,12 @@
 namespace paxx::cmn
 {
 
-void BuildTree(fs::directory_iterator it, tree::TreeState &state);
+template <typename Iterator> void BuildTree(Iterator it, tree::TreeState &state);
 
 namespace
 {
 
-void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
+template <typename Entry> void HandleDirectory(const Entry &e, tree::TreeState &state)
 {
     state.name = e.path().filename().stem();
 
@@ -36,7 +36,7 @@ void HandleDirectory(const fs::directory_entry &e, tree::TreeState &state)
     state.stack.erase(state.depth);
 }
 
-void HandleFile(const fs::directory_entry &e, tree::TreeState &state)
+template <typename Entry> void HandleFile(const Entry &e, tree::TreeState &state)
 {
     state.name = e.path().filename().stem();
     tree::Write(std::cout, state);
@@ -46,7 +46,7 @@ void HandleFile(const fs::directory_entry &e, tree::TreeState &state)
 
 namespace fs = std::filesystem;
 
-void BuildTree(fs::directory_iterator it, tree::TreeState &state)
+template <typename Iterator> void BuildTree(Iterator it, tree::TreeState &state)
 {
     const auto handle = [&](const auto &i)
     {
@@ -59,7 +59,7 @@ void BuildTree(fs::directory_iterator it, tree::TreeState &state)
         HandleFile(i, state);
     };
 
-    for (auto i = fs::begin(it); i != fs::end(it);
+    for (auto i = begin(it); i != end(it);
          /* deliberately not incrementing here, see below*/)
     {
         // advancing the iterator invalidates its previous copies
@@ -71,7 +71,7 @@ void BuildTree(fs::directory_iterator it, tree::TreeState &state)
             continue;
         }
 
-        if (i == fs::end(it))
+        if (i == end(it))
         {
             state.last = true;
             handle(entry);
