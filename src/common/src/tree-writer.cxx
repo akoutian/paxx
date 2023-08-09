@@ -20,13 +20,13 @@ using cmn::gl_newline;
 using cmn::gl_space;
 using cmn::gl_tee;
 
-auto BuildPrefix(const tree::TreeState &info)
+auto BuildPrefix(const tree::TreeState &state)
 {
     std::stringstream result;
 
-    for (size_t ii{}; ii < info.depth; ++ii)
+    for (size_t ii{}; ii < state.depth; ++ii)
     {
-        if (info.stack.contains(ii))
+        if (state.stack.contains(ii))
         {
             result << gl_bar << gl_space << gl_space << gl_space;
             continue;
@@ -34,7 +34,7 @@ auto BuildPrefix(const tree::TreeState &info)
         result << gl_space << gl_space << gl_space << gl_space;
     }
 
-    if (info.last)
+    if (state.last)
     {
         result << gl_corner << gl_dash << gl_dash << gl_space;
         return result;
@@ -46,9 +46,9 @@ auto BuildPrefix(const tree::TreeState &info)
 
 } // namespace
 
-void Write(std::ostream &out, const TreeState &info)
+void Write(std::ostream &out, const TreeState &state)
 {
-    out << BuildPrefix(info).str() << info.name << gl_newline;
+    out << BuildPrefix(state).str() << state.name << gl_newline;
 }
 
 } // namespace paxx::tree
