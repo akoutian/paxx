@@ -2,23 +2,25 @@
 
 #include "common/tree-builder.hxx"
 
+#include "fs-directory-entry.hxx"
+#include "fs-directory-iterator-traits.hxx"
 #include "tree-writer.hxx"
 
-#include <algorithm>
+#include <filesystem>
 #include <iostream>
-#include <set>
 
 namespace paxx::cmn
 {
 
-template <typename Iterator> void BuildTree(Iterator it, tree::TreeState &state);
+template <typename Traits> void BuildTree(typename Traits::Iterator it, tree::TreeState &state);
 
 namespace
 {
 
-template <typename Entry> void HandleDirectory(const Entry &e, tree::TreeState &state)
+template <typename Traits>
+void HandleDirectory(const typename Traits::Entry &e, tree::TreeState &state)
 {
-    state.name = e.path().filename().stem();
+    state.name = e.stem();
 
     tree::Write(std::cout, state);
 
@@ -28,9 +30,7 @@ template <typename Entry> void HandleDirectory(const Entry &e, tree::TreeState &
     }
 
     ++state.depth;
-
-    BuildTree(fs::directory_iterator(e), state);
-
+    BuildTree<Traits>(typename Traits::Iterator(e.path()), state);
     --state.depth;
 
     state.stack.erase(state.depth);
@@ -38,7 +38,7 @@ template <typename Entry> void HandleDirectory(const Entry &e, tree::TreeState &
 
 template <typename Entry> void HandleFile(const Entry &e, tree::TreeState &state)
 {
-    state.name = e.path().filename().stem();
+    state.name = e.stem();
     tree::Write(std::cout, state);
 }
 
@@ -46,32 +46,30 @@ template <typename Entry> void HandleFile(const Entry &e, tree::TreeState &state
 
 namespace fs = std::filesystem;
 
-template <typename Iterator> void BuildTree(Iterator it, tree::TreeState &state)
+template <typename Traits> void BuildTree(typename Traits::Iterator it, tree::TreeState &state)
 {
     const auto handle = [&](const auto &i)
     {
         if (i.is_directory())
         {
-            HandleDirectory(i, state);
+            HandleDirectory<Traits>(i, state);
             return;
         }
 
         HandleFile(i, state);
     };
 
-    for (auto i = begin(it); i != end(it);
-         /* deliberately not incrementing here, see below*/)
+    // post-increment and dereference inside the loop because it is an InputIterator
+    for (auto i = Traits::begin(it); i != Traits::end(it);)
     {
-        // advancing the iterator invalidates its previous copies
-        // solution: use post-increment and dereference to get the next entry
-        const auto entry = *(i++);
+        const typename Traits::Entry entry = *(i++);
 
-        if (entry.path().filename().string().starts_with("."))
+        if (entry.filename().starts_with("."))
         {
             continue;
         }
 
-        if (i == end(it))
+        if (i == Traits::end(it))
         {
             state.last = true;
             handle(entry);
@@ -84,11 +82,11 @@ template <typename Iterator> void BuildTree(Iterator it, tree::TreeState &state)
     }
 }
 
-// TODO: Unit Tests. Consider mocking fs::directory iterator
+// TODO: Unit Tests
 void BuildTree(fs::path p)
 {
     tree::TreeState info{.name = p.filename()};
-    BuildTree(fs::directory_iterator(p), info);
+    BuildTree<FsDirectoryIteratorTraits>(fs::directory_iterator(p), info);
 }
 
 } // namespace paxx::cmn
