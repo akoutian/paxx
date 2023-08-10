@@ -5,7 +5,7 @@
 #include "common/args.hxx"
 #include "common/find-password-store.hxx"
 #include "common/pgp-decryptor.hxx"
-#include "common/tree-builder.hxx"
+#include "common/tree.hxx"
 #include "common/types.hxx"
 #include "qr.hxx"
 #include <clip.h>
@@ -146,7 +146,7 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
     if (!args.name)
     {
         std::cout << "Password Store\n";
-        cmn::BuildTree(*p);
+        cmn::Tree(*p);
         return;
     }
 
@@ -156,7 +156,7 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
         std::cout << entry.path().filename().string() << '\n';
-        cmn::BuildTree(entry);
+        cmn::Tree(entry);
         return;
     }
 

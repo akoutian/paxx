@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "common/tree-builder.hxx"
+#include "tree-builder.hxx"
 
 #include "fs-directory-entry.hxx"
 #include "fs-directory-iterator-traits.hxx"
@@ -9,11 +9,11 @@
 #include <filesystem>
 #include <iostream>
 
-namespace paxx::cmn
+namespace paxx::tree
 {
 
-template <typename Traits>
-void BuildTree(typename Traits::Iterator, tree::TreeState &, std::ostream &);
+template void BuildTree<cmn::FsDirectoryIteratorTraits>(cmn::FsDirectoryIteratorTraits::Iterator,
+                                                        tree::TreeState &, std::ostream &);
 
 namespace
 {
@@ -44,8 +44,6 @@ template <typename Entry> void HandleFile(const Entry &e, tree::TreeState &state
 }
 
 } // namespace
-
-namespace fs = std::filesystem;
 
 // TODO: Unit Tests
 template <typename Traits>
@@ -85,10 +83,4 @@ void BuildTree(typename Traits::Iterator it, tree::TreeState &state, std::ostrea
     }
 }
 
-void BuildTree(fs::path p)
-{
-    tree::TreeState info{.name = p.filename()};
-    BuildTree<FsDirectoryIteratorTraits>(fs::directory_iterator(p), info, std::cout);
-}
-
-} // namespace paxx::cmn
+} // namespace paxx::tree
