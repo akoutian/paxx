@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "qr.h"
+#include "qr.hxx"
 
 #include <ostream>
 

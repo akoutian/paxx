@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "insert/insert.h"
+#include "insert/insert.hxx"
 
 #include <stdexcept>
 

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "rename/rename.h"
+#include "rename/rename.hxx"
 
 #include <stdexcept>
 

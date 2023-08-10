@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "common/tree-builder.h"
+#include "common/tree-builder.hxx"
 
-#include "tree-writer.h"
+#include "tree-writer.hxx"
 
 #include <algorithm>
 #include <iostream>

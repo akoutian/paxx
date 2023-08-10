@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "info/info.h"
+#include "info/info.hxx"
 
 #include <iostream>
 

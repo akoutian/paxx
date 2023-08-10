@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "common/pgp-decryptor.h"
+#include "common/pgp-decryptor.hxx"
 
 #include <gpgme++/data.h>
 #include <gpgme++/decryptionresult.h>

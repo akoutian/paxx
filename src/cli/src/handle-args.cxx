@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "handle-args.h"
-#include "delete/delete.h"
-#include "info/info.h"
-#include "show/show.h"
+#include "handle-args.hxx"
+#include "delete/delete.hxx"
+#include "info/info.hxx"
+#include "show/show.hxx"
 
 namespace paxx::cli
 {

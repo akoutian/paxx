@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "common/types.h"
+#include "common/types.hxx"
 
 namespace paxx
 {
 
-void Edit(cmn::Context &);
+void Insert(cmn::Context &);
 
 }

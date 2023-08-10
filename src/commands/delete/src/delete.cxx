@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "delete/delete.h"
+#include "delete/delete.hxx"
 
-#include "common/args.h"
-#include "common/find-password-store.h"
-#include "common/types.h"
+#include "common/args.hxx"
+#include "common/find-password-store.hxx"
+#include "common/types.hxx"
 
 #include <filesystem>
 #include <iostream>

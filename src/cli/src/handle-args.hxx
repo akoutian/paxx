@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "common/args.h"
-#include "common/types.h"
+#include "common/args.hxx"
+#include "common/types.hxx"
 
 namespace paxx::cli
 {

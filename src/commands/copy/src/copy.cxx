@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "copy/copy.h"
+#include "copy/copy.hxx"
 
 #include <stdexcept>
 

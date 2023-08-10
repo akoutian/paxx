@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "show/show.h"
+#include "show/show.hxx"
 
-#include "common/args.h"
-#include "common/find-password-store.h"
-#include "common/pgp-decryptor.h"
-#include "common/tree-builder.h"
-#include "common/types.h"
-#include "qr.h"
+#include "common/args.hxx"
+#include "common/find-password-store.hxx"
+#include "common/pgp-decryptor.hxx"
+#include "common/tree-builder.hxx"
+#include "common/types.hxx"
+#include "qr.hxx"
 #include <clip.h>
 
 #include <algorithm>

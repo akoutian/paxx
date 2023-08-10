@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "edit/edit.h"
+#include "edit/edit.hxx"
 
 #include <stdexcept>
 

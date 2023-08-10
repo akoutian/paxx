@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "build-cli.h"
-#include "common/types.h"
-#include "handle-args.h"
+#include "build-cli.hxx"
+#include "common/types.hxx"
+#include "handle-args.hxx"
 
 #include <iostream>
 

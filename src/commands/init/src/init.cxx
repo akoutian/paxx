@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "init/init.h"
+#include "init/init.hxx"
 
 #include <stdexcept>
 

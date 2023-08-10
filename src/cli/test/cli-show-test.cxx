@@ -2,7 +2,7 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "src/build-cli.h"
+#include "src/build-cli.hxx"
 
 #include <doctest/doctest.h>
 #include <lyra/lyra.hpp>

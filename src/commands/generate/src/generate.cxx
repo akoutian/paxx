@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "generate/generate.h"
+#include "generate/generate.hxx"
 
 #include <stdexcept>
 

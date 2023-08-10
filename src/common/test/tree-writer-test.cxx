@@ -2,9 +2,9 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "src/tree-writer.h"
+#include "src/tree-writer.hxx"
 
-#include "doctest/doctest.h"
+#include <doctest/doctest.h>
 
 #include <sstream>
 

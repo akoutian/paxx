@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "build-cli.h"
+#include "build-cli.hxx"
 
 #include <lyra/lyra.hpp>
 
