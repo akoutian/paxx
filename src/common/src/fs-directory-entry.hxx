@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 class FsDirectoryEntry
 {
   public:
-    FsDirectoryEntry(fs::directory_entry);
+    FsDirectoryEntry(fs::path);
 
     std::string path() const;
 

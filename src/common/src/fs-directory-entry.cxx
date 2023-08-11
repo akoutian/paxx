@@ -5,7 +5,7 @@
 namespace paxx::cmn
 {
 
-FsDirectoryEntry::FsDirectoryEntry(fs::directory_entry entry) : m_entry(std::move(entry))
+FsDirectoryEntry::FsDirectoryEntry(fs::path path) : m_entry(std::move(path))
 {
 }
 

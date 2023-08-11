@@ -63,7 +63,8 @@ void BuildTree(typename Traits::Iterator it, tree::TreeState &state, std::ostrea
     // post-increment and dereference inside the loop because it is an InputIterator
     for (auto i = Traits::begin(it); i != Traits::end(it);)
     {
-        const typename Traits::Entry entry = *(i++);
+        const auto e = *(i++);
+        const typename Traits::Entry entry(e.path());
 
         if (entry.filename().starts_with("."))
         {
