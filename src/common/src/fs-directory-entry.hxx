@@ -23,6 +23,8 @@ class FsDirectoryEntry
 
     bool is_directory() const;
 
+    fs::directory_entry entry() const;
+
   private:
     fs::directory_entry m_entry;
 };

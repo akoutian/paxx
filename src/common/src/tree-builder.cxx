@@ -31,7 +31,7 @@ void HandleDirectory(const typename Traits::Entry &e, tree::TreeState &state, st
     }
 
     ++state.depth;
-    BuildTree<Traits>(typename Traits::Iterator(e.path()), state, out);
+    BuildTree<Traits>(typename Traits::Iterator(e.entry()), state, out);
     --state.depth;
 
     state.stack.erase(state.depth);

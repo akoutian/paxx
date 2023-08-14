@@ -29,4 +29,9 @@ bool FsDirectoryEntry::is_directory() const
     return m_entry.is_directory();
 }
 
+fs::directory_entry FsDirectoryEntry::entry() const
+{
+    return m_entry;
+}
+
 } // namespace paxx::cmn
