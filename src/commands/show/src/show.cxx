@@ -3,12 +3,15 @@
 #include "show/show.hxx"
 
 #include "common/args.hxx"
+#include "common/expected.hxx"
 #include "common/find-password-store.hxx"
 #include "common/pgp-decryptor.hxx"
 #include "common/tree.hxx"
 #include "common/types.hxx"
 #include "qr.hxx"
+
 #include <clip.h>
+#include <gpgme++/data.h>
 
 #include <algorithm>
 #include <cstddef>
@@ -25,16 +28,20 @@ namespace fs = std::filesystem;
 namespace
 {
 
-std::stringstream Decrypt(const std::ifstream &ifs)
+cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
 {
     std::stringstream cipher;
     cipher << ifs.rdbuf();
     cmn::PGPDecryptor decryptor;
 
-    std::stringstream plain;
-    decryptor.decrypt_file(cipher, plain);
+    const auto to = [](auto e)
+    {
+        std::stringstream out;
+        out << e.toString();
+        return out;
+    };
 
-    return plain;
+    return decryptor.decrypt_file(cipher).map(to);
 }
 
 void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
@@ -119,9 +126,16 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
 
     auto plain = Decrypt(ifs);
 
+    if (!plain)
+    {
+        ctx.status = 1;
+        ctx.message = plain.error().get();
+        return;
+    }
+
     std::string result;
 
-    HandleLineNumber(result, args.line, plain, ctx);
+    HandleLineNumber(result, args.line, *plain, ctx);
     if (ctx.status != 0)
     {
         return;

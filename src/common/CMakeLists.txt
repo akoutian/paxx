@@ -7,7 +7,11 @@ add_library(
 
 target_include_directories(common PUBLIC include)
 
-target_link_libraries(common PRIVATE Gpgmepp tl::expected)
+target_link_libraries(
+    common
+    PRIVATE Gpgmepp
+    PUBLIC tl::expected
+)
 
 if(BUILD_TESTING)
     create_test(NAME tree-writer-test SOURCES test/tree-writer-test.cxx)

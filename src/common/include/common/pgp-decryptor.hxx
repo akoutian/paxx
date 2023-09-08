@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "common/expected.hxx"
+
 #include <gpgme++/context.h>
 
 #include <memory>
@@ -15,7 +17,7 @@ class PGPDecryptor
   public:
     PGPDecryptor();
 
-    void decrypt_file(const std::stringstream &, std::ostream &);
+    Expected<GpgME::Data> decrypt_file(const std::stringstream &);
 
   private:
     std::unique_ptr<GpgME::Context> m_ctx;

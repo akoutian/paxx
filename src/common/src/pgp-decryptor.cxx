@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <tl/expected.hpp>
 
 namespace paxx::cmn
 {
@@ -27,7 +28,7 @@ PGPDecryptor::PGPDecryptor()
     m_ctx = std::unique_ptr<GpgME::Context>(std::move(ctx));
 }
 
-void PGPDecryptor::decrypt_file(const std::stringstream &in, std::ostream &out)
+Expected<GpgME::Data> PGPDecryptor::decrypt_file(const std::stringstream &in)
 {
     const auto &str = in.str();
     auto cipher = GpgME::Data{str.data(), str.size(), false};
@@ -38,10 +39,10 @@ void PGPDecryptor::decrypt_file(const std::stringstream &in, std::ostream &out)
     const auto error = result.error();
     if (error.code() != 0)
     {
-        throw std::runtime_error(error.asString());
+        return Unexpected(error.asString());
     }
 
-    out << plain.toString();
+    return plain;
 }
 
 } // namespace paxx::cmn
