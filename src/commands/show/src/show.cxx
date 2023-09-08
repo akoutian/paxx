@@ -44,7 +44,7 @@ cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
     return decryptor.decrypt_file(cipher).map(to);
 }
 
-// return specific line from a stringstream, if line number is given; else, return the fist line
+// return specific line from a stringstream, if line number is given; else, return the whole content
 cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::stringstream &plain)
 {
     std::string result;
@@ -69,7 +69,7 @@ cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::st
     }
     else
     {
-        std::getline(plain, result);
+        result = plain.str();
     }
 
     // std::getline strips the delimiter (newline in this case) so we put it back in
