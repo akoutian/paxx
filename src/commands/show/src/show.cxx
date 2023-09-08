@@ -44,35 +44,32 @@ cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
     return decryptor.decrypt_file(cipher).map(to);
 }
 
-void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
-                      std::stringstream &plain, cmn::Context &ctx)
+// return specific line from a stringstream, if line number is given; else, return the fist line
+cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::stringstream &plain)
 {
-    std::string line;
+    std::string result;
+
     if (lineNumber)
     {
         const auto n = *lineNumber;
 
-        for (size_t ii{1}; std::getline(plain, line); ++ii)
+        for (size_t ii{1}; std::getline(plain, result); ++ii)
         {
             // mimic legacy "pass": both zero and one give the first line
             if (ii == n || n == 0)
             {
-                result = line;
                 break;
             }
         }
 
         if (plain.eof())
         {
-            ctx.status = 1;
-            ctx.message = "There is no password on line " + std::to_string(n) + ".";
-            return;
+            return cmn::Unexpected("There is no password on line " + std::to_string(n) + ".");
         }
     }
     else
     {
-        std::getline(plain, line);
-        result = line;
+        std::getline(plain, result);
     }
 
     // std::getline strips the delimiter (newline in this case) so we put it back in
@@ -82,9 +79,10 @@ void HandleLineNumber(std::string &result, std::optional<size_t> lineNumber,
     }
     else
     {
-        ctx.status = 1;
-        ctx.message = "Error while reading plaintext stream";
+        return cmn::Unexpected("Error while reading plaintext stream");
     }
+
+    return result;
 }
 
 void Output(const cmn::ShowArgs &args, const std::string &result, cmn::Context &ctx)
@@ -111,20 +109,22 @@ void Output(const cmn::ShowArgs &args, const std::string &result, cmn::Context &
     }
 }
 
-void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::ShowArgs &args)
+cmn::Expected<std::stringstream> DecryptFile(const fs::directory_entry &file)
 {
-
     const auto fp = file.path().string();
     std::ifstream ifs{fp};
 
     if (!ifs.is_open())
     {
-        ctx.status = 1;
-        ctx.message = "Error: failed to open file " + fp;
-        return;
+        return cmn::Unexpected("Failed to open file " + fp);
     }
 
-    auto plain = Decrypt(ifs);
+    return Decrypt(ifs);
+}
+
+void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::ShowArgs &args)
+{
+    auto plain = DecryptFile(file);
 
     if (!plain)
     {
@@ -133,19 +133,20 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    std::string result;
-
-    HandleLineNumber(result, args.line, *plain, ctx);
-    if (ctx.status != 0)
+    const auto line = ExtractLine(args.line, *plain);
+    if (!line)
     {
+        ctx.status = 1;
+        ctx.message = plain.error().get();
         return;
     }
 
-    Output(args, result, ctx);
+    Output(args, *line, ctx);
 }
 
 } // namespace
 
+// TODO: further simplify. Ideally only use the context inside this one function.
 void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
 {
     const auto p = cmn::FindPasswordStore();
