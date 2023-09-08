@@ -168,6 +168,13 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
     const auto name = *args.name;
     const auto path = *p / fs::path(name);
 
+    if (!path.string().starts_with((*p).string()))
+    {
+        ctx.status = 1;
+        ctx.message = "Error: " + name + " is not in the password store.";
+        return;
+    }
+
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
         std::cout << entry.path().filename().string() << '\n';
@@ -180,10 +187,6 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
         HandleFile(ctx, file, args);
         return;
     }
-
-    ctx.status = 1;
-    ctx.message = "Error: " + name + " is not in the password store.";
-    return;
 }
 
 } // namespace paxx
