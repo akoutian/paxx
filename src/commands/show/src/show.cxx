@@ -13,7 +13,6 @@
 #include <clip.h>
 #include <gpgme++/data.h>
 
-#include <algorithm>
 #include <cstddef>
 #include <filesystem>
 #include <fstream>

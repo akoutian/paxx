@@ -6,7 +6,6 @@
 #include <gpgme++/decryptionresult.h>
 #include <gpgme++/global.h>
 
-#include <cassert>
 #include <stdexcept>
 #include <tl/expected.hpp>
 

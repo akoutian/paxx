@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <cstddef>
-
 namespace paxx::cmn
 {
 

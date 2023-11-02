@@ -4,7 +4,6 @@
 
 #include "symbols.hxx"
 
-#include <algorithm>
 #include <sstream>
 
 namespace paxx::tree

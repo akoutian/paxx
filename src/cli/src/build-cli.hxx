@@ -3,9 +3,7 @@
 #pragma once
 
 #include "common/args.hxx"
-#include "common/types.hxx"
 
-#include <functional>
 #include <lyra/lyra.hpp>
 
 namespace paxx::cli

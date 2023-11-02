@@ -2,11 +2,9 @@
 
 #include "tree-builder.hxx"
 
-#include "fs-directory-entry.hxx"
 #include "fs-directory-iterator-traits.hxx"
 #include "tree-writer.hxx"
 
-#include <filesystem>
 #include <iostream>
 
 namespace paxx::tree
