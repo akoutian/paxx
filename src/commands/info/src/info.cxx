@@ -22,10 +22,10 @@ void Help([[maybe_unused]] cmn::Context &ctx)
 
     std::cout << "\n";
     std::cout << "Usage:\n";
-    std::cout << "    paxx show [--clip, -c] [--qrcode, -q] [--line=line-number, --line "
+    std::cout << "    paxx show [--qrcode, -q] [--line=line-number, --line "
                  "line-number, -l=line-number, -l line-number, -lline-number] pass-name\n";
-    std::cout << "        Show existing password and optionally put it on the clipboard or print "
-                 "it in the console as a QR code.\n";
+    std::cout
+        << "        Show existing password and optionally  print it on the console as a QR code.\n";
     std::cout << "    paxx rm [--recursive,-r] [--force,-f] pass-name\n";
     std::cout << "        Remove existing password or directory, optionally forcefully.\n";
     std::cout << "    paxx help\n";

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <qrcodegen/qrcodegen.hpp>
+#include <qrcodegencpp/qrcodegen.hpp>
 
 namespace paxx
 {

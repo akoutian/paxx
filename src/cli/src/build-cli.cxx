@@ -49,12 +49,6 @@ void BuildShow(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &read
     auto ls = lyra::command("ls", makeReady);
     auto list = lyra::command("list", makeReady);
 
-    const auto clipOpt = [&]([[maybe_unused]] bool i)
-    { parsed.show.outputType = cmn::OutputType::CLIPBOARD; };
-    show.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
-    ls.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
-    list.add_argument(lyra::opt(clipOpt).name("-c").name("--clip"));
-
     const auto qrCodeOpt = [&]([[maybe_unused]] bool i)
     { parsed.show.outputType = cmn::OutputType::QRCODE; };
     show.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));

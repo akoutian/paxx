@@ -10,7 +10,6 @@
 #include "common/types.hxx"
 #include "qr.hxx"
 
-#include <clip.h>
 #include <gpgme++/data.h>
 
 #include <cstddef>
@@ -40,7 +39,14 @@ cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
         return out;
     };
 
-    return decryptor.decrypt_file(cipher).map(to);
+    const auto result = decryptor.decrypt_file(cipher);
+
+    if (result)
+    {
+        return to(*result);
+    }
+
+    return nonstd::make_unexpected(result.error());
 }
 
 // return specific line from a stringstream, if line number is given; else, return the whole content
@@ -71,41 +77,30 @@ cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::st
         result = plain.str();
     }
 
-    // std::getline strips the delimiter (newline in this case) so we put it back in
     if (!plain.fail())
     {
-        result.push_back('\n');
+        return result;
     }
     else
     {
         return cmn::Unexpected("Error while reading plaintext stream");
     }
-
-    return result;
 }
 
-void Output(const cmn::ShowArgs &args, const std::string &result, cmn::Context &ctx)
+void Output(const cmn::ShowArgs &args, const std::string &result)
 {
     switch (args.outputType)
     {
-    case cmn::OutputType::STDOUT:
+    case cmn::OutputType::PLAINTEXT:
         std::cout << result;
-        return;
+        break;
     case cmn::OutputType::QRCODE: {
         const auto qr = Qr(result);
         WriteQr(qr, std::cout);
-        return;
-    }
-    case cmn::OutputType::CLIPBOARD: {
-        const auto success = clip::set_text(result);
-        if (!success)
-        {
-            ctx.status = 1;
-            ctx.message = "Failed to copy password to clipboard.";
-            return;
-        }
+        break;
     }
     }
+    return;
 }
 
 cmn::Expected<std::stringstream> DecryptFile(const fs::directory_entry &file)
@@ -140,7 +135,7 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    Output(args, *line, ctx);
+    Output(args, *line);
 }
 
 } // namespace

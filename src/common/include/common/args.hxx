@@ -11,8 +11,7 @@ namespace paxx::cmn
 
 enum struct OutputType
 {
-    STDOUT,
-    CLIPBOARD,
+    PLAINTEXT,
     QRCODE
 };
 

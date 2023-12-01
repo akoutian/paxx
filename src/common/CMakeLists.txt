@@ -10,7 +10,7 @@ target_include_directories(common PUBLIC include)
 target_link_libraries(
     common
     PRIVATE Gpgmepp
-    PUBLIC tl::expected
+    PUBLIC nonstd::expected-lite
 )
 
 if(BUILD_TESTING)
