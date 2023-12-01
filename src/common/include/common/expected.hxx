@@ -4,16 +4,16 @@
 
 #include "error.hxx"
 
-#include <nonstd/expected.hpp>
+#include <expected>
 
 namespace paxx::cmn
 {
 
-template <class T> using Expected = nonstd::expected<T, Error>;
+template <class T> using Expected = std::expected<T, Error>;
 
 inline auto Unexpected(std::string&& e)
 {
-    return nonstd::make_unexpected(Error{e});
+    return std::unexpected(Error{e});
 }
 
 }

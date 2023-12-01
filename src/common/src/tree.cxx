@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 
 void Tree(fs::path p)
 {
-    tree::TreeState info{.name = p.filename()};
+    tree::TreeState info{.name = p.filename(), .stack{}};
     BuildTree<FsDirectoryIteratorTraits>(fs::directory_iterator(p), info, std::cout);
 }
 

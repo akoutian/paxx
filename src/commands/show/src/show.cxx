@@ -41,12 +41,7 @@ cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
 
     const auto result = decryptor.decrypt_file(cipher);
 
-    if (result)
-    {
-        return to(*result);
-    }
-
-    return nonstd::make_unexpected(result.error());
+    return decryptor.decrypt_file(cipher).transform(to);
 }
 
 // return specific line from a stringstream, if line number is given; else, return the whole content
