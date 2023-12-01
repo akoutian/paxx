@@ -1,5 +1,13 @@
-find_package(Gpgmepp REQUIRED)
-find_package(doctest REQUIRED)
-find_package(expected-lite REQUIRED)
-find_package(qrcodegencpp REQUIRED)
-find_package(lyra REQUIRED)
+list(
+    APPEND
+    SYSTEM_DEPENDENCIES_REQUIRED
+    Gpgmepp
+    doctest
+    expected-lite
+    lyra
+    qrcodegencpp
+)
+
+foreach(dep IN LISTS SYSTEM_DEPENDENCIES_REQUIRED)
+    find_package(${dep} REQUIRED)
+endforeach()
