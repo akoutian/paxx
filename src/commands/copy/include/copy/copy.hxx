@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Copy(cmn::Context &);
+void copy(cmn::context &);
 
 }

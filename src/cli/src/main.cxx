@@ -8,19 +8,19 @@
 
 int main(int argc, char **argv)
 {
-    paxx::cmn::parsed::Args parsed;
-    paxx::cmn::ready::Args ready;
+    paxx::cmn::parsed::args parsed;
+    paxx::cmn::ready::args ready;
 
-    const auto result = paxx::cli::BuildCli(parsed, ready).parse({argc, argv});
+    const auto result = paxx::cli::build_cli(parsed, ready).parse({argc, argv});
 
     if (!result)
     {
-        std::cerr << "Error: " << result.message() << std::endl;
+        std::cerr << "error: " << result.message() << std::endl;
         return EXIT_FAILURE;
     }
 
-    paxx::cmn::Context ctx;
-    paxx::cli::HandleArgs(ready, ctx);
+    paxx::cmn::context ctx;
+    paxx::cli::handle_args(ready, ctx);
 
     if (ctx.status != 0 && ctx.message)
     {

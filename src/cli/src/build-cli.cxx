@@ -7,59 +7,59 @@
 namespace paxx::cli
 {
 
-void BuildHelp(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
+void build_help(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
-    const auto makeReady = [&]([[maybe_unused]] const auto &g)
+    const auto make_ready = [&]([[maybe_unused]] const auto &g)
     {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.help;
         }
     };
-    auto command = lyra::command("help", makeReady);
+    auto command = lyra::command("help", make_ready);
 
     cli.add_argument(command);
 }
 
-void BuildVersion(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
+void build_version(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
 
-    const auto makeReady = [&]([[maybe_unused]] const auto &g)
+    const auto make_ready = [&]([[maybe_unused]] const auto &g)
     {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.version;
         }
     };
-    auto command = lyra::command("version", makeReady);
+    auto command = lyra::command("version", make_ready);
 
     cli.add_argument(command);
 }
 
-void BuildShow(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
+void build_show(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
-    const auto makeReady = [&]([[maybe_unused]] auto g)
+    const auto make_ready = [&]([[maybe_unused]] auto g)
     {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.show;
         }
     };
-    auto show = lyra::command("show", makeReady);
-    auto ls = lyra::command("ls", makeReady);
-    auto list = lyra::command("list", makeReady);
+    auto show = lyra::command("show", make_ready);
+    auto ls = lyra::command("ls", make_ready);
+    auto list = lyra::command("list", make_ready);
 
-    const auto qrCodeOpt = [&]([[maybe_unused]] bool i)
-    { parsed.show.outputType = cmn::OutputType::QRCODE; };
-    show.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
-    ls.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
-    list.add_argument(lyra::opt(qrCodeOpt).name("-q").name("--qrcode"));
+    const auto qr_code_opt = [&]([[maybe_unused]] bool i)
+    { parsed.show.outputType = cmn::output_type::QRCODE; };
+    show.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
+    ls.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
+    list.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
 
-    const auto lineOpt = [&](size_t i) { parsed.show.line = i; };
+    const auto line_opt = [&](size_t i) { parsed.show.line = i; };
     const auto hint = "line number";
-    show.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
-    ls.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
-    list.add_argument(lyra::opt(lineOpt, hint).name("-l").name("--line"));
+    show.add_argument(lyra::opt(line_opt, hint).name("-l").name("--line"));
+    ls.add_argument(lyra::opt(line_opt, hint).name("-l").name("--line"));
+    list.add_argument(lyra::opt(line_opt, hint).name("-l").name("--line"));
 
     const auto name = [&](std::string s) { parsed.show.name = s; };
     show.add_argument(lyra::arg(name, "name"));
@@ -71,28 +71,28 @@ void BuildShow(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &read
     cli.add_argument(list);
 }
 
-void BuildDelete(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &ready)
+void Buildremove(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
-    const auto makeReady = [&]([[maybe_unused]] auto g)
+    const auto make_ready = [&]([[maybe_unused]] auto g)
     {
         if (std::holds_alternative<std::monostate>(ready))
         {
             ready = parsed.del;
         }
     };
-    auto rm = lyra::command("rm", makeReady);
-    auto del = lyra::command("delete", makeReady);
-    auto remove = lyra::command("remove", makeReady);
+    auto rm = lyra::command("rm", make_ready);
+    auto del = lyra::command("remove", make_ready);
+    auto remove = lyra::command("remove", make_ready);
 
-    const auto forceOpt = [&](bool i) { parsed.del.force = i; };
-    rm.add_argument(lyra::opt(forceOpt).name("-f").name("--force"));
-    del.add_argument(lyra::opt(forceOpt).name("-f").name("--force"));
-    remove.add_argument(lyra::opt(forceOpt).name("-f").name("--force"));
+    const auto force_opt = [&](bool i) { parsed.del.force = i; };
+    rm.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
+    del.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
+    remove.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
 
-    const auto recursiveOpt = [&](bool i) { parsed.del.recursive = i; };
-    rm.add_argument(lyra::opt(recursiveOpt).name("-r").name("--recursive"));
-    del.add_argument(lyra::opt(recursiveOpt).name("-r").name("--recursive"));
-    remove.add_argument(lyra::opt(recursiveOpt).name("-r").name("--recursive"));
+    const auto recurse_opt = [&](bool i) { parsed.del.recursive = i; };
+    rm.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
+    del.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
+    remove.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
 
     const auto name = [&](std::string s) { parsed.del.name = s; };
     rm.add_argument(lyra::arg(name, "name"));
@@ -104,14 +104,14 @@ void BuildDelete(lyra::cli &cli, cmn::parsed::Args &parsed, cmn::ready::Args &re
     cli.add_argument(remove);
 }
 
-lyra::cli BuildCli(cmn::parsed::Args &parsed, cmn::ready::Args &ready)
+lyra::cli build_cli(cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
     auto cli = lyra::cli();
 
-    BuildHelp(cli, parsed, ready);
-    BuildVersion(cli, parsed, ready);
-    BuildShow(cli, parsed, ready);
-    BuildDelete(cli, parsed, ready);
+    build_help(cli, parsed, ready);
+    build_version(cli, parsed, ready);
+    build_show(cli, parsed, ready);
+    Buildremove(cli, parsed, ready);
 
     return cli;
 }

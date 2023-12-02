@@ -8,6 +8,6 @@
 namespace paxx::cli
 {
 
-void HandleArgs(const cmn::ready::Args &, cmn::Context &);
+void handle_args(const cmn::ready::args &, cmn::context &);
 
 } // namespace paxx::cli

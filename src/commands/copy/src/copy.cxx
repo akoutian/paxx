@@ -7,7 +7,7 @@
 namespace paxx
 {
 
-void Copy([[maybe_unused]] cmn::Context &ctx)
+void copy([[maybe_unused]] cmn::context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

@@ -1,42 +1,42 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "handle-args.hxx"
-#include "delete/delete.hxx"
 #include "info/info.hxx"
+#include "remove/remove.hxx"
 #include "show/show.hxx"
 
 namespace paxx::cli
 {
 
-using paxx::cmn::Context;
+using paxx::cmn::context;
 
-void Handle([[maybe_unused]] const cmn::HelpArgs &args, Context &ctx)
+void handle([[maybe_unused]] const cmn::help_args &args, context &ctx)
 {
-    paxx::Help(ctx);
+    paxx::help(ctx);
 }
 
-void Handle(const cmn::ShowArgs &args, Context &ctx)
+void handle(const cmn::show_args &args, context &ctx)
 {
-    paxx::Show(ctx, args);
+    paxx::show(ctx, args);
 }
 
-void Handle([[maybe_unused]] const cmn::VersionArgs &args, Context &ctx)
+void handle([[maybe_unused]] const cmn::version_args &args, context &ctx)
 {
-    paxx::Version(ctx);
+    paxx::version(ctx);
 }
 
-void Handle(const cmn::DeleteArgs &args, Context &ctx)
+void handle(const cmn::remove_args &args, context &ctx)
 {
-    paxx::Delete(ctx, args);
+    paxx::remove(ctx, args);
 }
 
-void Handle([[maybe_unused]] std::monostate m, [[maybe_unused]] Context &ctx)
+void handle([[maybe_unused]] std::monostate m, [[maybe_unused]] context &ctx)
 {
 }
 
-void HandleArgs(const cmn::ready::Args &args, Context &ctx)
+void handle_args(const cmn::ready::args &args, context &ctx)
 {
-    std::visit([&](auto &a) { Handle(a, ctx); }, args);
+    std::visit([&](auto &a) { handle(a, ctx); }, args);
 }
 
 } // namespace paxx::cli

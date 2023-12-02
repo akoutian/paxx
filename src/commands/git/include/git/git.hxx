@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Git(cmn::Context &);
+void git(cmn::context &);
 
 }

@@ -13,10 +13,10 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
-void Tree(fs::path p)
+void tree(fs::path p)
 {
-    tree::TreeState info{.name = p.filename(), .stack{}};
-    BuildTree<FsDirectoryIteratorTraits>(fs::directory_iterator(p), info, std::cout);
+    tree::state info{.name = p.filename(), .stack{}};
+    build_tree<fs_directory_iterator_traits>(fs::directory_iterator(p), info, std::cout);
 }
 
 } // namespace paxx::cmn

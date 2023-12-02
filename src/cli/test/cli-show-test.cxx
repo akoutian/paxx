@@ -10,36 +10,36 @@
 namespace paxx::cli
 {
 
-TEST_CASE("Check Show Ia")
+TEST_CASE("Check show Ia")
 {
-    cmn::parsed::Args parsed;
-    cmn::ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "show"});
+    cmn::parsed::args parsed;
+    cmn::ready::args ready;
+    const auto result = build_cli(parsed, ready).parse({"argv[0]", "show"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<cmn::ShowArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::show_args>(ready));
 
-    const auto r = std::get<cmn::ShowArgs>(ready);
+    const auto r = std::get<cmn::show_args>(ready);
 
     CHECK(!r.line.has_value());
     CHECK(!r.name.has_value());
-    CHECK(r.outputType == cmn::OutputType::PLAINTEXT);
+    CHECK(r.outputType == cmn::output_type::PLAINTEXT);
 }
 
-TEST_CASE("Check Show Ib")
+TEST_CASE("Check show Ib")
 {
-    cmn::parsed::Args parsed;
-    cmn::ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "show", "something"});
+    cmn::parsed::args parsed;
+    cmn::ready::args ready;
+    const auto result = build_cli(parsed, ready).parse({"argv[0]", "show", "something"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<cmn::ShowArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::show_args>(ready));
 
-    const auto r = std::get<cmn::ShowArgs>(ready);
+    const auto r = std::get<cmn::show_args>(ready);
 
     CHECK(!r.line.has_value());
     CHECK(r.name == "something");
-    CHECK(r.outputType == cmn::OutputType::PLAINTEXT);
+    CHECK(r.outputType == cmn::output_type::PLAINTEXT);
 }
 
 } // namespace paxx::cli

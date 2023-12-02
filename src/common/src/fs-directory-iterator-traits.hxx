@@ -11,10 +11,10 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
-struct FsDirectoryIteratorTraits
+struct fs_directory_iterator_traits
 {
-    using Iterator = fs::directory_iterator;
-    using Entry = FsDirectoryEntry;
+    using iterator = fs::directory_iterator;
+    using entry = fs_directory_entry;
 
     static fs::directory_iterator begin(fs::directory_iterator it)
     {

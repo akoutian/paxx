@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Generate(cmn::Context &);
+void generate(cmn::context &);
 
 }

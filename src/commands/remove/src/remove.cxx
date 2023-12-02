@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "delete/delete.hxx"
+#include "remove/remove.hxx"
 
 #include "common/args.hxx"
 #include "common/find-password-store.hxx"
@@ -42,8 +42,8 @@ bool YesNo(const std::string &prompt)
     }
 }
 
-void HandleDirectory(const fs::directory_entry &entry, const cmn::DeleteArgs &args,
-                     cmn::Context &ctx)
+void handle_directory(const fs::directory_entry &entry, const cmn::remove_args &args,
+                      cmn::context &ctx)
 {
     if (args.recursive)
     {
@@ -56,7 +56,7 @@ void HandleDirectory(const fs::directory_entry &entry, const cmn::DeleteArgs &ar
     return;
 }
 
-void HandleFile(const fs::directory_entry &entry)
+void handle_file(const fs::directory_entry &entry)
 {
     fs::remove(entry.path());
 
@@ -70,21 +70,21 @@ void HandleFile(const fs::directory_entry &entry)
 
 } // namespace
 
-void Delete(cmn::Context &ctx, const cmn::DeleteArgs &args)
+void remove(cmn::context &ctx, const cmn::remove_args &args)
 {
-    const auto p = cmn::FindPasswordStore();
+    const auto p = cmn::find_password_store();
 
     if (!p)
     {
         ctx.status = 1;
-        ctx.message = "Error: password store is empty. Try \"pass init\".";
+        ctx.message = "error: password store is empty. Try \"pass init\".";
         return;
     }
 
     const auto name = args.name;
     const auto path = *p / fs::path(name);
 
-    const auto prompt = "Are you sure you would like to delete " + name + "?";
+    const auto prompt = "Are you sure you would like to remove " + name + "?";
     if (!(args.force || YesNo(prompt)))
     {
         return;
@@ -92,18 +92,18 @@ void Delete(cmn::Context &ctx, const cmn::DeleteArgs &args)
 
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
-        HandleDirectory(entry, args, ctx);
+        handle_directory(entry, args, ctx);
         return;
     }
 
     if (const auto entry = fs::directory_entry{path.string() + ".gpg"}; entry.is_regular_file())
     {
-        HandleFile(entry);
+        handle_file(entry);
         return;
     }
 
     ctx.status = 1;
-    ctx.message = "Error: " + name + " is not in the password store.";
+    ctx.message = "error: " + name + " is not in the password store.";
     return;
 }
 

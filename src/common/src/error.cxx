@@ -5,21 +5,21 @@
 namespace paxx::cmn
 {
 
-Error::Error(std::string message) : m_error(std::move(message))
+error::error(std::string message) : m_error(std::move(message))
 {
 }
 
-std::string Error::get()
+std::string error::get()
 {
     return m_error;
 }
 
-bool Error::operator==(const Error &other) const
+bool error::operator==(const error &other) const
 {
     return m_error == other.m_error;
 }
 
-bool Error::operator!=(const Error &other) const
+bool error::operator!=(const error &other) const
 {
     return !(*this == other);
 }

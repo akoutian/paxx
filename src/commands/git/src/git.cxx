@@ -7,7 +7,7 @@
 namespace paxx
 {
 
-void Git([[maybe_unused]] cmn::Context &ctx)
+void git([[maybe_unused]] cmn::context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

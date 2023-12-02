@@ -7,7 +7,7 @@
 namespace paxx::tree
 {
 
-template <typename Traits>
-void BuildTree(typename Traits::Iterator, tree::TreeState &, std::ostream &);
+template <typename traits>
+void build_tree(typename traits::iterator, tree::state &, std::ostream &);
 
 }

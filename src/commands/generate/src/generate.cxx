@@ -7,7 +7,7 @@
 namespace paxx
 {
 
-void Generate([[maybe_unused]] cmn::Context &ctx)
+void generate([[maybe_unused]] cmn::context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

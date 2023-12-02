@@ -19,7 +19,7 @@ using cmn::gl_newline;
 using cmn::gl_space;
 using cmn::gl_tee;
 
-auto BuildPrefix(const tree::TreeState &state)
+auto build_prefix(const tree::state &state)
 {
     std::stringstream result;
 
@@ -45,9 +45,9 @@ auto BuildPrefix(const tree::TreeState &state)
 
 } // namespace
 
-void Write(std::ostream &out, const TreeState &state)
+void write(std::ostream &out, const state &state)
 {
-    out << BuildPrefix(state).str() << state.name << gl_newline;
+    out << build_prefix(state).str() << state.name << gl_newline;
 }
 
 } // namespace paxx::tree

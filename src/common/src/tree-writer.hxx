@@ -9,7 +9,7 @@
 namespace paxx::tree
 {
 
-struct TreeState
+struct state
 {
     // is the current entry the last to appear in a directory
     bool last{false};
@@ -19,6 +19,6 @@ struct TreeState
     std::set<size_t> stack;
 };
 
-void Write(std::ostream &, const TreeState &);
+void write(std::ostream &, const state &);
 
 } // namespace paxx::tree

@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Init(cmn::Context &);
+void init(cmn::context &);
 
 }

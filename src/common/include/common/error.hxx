@@ -7,17 +7,17 @@
 namespace paxx::cmn
 {
 
-class [[nodiscard]] Error
+class [[nodiscard]] error
 {
   public:
-    Error() = delete;
+    error() = delete;
 
-    explicit Error(std::string);
+    explicit error(std::string);
 
     std::string get();
 
-    bool operator==(const Error&) const;
-    bool operator!=(const Error&) const;
+    bool operator==(const error&) const;
+    bool operator!=(const error&) const;
 
   private:
     std::string m_error;

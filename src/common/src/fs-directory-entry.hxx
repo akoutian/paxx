@@ -10,10 +10,10 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
-class FsDirectoryEntry
+class fs_directory_entry
 {
   public:
-    FsDirectoryEntry(fs::path);
+    fs_directory_entry(fs::path);
 
     std::string path() const;
 

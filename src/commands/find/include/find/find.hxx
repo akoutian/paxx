@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Find(cmn::Context &);
+void find(cmn::context &);
 
 }

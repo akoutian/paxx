@@ -11,15 +11,15 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
-static std::string gl_passwordStoreName = "password-store";
+static std::string gl_password_store_name = "password-store";
 
-inline std::optional<fs::path> FindPasswordStore()
+inline std::optional<fs::path> find_password_store()
 {
     fs::path result;
 
     if (const auto h = std::getenv("HOME"))
     {
-        const auto p = fs::path(h) /= "." + gl_passwordStoreName;
+        const auto p = fs::path(h) /= "." + gl_password_store_name;
         if (fs::exists(p))
         {
             result = p;

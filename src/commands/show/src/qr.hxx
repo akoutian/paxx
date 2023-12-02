@@ -9,8 +9,8 @@ namespace paxx
 
 using qrcodegen::QrCode;
 
-QrCode Qr(const std::string &text);
+QrCode qr(const std::string &text);
 
-void WriteQr(const QrCode &, std::ostream &);
+void write_qr(const QrCode &, std::ostream &);
 
 } // namespace paxx

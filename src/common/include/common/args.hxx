@@ -9,28 +9,28 @@
 namespace paxx::cmn
 {
 
-enum struct OutputType
+enum struct output_type
 {
     PLAINTEXT,
     QRCODE
 };
 
-struct HelpArgs
+struct help_args
 {
 };
 
-struct ShowArgs
+struct show_args
 {
     std::optional<size_t> line;
     std::optional<std::string> name;
-    OutputType outputType{};
+    output_type outputType{};
 };
 
-struct VersionArgs
+struct version_args
 {
 };
 
-struct DeleteArgs
+struct remove_args
 {
     std::string name;
     bool force{};
@@ -40,12 +40,12 @@ struct DeleteArgs
 namespace parsed
 {
 
-struct Args
+struct args
 {
-    HelpArgs help;
-    ShowArgs show;
-    VersionArgs version;
-    DeleteArgs del;
+    help_args help;
+    show_args show;
+    version_args version;
+    remove_args del;
 };
 
 } // namespace parsed
@@ -53,7 +53,7 @@ struct Args
 namespace ready
 {
 
-using Args = std::variant<std::monostate, HelpArgs, ShowArgs, VersionArgs, DeleteArgs>;
+using args = std::variant<std::monostate, help_args, show_args, version_args, remove_args>;
 
 } // namespace ready
 

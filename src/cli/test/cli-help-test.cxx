@@ -10,14 +10,14 @@
 namespace paxx::cli
 {
 
-TEST_CASE("Check Help")
+TEST_CASE("Check help")
 {
-    cmn::parsed::Args parsed;
-    cmn::ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "help"});
+    cmn::parsed::args parsed;
+    cmn::ready::args ready;
+    const auto result = build_cli(parsed, ready).parse({"argv[0]", "help"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<cmn::HelpArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::help_args>(ready));
 }
 
 } // namespace paxx::cli

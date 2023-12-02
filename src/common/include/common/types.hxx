@@ -8,7 +8,7 @@
 namespace paxx::cmn
 {
 
-struct Context
+struct context
 {
     int status{};
     std::optional<std::string> message{};

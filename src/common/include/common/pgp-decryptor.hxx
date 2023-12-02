@@ -12,12 +12,12 @@
 namespace paxx::cmn
 {
 
-class PGPDecryptor
+class pgp_decryptor
 {
   public:
-    PGPDecryptor();
+    pgp_decryptor();
 
-    Expected<GpgME::Data> decrypt_file(const std::stringstream &);
+    expected<GpgME::Data> decrypt_file(const std::stringstream &);
 
   private:
     std::unique_ptr<GpgME::Context> m_ctx;

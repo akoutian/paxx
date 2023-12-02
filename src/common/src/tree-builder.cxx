@@ -10,18 +10,18 @@
 namespace paxx::tree
 {
 
-template void BuildTree<cmn::FsDirectoryIteratorTraits>(cmn::FsDirectoryIteratorTraits::Iterator,
-                                                        tree::TreeState &, std::ostream &);
+template void build_tree<cmn::fs_directory_iterator_traits>(
+    cmn::fs_directory_iterator_traits::iterator, tree::state &, std::ostream &);
 
 namespace
 {
 
-template <typename Traits>
-void HandleDirectory(const typename Traits::Entry &e, tree::TreeState &state, std::ostream &out)
+template <typename traits>
+void handle_directory(const typename traits::entry &e, tree::state &state, std::ostream &out)
 {
     state.name = e.stem();
 
-    tree::Write(out, state);
+    tree::write(out, state);
 
     if (!state.last)
     {
@@ -29,47 +29,47 @@ void HandleDirectory(const typename Traits::Entry &e, tree::TreeState &state, st
     }
 
     ++state.depth;
-    BuildTree<Traits>(typename Traits::Iterator(e.entry()), state, out);
+    build_tree<traits>(typename traits::iterator(e.entry()), state, out);
     --state.depth;
 
     state.stack.erase(state.depth);
 }
 
-template <typename Entry> void HandleFile(const Entry &e, tree::TreeState &state, std::ostream &out)
+template <typename entry> void handle_file(const entry &e, tree::state &state, std::ostream &out)
 {
     state.name = e.stem();
-    tree::Write(out, state);
+    tree::write(out, state);
 }
 
 } // namespace
 
 // TODO: Unit Tests
-template <typename Traits>
-void BuildTree(typename Traits::Iterator it, tree::TreeState &state, std::ostream &out)
+template <typename traits>
+void build_tree(typename traits::iterator it, tree::state &state, std::ostream &out)
 {
     const auto handle = [&](const auto &i)
     {
         if (i.is_directory())
         {
-            HandleDirectory<Traits>(i, state, out);
+            handle_directory<traits>(i, state, out);
             return;
         }
 
-        HandleFile(i, state, out);
+        handle_file(i, state, out);
     };
 
     // post-increment and dereference inside the loop because it is an InputIterator
-    for (auto i = Traits::begin(it); i != Traits::end(it);)
+    for (auto i = traits::begin(it); i != traits::end(it);)
     {
         const auto e = *(i++);
-        const typename Traits::Entry entry(e.path());
+        const typename traits::entry entry(e.path());
 
         if (entry.filename().starts_with("."))
         {
             continue;
         }
 
-        if (i == Traits::end(it))
+        if (i == traits::end(it))
         {
             state.last = true;
             handle(entry);

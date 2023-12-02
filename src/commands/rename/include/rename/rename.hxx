@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void Rename(cmn::Context &);
+void Rename(cmn::context &);
 
 }

@@ -9,6 +9,6 @@
 namespace paxx::cli
 {
 
-lyra::cli BuildCli(cmn::parsed::Args &, cmn::ready::Args &);
+lyra::cli build_cli(cmn::parsed::args &, cmn::ready::args &);
 
 } // namespace paxx::cli

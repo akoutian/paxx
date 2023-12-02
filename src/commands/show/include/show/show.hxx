@@ -8,6 +8,6 @@
 namespace paxx
 {
 
-void Show(cmn::Context &, const cmn::ShowArgs &);
+void show(cmn::context &, const cmn::show_args &);
 
 }

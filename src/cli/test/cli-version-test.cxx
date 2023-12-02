@@ -10,14 +10,14 @@
 namespace paxx::cli
 {
 
-TEST_CASE("Check Version")
+TEST_CASE("Check version")
 {
-    cmn::parsed::Args parsed;
-    cmn::ready::Args ready;
-    const auto result = BuildCli(parsed, ready).parse({"argv[0]", "version"});
+    cmn::parsed::args parsed;
+    cmn::ready::args ready;
+    const auto result = build_cli(parsed, ready).parse({"argv[0]", "version"});
 
     REQUIRE(result);
-    REQUIRE(std::holds_alternative<cmn::VersionArgs>(ready));
+    REQUIRE(std::holds_alternative<cmn::version_args>(ready));
 }
 
 } // namespace paxx::cli

@@ -12,7 +12,7 @@
 namespace paxx::cmn
 {
 
-PGPDecryptor::PGPDecryptor()
+pgp_decryptor::pgp_decryptor()
 {
     GpgME::initializeLibrary();
 
@@ -27,7 +27,7 @@ PGPDecryptor::PGPDecryptor()
     m_ctx = std::unique_ptr<GpgME::Context>(std::move(ctx));
 }
 
-Expected<GpgME::Data> PGPDecryptor::decrypt_file(const std::stringstream &in)
+expected<GpgME::Data> pgp_decryptor::decrypt_file(const std::stringstream &in)
 {
     const auto &str = in.str();
     auto cipher = GpgME::Data{str.data(), str.size(), false};
@@ -38,7 +38,7 @@ Expected<GpgME::Data> PGPDecryptor::decrypt_file(const std::stringstream &in)
     const auto error = result.error();
     if (error.code() != 0)
     {
-        return Unexpected(error.asString());
+        return unexpected(error.asString());
     }
 
     return plain;

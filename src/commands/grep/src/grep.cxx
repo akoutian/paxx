@@ -7,7 +7,7 @@
 namespace paxx
 {
 
-void Grep([[maybe_unused]] cmn::Context &ctx)
+void grep([[maybe_unused]] cmn::context &ctx)
 {
     throw std::runtime_error("TODO: implement");
 }

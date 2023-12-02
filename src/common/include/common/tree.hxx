@@ -9,6 +9,6 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
-void Tree(fs::path);
+void tree(fs::path);
 
 } // namespace paxx::cmn

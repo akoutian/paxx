@@ -7,14 +7,14 @@
 namespace paxx
 {
 
-QrCode Qr(const std::string &text)
+QrCode qr(const std::string &text)
 {
     QrCode::Ecc ecc = QrCode::Ecc::LOW;
     QrCode result = QrCode::encodeText(text.c_str(), ecc);
     return result;
 }
 
-void WriteQr(const QrCode &qr, std::ostream &out)
+void write_qr(const QrCode &qr, std::ostream &out)
 {
     int border = 1;
 

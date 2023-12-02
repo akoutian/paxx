@@ -9,11 +9,11 @@
 namespace paxx::cmn
 {
 
-template <class T> using Expected = std::expected<T, Error>;
+template <class T> using expected = std::expected<T, error>;
 
-inline auto Unexpected(std::string&& e)
+inline auto unexpected(std::string&& e)
 {
-    return std::unexpected(Error{e});
+    return std::unexpected(error{e});
 }
 
 }

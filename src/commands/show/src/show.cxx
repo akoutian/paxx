@@ -26,11 +26,11 @@ namespace fs = std::filesystem;
 namespace
 {
 
-cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
+cmn::expected<std::stringstream> decrypt(const std::ifstream &ifs)
 {
     std::stringstream cipher;
     cipher << ifs.rdbuf();
-    cmn::PGPDecryptor decryptor;
+    cmn::pgp_decryptor decryptor;
 
     const auto to = [](auto e)
     {
@@ -45,7 +45,7 @@ cmn::Expected<std::stringstream> Decrypt(const std::ifstream &ifs)
 }
 
 // return specific line from a stringstream, if line number is given; else, return the whole content
-cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::stringstream &plain)
+cmn::expected<std::string> extract_line(std::optional<size_t> lineNumber, std::stringstream &plain)
 {
     std::string result;
 
@@ -64,7 +64,7 @@ cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::st
 
         if (plain.eof())
         {
-            return cmn::Unexpected("There is no password on line " + std::to_string(n) + ".");
+            return cmn::unexpected("There is no password on line " + std::to_string(n) + ".");
         }
     }
     else
@@ -78,42 +78,42 @@ cmn::Expected<std::string> ExtractLine(std::optional<size_t> lineNumber, std::st
     }
     else
     {
-        return cmn::Unexpected("Error while reading plaintext stream");
+        return cmn::unexpected("error while reading plaintext stream");
     }
 }
 
-void Output(const cmn::ShowArgs &args, const std::string &result)
+void output(const cmn::show_args &args, const std::string &result)
 {
     switch (args.outputType)
     {
-    case cmn::OutputType::PLAINTEXT:
+    case cmn::output_type::PLAINTEXT:
         std::cout << result;
         break;
-    case cmn::OutputType::QRCODE: {
-        const auto qr = Qr(result);
-        WriteQr(qr, std::cout);
+    case cmn::output_type::QRCODE: {
+        const auto qr_code = qr(result);
+        write_qr(qr_code, std::cout);
         break;
     }
     }
     return;
 }
 
-cmn::Expected<std::stringstream> DecryptFile(const fs::directory_entry &file)
+cmn::expected<std::stringstream> decrypt_file(const fs::directory_entry &file)
 {
     const auto fp = file.path().string();
     std::ifstream ifs{fp};
 
     if (!ifs.is_open())
     {
-        return cmn::Unexpected("Failed to open file " + fp);
+        return cmn::unexpected("Failed to open file " + fp);
     }
 
-    return Decrypt(ifs);
+    return decrypt(ifs);
 }
 
-void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::ShowArgs &args)
+void handle_file(cmn::context &ctx, const fs::directory_entry &file, const cmn::show_args &args)
 {
-    auto plain = DecryptFile(file);
+    auto plain = decrypt_file(file);
 
     if (!plain)
     {
@@ -122,7 +122,7 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    const auto line = ExtractLine(args.line, *plain);
+    const auto line = extract_line(args.line, *plain);
     if (!line)
     {
         ctx.status = 1;
@@ -130,27 +130,27 @@ void HandleFile(cmn::Context &ctx, const fs::directory_entry &file, const cmn::S
         return;
     }
 
-    Output(args, *line);
+    output(args, *line);
 }
 
 } // namespace
 
 // TODO: further simplify. Ideally only use the context inside this one function.
-void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
+void show(cmn::context &ctx, const cmn::show_args &args)
 {
-    const auto p = cmn::FindPasswordStore();
+    const auto p = cmn::find_password_store();
 
     if (!p)
     {
         ctx.status = 1;
-        ctx.message = "Error: password store is empty. Try \"pass init\".";
+        ctx.message = "error: password store is empty. Try \"pass init\".";
         return;
     }
 
     if (!args.name)
     {
         std::cout << "Password Store\n";
-        cmn::Tree(*p);
+        cmn::tree(*p);
         return;
     }
 
@@ -160,20 +160,20 @@ void Show(cmn::Context &ctx, const cmn::ShowArgs &args)
     if (!path.string().starts_with((*p).string()))
     {
         ctx.status = 1;
-        ctx.message = "Error: " + name + " is not in the password store.";
+        ctx.message = "error: " + name + " is not in the password store.";
         return;
     }
 
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
         std::cout << entry.path().filename().string() << '\n';
-        cmn::Tree(entry);
+        cmn::tree(entry);
         return;
     }
 
     if (const auto file = fs::directory_entry{path.string() + ".gpg"}; file.is_regular_file())
     {
-        HandleFile(ctx, file, args);
+        handle_file(ctx, file, args);
         return;
     }
 }
