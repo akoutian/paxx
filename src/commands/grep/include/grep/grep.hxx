@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void grep(cmn::context &);
+cmn::command_status grep();
 
 }

@@ -42,20 +42,6 @@ bool YesNo(const std::string &prompt)
     }
 }
 
-void handle_directory(const fs::directory_entry &entry, const cmn::remove_args &args,
-                      cmn::context &ctx)
-{
-    if (args.recursive)
-    {
-        fs::remove_all(entry.path());
-        return;
-    }
-
-    ctx.status = 1;
-    ctx.message = "cannot remove '" + entry.path().string() + "': is a directory";
-    return;
-}
-
 void handle_file(const fs::directory_entry &entry)
 {
     fs::remove(entry.path());
@@ -70,15 +56,13 @@ void handle_file(const fs::directory_entry &entry)
 
 } // namespace
 
-void remove(cmn::context &ctx, const cmn::remove_args &args)
+cmn::command_status remove(const cmn::remove_args &args)
 {
     const auto p = cmn::find_password_store();
 
     if (!p)
     {
-        ctx.status = 1;
-        ctx.message = "error: password store is empty. Try \"pass init\".";
-        return;
+        return {"error: password store is empty. Try \"pass init\"."};
     }
 
     const auto name = args.name;
@@ -87,24 +71,27 @@ void remove(cmn::context &ctx, const cmn::remove_args &args)
     const auto prompt = "Are you sure you would like to remove " + name + "?";
     if (!(args.force || YesNo(prompt)))
     {
-        return;
+        return {};
     }
 
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
-        handle_directory(entry, args, ctx);
-        return;
+        if (args.recursive)
+        {
+            fs::remove_all(entry.path());
+            return {};
+        }
+
+        return {"cannot remove '" + entry.path().string() + "': is a directory"};
     }
 
     if (const auto entry = fs::directory_entry{path.string() + ".gpg"}; entry.is_regular_file())
     {
         handle_file(entry);
-        return;
+        return {};
     }
 
-    ctx.status = 1;
-    ctx.message = "error: " + name + " is not in the password store.";
-    return;
+    return {"error: " + name + " is not in the password store."};
 }
 
 } // namespace paxx

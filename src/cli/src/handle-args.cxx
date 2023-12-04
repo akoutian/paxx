@@ -8,35 +8,34 @@
 namespace paxx::cli
 {
 
-using paxx::cmn::context;
-
-void handle([[maybe_unused]] const cmn::help_args &args, context &ctx)
+cmn::command_status handle([[maybe_unused]] const cmn::help_args &args)
 {
-    paxx::help(ctx);
+    return paxx::help();
 }
 
-void handle(const cmn::show_args &args, context &ctx)
+cmn::command_status handle(const cmn::show_args &args)
 {
-    paxx::show(ctx, args);
+    return paxx::show(args);
 }
 
-void handle([[maybe_unused]] const cmn::version_args &args, context &ctx)
+cmn::command_status handle([[maybe_unused]] const cmn::version_args &args)
 {
-    paxx::version(ctx);
+    return paxx::version();
 }
 
-void handle(const cmn::remove_args &args, context &ctx)
+cmn::command_status handle(const cmn::remove_args &args)
 {
-    paxx::remove(ctx, args);
+    return paxx::remove(args);
 }
 
-void handle([[maybe_unused]] std::monostate m, [[maybe_unused]] context &ctx)
+cmn::command_status handle([[maybe_unused]] std::monostate m)
 {
+    return {};
 }
 
-void handle_args(const cmn::ready::args &args, context &ctx)
+cmn::command_status handle_args(const cmn::ready::args &args)
 {
-    std::visit([&](auto &a) { handle(a, ctx); }, args);
+    return std::visit([&](auto &a) { return handle(a); }, args);
 }
 
 } // namespace paxx::cli

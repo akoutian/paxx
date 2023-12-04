@@ -7,8 +7,8 @@
 namespace paxx
 {
 
-void version(cmn::context &);
+cmn::command_status version();
 
-void help(cmn::context &);
+cmn::command_status help();
 
 } // namespace paxx

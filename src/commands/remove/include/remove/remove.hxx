@@ -8,6 +8,6 @@
 namespace paxx
 {
 
-void remove(cmn::context &, const cmn::remove_args &args);
+cmn::command_status remove( const cmn::remove_args &args);
 
 }

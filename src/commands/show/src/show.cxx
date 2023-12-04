@@ -111,47 +111,23 @@ cmn::expected<std::stringstream> decrypt_file(const fs::directory_entry &file)
     return decrypt(ifs);
 }
 
-void handle_file(cmn::context &ctx, const fs::directory_entry &file, const cmn::show_args &args)
-{
-    auto plain = decrypt_file(file);
-
-    if (!plain)
-    {
-        ctx.status = 1;
-        ctx.message = plain.error().get();
-        return;
-    }
-
-    const auto line = extract_line(args.line, *plain);
-    if (!line)
-    {
-        ctx.status = 1;
-        ctx.message = plain.error().get();
-        return;
-    }
-
-    output(args, *line);
-}
-
 } // namespace
 
-// TODO: further simplify. Ideally only use the context inside this one function.
-void show(cmn::context &ctx, const cmn::show_args &args)
+// TODO: break up this function into smaller ones. It is too long.
+cmn::command_status show(const cmn::show_args &args)
 {
     const auto p = cmn::find_password_store();
 
     if (!p)
     {
-        ctx.status = 1;
-        ctx.message = "error: password store is empty. Try \"pass init\".";
-        return;
+        return {"error: password store is empty. Try \"pass init\"."};
     }
 
     if (!args.name)
     {
         std::cout << "Password Store\n";
         cmn::tree(*p);
-        return;
+        return {};
     }
 
     const auto name = *args.name;
@@ -159,23 +135,34 @@ void show(cmn::context &ctx, const cmn::show_args &args)
 
     if (!path.string().starts_with((*p).string()))
     {
-        ctx.status = 1;
-        ctx.message = "error: " + name + " is not in the password store.";
-        return;
+        return {"error: " + name + " is not in the password store."};
     }
 
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
     {
         std::cout << entry.path().filename().string() << '\n';
         cmn::tree(entry);
-        return;
+        return {};
     }
 
     if (const auto file = fs::directory_entry{path.string() + ".gpg"}; file.is_regular_file())
     {
-        handle_file(ctx, file, args);
-        return;
+        auto plain = decrypt_file(file);
+        if (!plain)
+        {
+            return {plain.error().get()};
+        }
+
+        const auto line = extract_line(args.line, *plain);
+        if (!line)
+        {
+            return {line.error().get()};
+        }
+
+        output(args, *line);
     }
+
+    return {};
 }
 
 } // namespace paxx

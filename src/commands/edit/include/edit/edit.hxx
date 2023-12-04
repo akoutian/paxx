@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void edit(cmn::context &);
+cmn::command_status edit();
 
 }

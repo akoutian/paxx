@@ -7,6 +7,6 @@
 namespace paxx
 {
 
-void insert(cmn::context &);
+cmn::command_status insert();
 
 }

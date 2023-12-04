@@ -9,7 +9,7 @@ error::error(std::string message) : m_error(std::move(message))
 {
 }
 
-std::string error::get()
+std::string error::get() const
 {
     return m_error;
 }

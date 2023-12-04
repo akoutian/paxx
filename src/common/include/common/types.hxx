@@ -8,9 +8,8 @@
 namespace paxx::cmn
 {
 
-struct context
+struct command_status
 {
-    int status{};
     std::optional<std::string> message{};
 };
 

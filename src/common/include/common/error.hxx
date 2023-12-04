@@ -14,7 +14,7 @@ class [[nodiscard]] error
 
     explicit error(std::string);
 
-    std::string get();
+    std::string get() const;
 
     bool operator==(const error&) const;
     bool operator!=(const error&) const;

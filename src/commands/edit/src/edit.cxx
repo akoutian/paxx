@@ -7,7 +7,7 @@
 namespace paxx
 {
 
-void edit([[maybe_unused]] cmn::context &ctx)
+cmn::command_status edit()
 {
     throw std::runtime_error("TODO: implement");
 }

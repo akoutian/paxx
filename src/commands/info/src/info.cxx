@@ -7,18 +7,20 @@
 namespace paxx
 {
 
-void version([[maybe_unused]] cmn::context &ctx)
+cmn::command_status version()
 {
     std::cout << "╭───────────────────────────────────────────╮\n";
     std::cout << "│    paxx: the C++ UNIX password manager    │\n";
     std::cout << "│                                           │\n";
     std::cout << "│                   v0.0.1                  │\n";
     std::cout << "╰───────────────────────────────────────────╯" << std::endl;
+
+    return {};
 }
 
-void help([[maybe_unused]] cmn::context &ctx)
+cmn::command_status help()
 {
-    version(ctx);
+    version();
 
     std::cout << "\n";
     std::cout << "Usage:\n";
@@ -32,6 +34,8 @@ void help([[maybe_unused]] cmn::context &ctx)
     std::cout << "        show this text.\n";
     std::cout << "    paxx version\n";
     std::cout << "        show version information." << std::endl;
+
+    return {};
 }
 
 } // namespace paxx

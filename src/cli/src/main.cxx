@@ -19,13 +19,13 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    paxx::cmn::context ctx;
-    paxx::cli::handle_args(ready, ctx);
+    const auto status = paxx::cli::handle_args(ready);
 
-    if (ctx.status != 0 && ctx.message)
+    if (status.message)
     {
-        std::cerr << ctx.message.value() << std::endl;
+        std::cerr << *status.message << std::endl;
+        return EXIT_FAILURE;
     }
 
-    return ctx.status;
+    return EXIT_SUCCESS;
 }
