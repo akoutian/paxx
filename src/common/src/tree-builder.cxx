@@ -41,44 +41,36 @@ template <typename entry> void handle_file(const entry &e, tree::state &state, s
     tree::write(out, state);
 }
 
+template <typename traits>
+void handle(const typename traits::entry &entry, tree::state &state, std::ostream &out)
+{
+    if (entry.is_directory())
+    {
+        handle_directory<traits>(entry, state, out);
+        return;
+    }
+
+    handle_file(entry, state, out);
+}
+
 } // namespace
 
-// TODO: Unit Tests
 template <typename traits>
 void build_tree(typename traits::iterator it, tree::state &state, std::ostream &out)
 {
-    const auto handle = [&](const auto &i)
-    {
-        if (i.is_directory())
-        {
-            handle_directory<traits>(i, state, out);
-            return;
-        }
-
-        handle_file(i, state, out);
-    };
-
     // post-increment and dereference inside the loop because it is an InputIterator
     for (auto i = traits::begin(it); i != traits::end(it);)
     {
-        const auto e = *(i++);
-        const typename traits::entry entry(e.path());
+        const typename traits::entry entry{*i++};
 
         if (entry.filename().starts_with("."))
         {
             continue;
         }
 
-        if (i == traits::end(it))
-        {
-            state.last = true;
-            handle(entry);
-        }
-        else
-        {
-            state.last = false;
-            handle(entry);
-        }
+        state.last = (i == traits::end(it));
+
+        handle<traits>(entry, state, out);
     }
 }
 

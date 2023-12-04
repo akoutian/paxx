@@ -10,6 +10,7 @@ namespace paxx::cmn
 
 namespace fs = std::filesystem;
 
+// facade to fs::directory_entry that exposes only the few operations that we need
 class fs_directory_entry
 {
   public:
