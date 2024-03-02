@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "tree-builder.hxx"
+#include "tree-walker.hxx"
 
 #include "fs-directory-iterator-traits.hxx"
 #include "tree-writer.hxx"
@@ -10,7 +10,7 @@
 namespace paxx::tree
 {
 
-template void build_tree<cmn::fs_directory_iterator_traits>(
+template void walk_tree<cmn::fs_directory_iterator_traits>(
     cmn::fs_directory_iterator_traits::iterator, tree::state &, std::ostream &);
 
 namespace
@@ -29,7 +29,7 @@ void handle_directory(const typename traits::entry &e, tree::state &state, std::
     }
 
     ++state.depth;
-    build_tree<traits>(typename traits::iterator(e.entry()), state, out);
+    walk_tree<traits>(typename traits::iterator(e.entry()), state, out);
     --state.depth;
 
     state.stack.erase(state.depth);
@@ -56,7 +56,7 @@ void handle(const typename traits::entry &entry, tree::state &state, std::ostrea
 } // namespace
 
 template <typename traits>
-void build_tree(typename traits::iterator it, tree::state &state, std::ostream &out)
+void walk_tree(typename traits::iterator it, tree::state &state, std::ostream &out)
 {
     // post-increment and dereference inside the loop because it is an InputIterator
     for (auto i = traits::begin(it); i != traits::end(it);)
