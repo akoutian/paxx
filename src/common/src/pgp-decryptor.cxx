@@ -6,7 +6,6 @@
 #include <gpgme++/decryptionresult.h>
 #include <gpgme++/global.h>
 
-#include <nonstd/expected.hpp>
 #include <stdexcept>
 
 namespace paxx::cmn
