@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
 add_library(
-    common STATIC src/pgp-decryptor.cxx src/tree-walker.cxx src/tree-writer.cxx
-                  src/fs-directory-entry.cxx src/tree.cxx src/error.cxx
+    common STATIC src/pgp-decryptor.cxx src/tree-writer.cxx src/fs-directory-entry.cxx src/tree.cxx
+                  src/error.cxx
 )
 
 target_include_directories(common PUBLIC include)
