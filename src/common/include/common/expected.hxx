@@ -11,9 +11,9 @@ namespace paxx::cmn
 
 template <class T> using expected = std::expected<T, error>;
 
-inline auto unexpected(std::string&& e)
+inline auto unexpected(std::string &&e)
 {
     return std::unexpected(error{e});
 }
 
-}
+} // namespace paxx::cmn

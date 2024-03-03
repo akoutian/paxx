@@ -16,8 +16,8 @@ class [[nodiscard]] error
 
     std::string get() const;
 
-    bool operator==(const error&) const;
-    bool operator!=(const error&) const;
+    bool operator==(const error &) const;
+    bool operator!=(const error &) const;
 
   private:
     std::string m_error;
