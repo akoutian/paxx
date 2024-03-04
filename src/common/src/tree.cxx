@@ -15,8 +15,8 @@ namespace fs = std::filesystem;
 
 void tree(fs::path p)
 {
-    tree::state info{.name = p.filename(), .stack{}};
-    walk_tree<fs_directory_iterator_traits>(fs::directory_iterator(p), info, std::cout);
+    tree::state state{.name = p.filename(), .stack{}};
+    walk_tree<fs_directory_iterator_traits>(fs::directory_iterator(p), state, std::cout);
 }
 
 } // namespace paxx::cmn
