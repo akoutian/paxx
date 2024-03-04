@@ -55,7 +55,18 @@ void walk(std::shared_ptr<fake_directory_node> node, std::stringstream &ss)
                                               state, ss);
 }
 
-TEST_CASE("Test simple case")
+TEST_CASE("Test empty tree")
+{
+    const auto test_node = std::make_shared<fake_directory_node>(fake_directory_node{"root", {}});
+
+    std::stringstream ss;
+
+    walk(test_node, ss);
+
+    CHECK(ss.str() == "");
+}
+
+TEST_CASE("Test simple tree")
 {
     const auto test_node = build_simple_test_node();
 
@@ -70,7 +81,7 @@ TEST_CASE("Test simple case")
     CHECK(ss.str() == expected);
 }
 
-TEST_CASE("Test not so simple case")
+TEST_CASE("Test not so simple tree")
 {
     const auto test_node = build_not_so_simple_test_node();
 
