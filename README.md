@@ -8,7 +8,6 @@ Work In Progress
 The following libraries are needed in order to build `paxx`:
 
 * doctest (https://github.com/doctest/doctest)
-* expected-lite (https://github.com/martinmoene/expected-lite)
 * gpgme (https://gnupg.org/software/gpgme/index.html)
 * lyra (https://www.bfgroup.xyz/Lyra/)
 * qrcodegencpp (https://www.nayuki.io/page/qr-code-generator-library)
