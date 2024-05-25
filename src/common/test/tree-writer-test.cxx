@@ -29,7 +29,7 @@ TEST_CASE("Check Single entry")
 
     write(entries, os);
 
-    CHECK(os.str() == "\342\224\224\342\224\200\342\224\200 one\n");
+    CHECK(os.str() == "└── one\n");
 }
 
 TEST_CASE("Check Two Entries")
@@ -43,8 +43,8 @@ TEST_CASE("Check Two Entries")
 
     write(entries, os);
 
-    CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
-                      "\342\224\224\342\224\200\342\224\200 two\n");
+    CHECK(os.str() == "├── one\n"
+                      "└── two\n");
 }
 
 TEST_CASE("Check Three Entries")
@@ -59,9 +59,9 @@ TEST_CASE("Check Three Entries")
 
     write(entries, os);
 
-    CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
-                      "\342\224\234\342\224\200\342\224\200 two\n"
-                      "\342\224\224\342\224\200\342\224\200 three\n");
+    CHECK(os.str() == "├── one\n"
+                      "├── two\n"
+                      "└── three\n");
 }
 
 TEST_CASE("Check Single Nested entry")
@@ -76,26 +76,9 @@ TEST_CASE("Check Single Nested entry")
 
     write(entries, os);
 
-    CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
-                      "\342\224\202   \342\224\224\342\224\200\342\224\200 two\n"
-                      "\342\224\224\342\224\200\342\224\200 three\n");
-}
-
-TEST_CASE("Check Single Nested entry")
-{
-    std::vector<state> entries{
-        {.last = false, .depth = 0, .name{"one"}, .stack{}},
-        {.last = true, .depth = 1, .name{"two"}, .stack{0}},
-        {.last = true, .depth = 0, .name{"three"}, .stack{}},
-    };
-
-    std::stringstream os;
-
-    write(entries, os);
-
-    CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
-                      "\342\224\202   \342\224\224\342\224\200\342\224\200 two\n"
-                      "\342\224\224\342\224\200\342\224\200 three\n");
+    CHECK(os.str() == "├── one\n"
+                      "│   └── two\n"
+                      "└── three\n");
 }
 
 TEST_CASE("Check Multiple Nested Entries")
@@ -117,16 +100,16 @@ TEST_CASE("Check Multiple Nested Entries")
 
     write(entries, os);
 
-    CHECK(os.str() == "\342\224\234\342\224\200\342\224\200 one\n"
-                      "\342\224\202   \342\224\234\342\224\200\342\224\200 two\n"
-                      "\342\224\202   \342\224\202   \342\224\234\342\224\200\342\224\200 three\n"
-                      "\342\224\202   \342\224\202   \342\224\224\342\224\200\342\224\200 four\n"
-                      "\342\224\202   \342\224\224\342\224\200\342\224\200 five\n"
-                      "\342\224\202       \342\224\234\342\224\200\342\224\200 six\n"
-                      "\342\224\202       \342\224\224\342\224\200\342\224\200 seven\n"
-                      "\342\224\202           \342\224\224\342\224\200\342\224\200 eight\n"
-                      "\342\224\224\342\224\200\342\224\200 nine\n"
-                      "    \342\224\224\342\224\200\342\224\200 ten\n");
+    CHECK(os.str() == "├── one\n"
+                      "│   ├── two\n"
+                      "│   │   ├── three\n"
+                      "│   │   └── four\n"
+                      "│   └── five\n"
+                      "│       ├── six\n"
+                      "│       └── seven\n"
+                      "│           └── eight\n"
+                      "└── nine\n"
+                      "    └── ten\n");
 }
 
 } // namespace paxx::tree

@@ -25,7 +25,7 @@ void handle_directory(const typename traits::entry &e, tree::state &state, std::
     }
 
     ++state.depth;
-    walk_tree<traits>(typename traits::iterator(e.entry()), state, out);
+    walk_tree<traits>(typename traits::iterator{e.entry()}, state, out);
     --state.depth;
 
     state.stack.erase(state.depth);
