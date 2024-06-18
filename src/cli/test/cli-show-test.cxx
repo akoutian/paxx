@@ -23,7 +23,7 @@ TEST_CASE("Check show Ia")
 
     CHECK(!r.line.has_value());
     CHECK(!r.name.has_value());
-    CHECK(r.outputType == cmn::output_type::PLAINTEXT);
+    CHECK(r.format == cmn::output_format::PLAINTEXT);
 }
 
 TEST_CASE("Check show Ib")
@@ -39,7 +39,7 @@ TEST_CASE("Check show Ib")
 
     CHECK(!r.line.has_value());
     CHECK(r.name == "something");
-    CHECK(r.outputType == cmn::output_type::PLAINTEXT);
+    CHECK(r.format == cmn::output_format::PLAINTEXT);
 }
 
 } // namespace paxx::cli

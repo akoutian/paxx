@@ -84,12 +84,12 @@ cmn::expected<std::string> extract_line(std::optional<size_t> lineNumber, std::s
 
 void output(const cmn::show_args &args, const std::string &result)
 {
-    switch (args.outputType)
+    switch (args.format)
     {
-    case cmn::output_type::PLAINTEXT:
+    case cmn::output_format::PLAINTEXT:
         std::cout << result;
         break;
-    case cmn::output_type::QRCODE: {
+    case cmn::output_format::QRCODE: {
         const auto qr_code = qr(result);
         write_qr(qr_code, std::cout);
         break;

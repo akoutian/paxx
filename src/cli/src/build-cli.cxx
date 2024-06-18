@@ -50,7 +50,7 @@ void build_show(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &rea
     auto list = lyra::command("list", make_ready);
 
     const auto qr_code_opt = [&]([[maybe_unused]] bool i)
-    { parsed.show.outputType = cmn::output_type::QRCODE; };
+    { parsed.show.format = cmn::output_format::QRCODE; };
     show.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
     ls.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
     list.add_argument(lyra::opt(qr_code_opt).name("-q").name("--qrcode"));
@@ -71,7 +71,7 @@ void build_show(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &rea
     cli.add_argument(list);
 }
 
-void Buildremove(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
+void build_remove(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
     const auto make_ready = [&]([[maybe_unused]] auto g)
     {
@@ -111,7 +111,7 @@ lyra::cli build_cli(cmn::parsed::args &parsed, cmn::ready::args &ready)
     build_help(cli, parsed, ready);
     build_version(cli, parsed, ready);
     build_show(cli, parsed, ready);
-    Buildremove(cli, parsed, ready);
+    build_remove(cli, parsed, ready);
 
     return cli;
 }

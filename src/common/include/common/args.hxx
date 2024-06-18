@@ -9,7 +9,7 @@
 namespace paxx::cmn
 {
 
-enum struct output_type
+enum struct output_format
 {
     PLAINTEXT,
     QRCODE
@@ -23,7 +23,7 @@ struct show_args
 {
     std::optional<size_t> line;
     std::optional<std::string> name;
-    output_type outputType{};
+    output_format format{};
 };
 
 struct version_args
