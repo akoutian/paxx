@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "build-cli.hxx"
-#include "common/types.hxx"
+#include "cli.hxx"
 #include "handle-args.hxx"
 
 #include <iostream>
 
 int main(int argc, char **argv)
 {
-    paxx::cmn::parsed::args parsed;
-    paxx::cmn::ready::args ready;
+    paxx::cli::cli cli;
 
-    const auto result = paxx::cli::build_cli(parsed, ready).parse({argc, argv});
+    const auto result = cli.parse(argc, argv);
 
     if (!result)
     {
@@ -19,7 +17,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    const auto status = paxx::cli::handle_args(ready);
+    const auto status = paxx::cli::handle_args(cli.get());
 
     if (status.message)
     {

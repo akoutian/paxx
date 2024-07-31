@@ -7,6 +7,13 @@
 namespace paxx::cli
 {
 
+// Lyra unfortunately has a weird behaviour with subcommand arguments. If multiple subcommands are
+// specified, e.g. `paxx help show -q asdf`, where `help` and `show` are subcommands, Lyra will
+// parse and execute both of them. The usual convention in commandline tools is to execute the first
+// and ignore the second or emit an error. Because of this strange behaviour, we need to store all
+// the arguments and use a variant to ensure only the first subcommand is passed on to the rest of
+// the code.
+
 void build_help(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &ready)
 {
     const auto make_ready = [&]([[maybe_unused]] const auto &g)
