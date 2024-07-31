@@ -45,7 +45,7 @@ struct args
     help_args help;
     show_args show;
     version_args version;
-    remove_args del;
+    remove_args remove;
 };
 
 } // namespace parsed

@@ -84,24 +84,24 @@ void build_remove(lyra::cli &cli, cmn::parsed::args &parsed, cmn::ready::args &r
     {
         if (std::holds_alternative<std::monostate>(ready))
         {
-            ready = parsed.del;
+            ready = parsed.remove;
         }
     };
     auto rm = lyra::command("rm", make_ready);
     auto del = lyra::command("remove", make_ready);
     auto remove = lyra::command("remove", make_ready);
 
-    const auto force_opt = [&](bool i) { parsed.del.force = i; };
+    const auto force_opt = [&](bool i) { parsed.remove.force = i; };
     rm.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
     del.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
     remove.add_argument(lyra::opt(force_opt).name("-f").name("--force"));
 
-    const auto recurse_opt = [&](bool i) { parsed.del.recursive = i; };
+    const auto recurse_opt = [&](bool i) { parsed.remove.recursive = i; };
     rm.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
     del.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
     remove.add_argument(lyra::opt(recurse_opt).name("-r").name("--recursive"));
 
-    const auto name = [&](std::string s) { parsed.del.name = s; };
+    const auto name = [&](std::string s) { parsed.remove.name = s; };
     rm.add_argument(lyra::arg(name, "name"));
     del.add_argument(lyra::arg(name, "name"));
     remove.add_argument(lyra::arg(name, "name"));
