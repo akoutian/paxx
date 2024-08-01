@@ -68,7 +68,7 @@ cmn::command_status remove(const cmn::remove_args &args)
     const auto name = args.name;
     const auto path = *p / fs::path(name);
 
-    const auto prompt = "Are you sure you would like to remove " + name + "?";
+    const auto prompt = std::format("Are you sure you would like to remove '{}'?", name);
     if (!(args.force || YesNo(prompt)))
     {
         return {};
@@ -82,10 +82,11 @@ cmn::command_status remove(const cmn::remove_args &args)
             return {};
         }
 
-        return {"cannot remove '" + entry.path().string() + "': is a directory"};
+        return {std::format("cannot remove '{}': is a directory", entry.path().string())};
     }
 
-    if (const auto entry = fs::directory_entry{path.string() + ".gpg"}; entry.is_regular_file())
+    if (const auto entry = fs::directory_entry{std::format("{}.gpg", path.string())};
+        entry.is_regular_file())
     {
         handle_file(entry);
         return {};

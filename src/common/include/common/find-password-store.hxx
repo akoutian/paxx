@@ -19,7 +19,7 @@ inline std::optional<fs::path> find_password_store()
 
     if (const auto h = std::getenv("HOME"))
     {
-        const auto p = fs::path(h) /= "." + gl_password_store_name;
+        const auto p = fs::path(h) /= std::format(".{}", gl_password_store_name);
         if (fs::exists(p))
         {
             result = p;

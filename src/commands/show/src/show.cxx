@@ -64,7 +64,8 @@ cmn::expected<std::string> extract_line(std::optional<size_t> lineNumber, std::s
 
         if (plain.eof())
         {
-            return cmn::unexpected("There is no password on line " + std::to_string(n) + ".");
+            return cmn::unexpected(
+                std::format("There is no password on line {}.", std::to_string(n)));
         }
     }
     else
@@ -105,7 +106,7 @@ cmn::expected<std::stringstream> decrypt_file(const fs::directory_entry &file)
 
     if (!ifs.is_open())
     {
-        return cmn::unexpected("Failed to open file " + fp);
+        return cmn::unexpected(std::format("Failed to open file {}.", fp));
     }
 
     return decrypt(ifs);
@@ -135,7 +136,7 @@ cmn::command_status show(const cmn::show_args &args)
 
     if (!path.string().starts_with((*p).string()))
     {
-        return {"error: " + name + " is not in the password store."};
+        return {std::format("error: {} is not in the password store.", name)};
     }
 
     if (const auto entry = fs::directory_entry{path}; entry.is_directory())
@@ -145,7 +146,8 @@ cmn::command_status show(const cmn::show_args &args)
         return {};
     }
 
-    if (const auto file = fs::directory_entry{path.string() + ".gpg"}; file.is_regular_file())
+    if (const auto file = fs::directory_entry{std::format("{}.gpg", path.string())};
+        file.is_regular_file())
     {
         auto plain = decrypt_file(file);
         if (!plain)
