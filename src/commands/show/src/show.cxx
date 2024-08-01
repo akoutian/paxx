@@ -152,13 +152,13 @@ cmn::command_status show(const cmn::show_args &args)
         auto plain = decrypt_file(file);
         if (!plain)
         {
-            return {plain.error().get()};
+            return {plain.error().string()};
         }
 
         const auto line = extract_line(args.line, *plain);
         if (!line)
         {
-            return {line.error().get()};
+            return {line.error().string()};
         }
 
         output(args, *line);

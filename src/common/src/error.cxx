@@ -2,24 +2,37 @@
 
 #include "common/error.hxx"
 
+#include <ranges>
+
 namespace paxx::cmn
 {
 
-error::error(std::string message) : m_error(std::move(message))
+errors::errors(std::string message)
 {
+    add_error(std::move(message));
 }
 
-std::string error::get() const
+void errors::add_error(std::string &&message)
 {
-    return m_error;
+    m_errors.insert(std::move(message));
 }
 
-bool error::operator==(const error &other) const
+[[nodiscard]] const std::unordered_set<std::string> &errors::get() const &
 {
-    return m_error == other.m_error;
+    return m_errors;
 }
 
-bool error::operator!=(const error &other) const
+[[nodiscard]] std::string errors::string() const
+{
+    return std::ranges::join_with_view(m_errors, ", ") | std::ranges::to<std::string>();
+}
+
+bool errors::operator==(const errors &other) const
+{
+    return m_errors == other.m_errors;
+}
+
+bool errors::operator!=(const errors &other) const
 {
     return !(*this == other);
 }

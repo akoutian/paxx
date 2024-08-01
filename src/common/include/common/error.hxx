@@ -3,24 +3,30 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 namespace paxx::cmn
 {
 
-class [[nodiscard]] error
+class [[nodiscard]] errors
 {
+    std::unordered_set<std::string> m_errors;
+
   public:
-    error() = delete;
+    errors() = delete;
 
-    explicit error(std::string);
+    explicit errors(std::string);
 
-    std::string get() const;
+    void add_error(std::string &&);
 
-    bool operator==(const error &) const;
-    bool operator!=(const error &) const;
+    [[nodiscard]] bool empty() const;
 
-  private:
-    std::string m_error;
+    [[nodiscard]] const std::unordered_set<std::string> &get() const &;
+
+    [[nodiscard]] std::string string() const;
+
+    bool operator==(const errors &) const;
+    bool operator!=(const errors &) const;
 };
 
 } // namespace paxx::cmn
